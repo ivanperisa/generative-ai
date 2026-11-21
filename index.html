@@ -1,0 +1,976 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Generative AI Test 1 Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&family=Mulish:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one question at a time, laid out like the example sheet's slides: eyebrow, question beside its picture, ticked options, grey answer panel */
+:root{
+  /* sampled from the example-questions sheet */
+  --bg:#ffffff; --fg:#1a2230; --sub:#5a6372; --muted:#81858d; --line:#e2e3e5; --panel:#f2f3f5;
+  --accent:#00787a; --accent-ink:#ffffff; --accent-soft:#dbe9e9;
+  --hl:#fde6df; --hl-line:#d4400b; --bad:#d4400b; --bad-soft:#fde6df; --mid:#a8740f;
+  --display:"Jost","Futura","Century Gothic",system-ui,sans-serif;
+  --body:"Mulish","Segoe UI",system-ui,-apple-system,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+:root{color-scheme:light}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:960px;margin:0 auto}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button{font:inherit;color:inherit;cursor:pointer}
+
+header.top{position:relative;padding-block:44px 6px;padding-left:4px}
+.corner{position:absolute;left:0;top:22px;width:30px;height:30px;border-left:3px solid var(--accent);border-top:3px solid var(--accent)}
+h1{font-family:var(--display);font-weight:500;color:var(--accent);font-size:clamp(2rem,5vw,3.1rem);line-height:1.05;margin:16px 0 8px;letter-spacing:.005em;text-wrap:balance}
+.sub{font-family:var(--display);font-weight:400;color:var(--sub);font-size:1.08rem;margin:0;max-width:62ch}
+
+nav.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);
+  padding-block:12px;margin-block:22px 0;display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.seg button{border:0;background:transparent;padding:6px 12px;font-weight:700;font-size:.85rem;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:transparent;border-radius:999px;padding:3px 11px;font-size:.8rem;font-weight:600;color:var(--fg)}
+.chip[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.chip .n{color:var(--muted);font-weight:600;margin-left:3px;font-variant-numeric:tabular-nums}
+.stat{margin-left:auto;font-size:.82rem;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.stat b{color:var(--fg)}
+
+.dots{display:flex;flex-wrap:wrap;gap:4px;margin:16px 0 0}
+.dot{width:11px;height:11px;border-radius:3px;border:1px solid var(--line);background:transparent;padding:0}
+.dot.perfect{background:var(--accent);border-color:var(--accent)}
+.dot.partial{background:var(--mid);border-color:var(--mid)}
+.dot.wrong{background:var(--bad);border-color:var(--bad)}
+.dot.answered{background:var(--line)}
+.dot.cur{outline:2px solid var(--fg);outline-offset:1px}
+
+main.card{padding-block:26px 8px}
+.qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.eyebrow{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--sub);font-weight:400}
+.tag{font-size:.75rem;color:var(--muted);font-weight:600}
+.tag.ex{color:var(--accent)}
+.qrow{display:flex;gap:28px;align-items:center;justify-content:space-between;margin:12px 0 22px;flex-wrap:wrap}
+.qtext{flex:1 1 380px;min-width:0;font-size:clamp(1.25rem,2.6vw,1.6rem);line-height:1.3;font-weight:600;margin:0;max-width:34ch;text-wrap:pretty}
+.qtext.wide{max-width:46ch}
+.vis{flex:0 1 auto;min-width:0;max-width:100%;overflow-x:auto}
+sub,sup{font-size:.68em;line-height:0}
+
+.tokgrid{display:grid;gap:8px 10px;justify-items:start;align-items:center}
+.pos{font-family:var(--mono);font-size:.8rem;color:var(--sub);justify-self:center}
+.tok{font-family:var(--mono);font-size:1rem;background:var(--accent-soft);color:var(--fg);padding:4px 9px;border-radius:5px;border:1.5px solid transparent;white-space:nowrap}
+.tok.hl{background:var(--hl);border-color:var(--hl-line)}
+.tok small{font-size:.72em;color:var(--muted);margin-left:6px}
+.vt{border-collapse:collapse;font-size:.9rem;font-variant-numeric:tabular-nums}
+.vt th,.vt td{padding:5px 11px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+.vt th{font-weight:600;color:var(--muted);font-size:.78rem}
+.vt td:first-child,.vt th:first-child{text-align:left;font-family:var(--mono);font-size:.86rem}
+.vt td.k{background:var(--hl)}
+.vt tr:last-child td{border-bottom:0}
+.vt .cap{caption-side:bottom;font-size:.76rem;color:var(--muted);padding-top:6px;text-align:left}
+
+ol.opts{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.opt{display:flex;align-items:flex-start;gap:14px;padding:8px 10px;margin-inline:-10px;border-radius:8px;border:0;background:transparent;width:calc(100% + 20px);text-align:left;font-size:clamp(1rem,2vw,1.17rem);line-height:1.4}
+.opt:hover:not([disabled]){background:var(--panel)}
+.opt[disabled]{cursor:default}
+.box{flex:none;width:22px;height:22px;border-radius:4px;border:1.6px solid var(--muted);display:grid;place-items:center;margin-top:1px;color:var(--accent-ink)}
+.box svg{width:15px;height:15px;opacity:0}
+.letter{flex:none;width:16px;font-weight:700;color:var(--sub)}
+.otext{min-width:0;flex:1}
+.mark{flex:none;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:4px;margin-top:3px}
+.opt.picked .box{background:var(--fg);border-color:var(--fg);color:var(--bg)}
+.opt.picked .box svg{opacity:1}
+/* revealed */
+.opt.true .box{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.opt.true .box svg{opacity:1}
+.opt.false{color:var(--muted)}
+.opt.false .box{background:transparent;border-color:var(--muted)}
+.opt.false .box svg{opacity:0}
+.opt.false.picked .box{border-color:var(--bad);color:var(--bad)}
+.opt.false.picked .box svg.x{opacity:1}
+.opt.true:not(.picked) .mark{background:var(--bad-soft);color:var(--bad)}
+.opt.false.picked .mark{background:var(--bad-soft);color:var(--bad)}
+.opt.false.picked .otext{text-decoration:line-through;text-decoration-color:var(--bad)}
+.box{position:relative}
+.box svg.x{position:absolute;opacity:0}
+.opt.true .box svg.x,.opt.picked .box svg.x{opacity:0}
+.opt.false.picked .box svg.x{opacity:1}
+.opt.false.picked .box svg:not(.x){opacity:0}
+[hidden]{display:none!important}
+
+.answer{display:flex;gap:16px;align-items:center;background:var(--panel);padding:16px 20px;margin-top:26px;border-radius:2px}
+.answer svg{flex:none;width:26px;height:26px;color:var(--fg)}
+.answer p{margin:0;font-size:.95rem;line-height:1.5}
+.answer .src{font-size:.8rem;color:var(--sub);margin-top:4px}
+.result{font-weight:700;font-size:.85rem;margin-bottom:4px;font-variant-numeric:tabular-nums}
+.result.perfect{color:var(--accent)} .result.partial{color:var(--mid)} .result.wrong{color:var(--bad)}
+
+.controls{display:flex;gap:10px;align-items:center;margin-top:24px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:transparent;border-radius:8px;padding:9px 16px;font-weight:700;font-size:.92rem}
+.btn:hover{border-color:var(--fg)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{filter:brightness(1.07)}
+.btn[disabled]{opacity:.4;cursor:default}
+.spacer{flex:1}
+.hint{font-size:.78rem;color:var(--muted)}
+.hint kbd{font-family:var(--mono);font-size:.74rem;border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;padding:0 5px}
+
+.summary{padding-block:28px 0}
+.summary h2{font-family:var(--display);font-weight:600;font-size:2rem;color:var(--accent);margin:0 0 4px}
+.summary p{margin:0 0 14px;color:var(--muted);max-width:62ch}
+.big{font-family:var(--display);font-size:3.2rem;font-weight:600;line-height:1;color:var(--fg);font-variant-numeric:tabular-nums}
+.rows{display:grid;gap:6px;margin:18px 0 6px}
+.rowq{display:flex;gap:12px;align-items:baseline;border:0;background:transparent;text-align:left;padding:8px 10px;margin-inline:-10px;border-radius:8px}
+.rowq:hover{background:var(--panel)}
+.rowq .sc{flex:none;width:48px;font-weight:700;font-variant-numeric:tabular-nums}
+.rowq .t{min-width:0}
+.empty{padding:40px 0;color:var(--muted)}
+footer{margin-top:40px;font-size:.8rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center}
+footer button{border:0;background:none;padding:0;color:var(--muted);text-decoration:underline;font-size:.8rem}
+@media (max-width:560px){
+  nav.bar{position:static}
+  .stat{margin-left:0;width:100%}
+  .qrow{gap:16px}
+  .hint{display:none}
+}
+@media (prefers-reduced-motion:no-preference){.answer{animation:rise .18s ease-out}@keyframes rise{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <span class="corner" aria-hidden="true"></span>
+    <h1>Test 1 · Practice questions</h1>
+    <p class="sub" id="subline">194.207 Generative AI · questions as on the test, each with its answer</p>
+  </header>
+
+  <nav class="bar" aria-label="Quiz controls">
+    <div class="seg" role="group" aria-label="Mode">
+      <button id="m-practice" aria-pressed="true">Practice</button>
+      <button id="m-mock" aria-pressed="false">Mock test</button>
+    </div>
+    <div class="chips" id="chips" role="group" aria-label="Lecture"></div>
+    <div class="stat" id="stat"></div>
+  </nav>
+
+  <div class="dots" id="dots" aria-label="Questions in this set"></div>
+  <div id="view"></div>
+
+  <footer>
+    <span>Tick every true statement; anywhere from none to all four can be true. Scored like the test: +1.5 ÷ n per correct tick, −0.75 per wrong tick, at least 0 per question; with none true, no tick earns 1.5. Mock test: 20 questions, 40 minutes.</span>
+    <button id="shuffle">Shuffle order</button>
+    <button id="reset">Clear my results</button>
+  </footer>
+</div>
+
+<script>
+const LECT = {
+  intro: {short: "Introduction", full: "Introduction to Generative AI"},
+  found: {short: "Foundations", full: "Theoretical Foundations of Language Modelling"},
+  tp1:   {short: "Training I", full: "Training Paradigms I"},
+  tp2:   {short: "Training II", full: "Training Paradigms II"}
+};
+
+/* Each question: id, lec, q, optional vis (HTML), o (four statements), c (indexes of the true ones), e (why), s (topic in the lecture), ex (from the example sheet) */
+const Q = [
+/* ───── Example sheet ───── */
+{id:"E1", lec:"intro", ex:true,
+ q:`In a decoder-only transformer, what is true about “·bank” in these two phrases?`,
+ vis:`<div class="tokgrid" style="grid-template-columns:repeat(3,auto)"><span class="pos">1</span><span class="pos">2</span><span class="pos">3</span><span class="tok">the</span><span class="tok">·river</span><span class="tok hl">·bank</span><span class="tok">the</span><span class="tok">·savings</span><span class="tok hl">·bank</span></div>`,
+ o:[`The embedding layer gives ·bank the same vector in both phrases`,`After attention, ·bank’s vector holds meaning from the words before it`,`After positional encoding, the two ·bank vectors are different`,`The feed-forward layers add meaning from the neighbouring words`], c:[0,1],
+ e:`The embedding is a lookup: the same token always gets the same row. ·bank is the third token in both, so its position is the same too. Only attention mixes tokens; the feed-forward looks at each token alone.`,
+ s:`the lookup is static, context pulls bank apart`},
+{id:"E2", lec:"found", ex:true,
+ q:`Attention without positional encoding and without a mask reads “dog bites man” and “man bites dog”. Each word is one token. What is true?`,
+ o:[`The word dog gets the same output vector in both`,`Adding the same vector to every embedding tells the two apart`,`Stacking more of these attention layers tells the two apart`,`The token IDs tell the model the order of the words`], c:[0],
+ e:`Attention only compares pairs of tokens. Change the order of the input and you get the same outputs in the new order, in every layer. A vector added to every token is the same everywhere, and a token ID says which token it is, not where it stands.`,
+ s:`attention alone: no order`},
+{id:"E3", lec:"tp1", ex:true,
+ q:`The compute for training is about C ≈ 6 · N · D. Where does the 6 come from?`,
+ o:[`Forward pass: each weight does one multiply and one add per token`,`Backward pass: each weight is used twice, for two different gradients`,`Optimizer step: two more operations for each weight and token`,`Attention: two more operations for comparing the tokens`], c:[0,1],
+ e:`Forward: 2 operations for each weight and token. Backward: 4. Together: 6. The optimizer runs once per step, not once per token, and the formula leaves attention out.`,
+ s:`where C ≈ 6 · N · D comes from`},
+{id:"E4", lec:"tp2", ex:true,
+ q:`A model generates text one token at a time, with a standard KV cache. What happens for each new token?`,
+ o:[`Only the new token goes through all the layers`,`Its query is compared with the cached keys of all earlier tokens`,`Its key and value are stored in the cache for later tokens`,`The keys of earlier tokens are updated to include the new token`], c:[0,1,2],
+ e:`Earlier tokens are needed only inside attention, through their keys and values. Because of the mask, a token never sees later tokens, so its key and value never change.`,
+ s:`the KV cache: prefill and decode`},
+{id:"E5", lec:"found", ex:true,
+ q:`Why are the attention scores divided by √d<sub>k</sub> before the softmax?`,
+ o:[`Without it, large scores give one token almost all the weight`,`Without it, almost no gradient flows back through the softmax`,`Without it, the scores grow with the length of the sequence`,`Without it, the weights in a row do not add up to 1`], c:[0,1],
+ e:`Scores grow with d<sub>k</sub>, the length of q and k, not with the length of the sequence. With large scores, softmax gives one token nearly everything and the rest almost 0, so there is almost no gradient. Dividing keeps the order of the scores; softmax itself makes the weights add up to 1.`,
+ s:`softmax, and why the scores are scaled`},
+{id:"E6", lec:"tp2", ex:true,
+ q:`Why does RLHF penalize the policy with β · KL to the reference model?`,
+ o:[`It stops the policy from optimizing the reward model’s score too far`,`It keeps the policy close to the SFT model it started from`,`It keeps the reward model close to its weights from before RL`,`It rewards the policy for tokens the reference model finds unlikely`], c:[0,1],
+ e:`If the policy chases the reward model too far, its score keeps rising while the real quality goes up and then down. The KL term pulls the policy back towards the frozen SFT model, harder the further it moves. The reward model does not change during RL.`,
+ s:`RLHF: over-optimization, KL, the loop`},
+{id:"E7", lec:"found", ex:true,
+ q:`In masked self-attention, the scores for later tokens are set to −∞ before the softmax. What is true?`,
+ o:[`The weights for later tokens come out as exactly 0`,`The weights in each row still add up to 1`,`Setting those weights to 0 after the softmax would give the same result`,`Because of the mask, training has to go through the tokens one after the other`], c:[0,1],
+ e:`e<sup>−∞</sup> = 0, so the softmax gives later tokens no weight and shares the whole 1 among the tokens up to here. Zeroing the weights after the softmax leaves rows that add up to less than 1. The mask is what lets training run every position at once: each sees exactly what it would see while generating.`,
+ s:`masked attention: the chain rule inside attention`},
+
+/* ───── Introduction to Generative AI ───── */
+{id:"I1", lec:"intro",
+ q:`A symbolic system uses one rule. What is true?`,
+ vis:`<div class="tokgrid"><span class="tok">∀x ( Horns(x) ∧ Udder(x) ∧ Hooves(x) ∧ Tail(x) → Cow(x) )</span></div>`,
+ o:[`For a dehorned cow, the rule concludes nothing`,`For a female goat, the rule concludes Cow`,`Leaving Horns out of the rule makes it right for every animal`,`The system learns the missing exception from the animals it sees`], c:[0,1],
+ e:`The dehorned cow fails Horns(c), so the rule stays silent; the goat has all four, so it is called a cow. Without Horns the dehorned cow is fixed, but the goat is still a cow. A symbolic system knows only what its rules say: each fix is another rule someone has to write.`,
+ s:`symbolic AI and the cow rule`},
+{id:"I2", lec:"intro",
+ q:`A random forest sorts e-mails into spam and not spam. It learned from a million e-mails that people labelled. What is true?`,
+ o:[`It is subsymbolic, although its trees split on rules`,`It is symbolic, because each split is a rule a person can read`,`Only neural networks count as subsymbolic`,`Its knowledge comes from examples, not from rules people wrote`], c:[0,3],
+ e:`Its splits, such as contains “winner”, were learned from the labelled e-mails, hundreds of trees of them, and none says on its own why an e-mail is spam. What makes a system subsymbolic is where its knowledge comes from, not whether it is a neural network.`,
+ s:`subsymbolic AI: where the knowledge comes from`},
+{id:"I3", lec:"intro",
+ q:`A network trained on cow photos taken mostly on green pastures fails to recognise a cow on a beach. What is true?`,
+ o:[`It may have learned that a cow comes with grass around it`,`The remedy is to show it cows in other places and train it again`,`The remedy is to find the rule about grass and change it`,`A subsymbolic model learns exactly the patterns its designers meant`], c:[0,1],
+ e:`A learned model picks up whatever pattern tells its examples apart, wanted or not. Its knowledge sits in parameters, not in rules anyone can read, so there is no rule to correct: it can only be corrected indirectly, by retraining on other data.`,
+ s:`limited interpretability and controllability`},
+{id:"I4", lec:"intro",
+ q:`Compare a symbolic and a subsymbolic system. What is true?`,
+ o:[`A symbolic system’s decisions can be followed from input to output`,`A subsymbolic system usually fails on cases nobody thought of beforehand`,`Both end up working with numbers`,`Generative AI sits on the symbolic side`], c:[0,2],
+ e:`Symbols and rules are human-readable, so the flow of a symbolic system can be followed. It is the symbolic system that usually fails on unforeseen cases; a subsymbolic one often handles them. Every AI system works with numbers in the end; subsymbolic ones skip the symbols. Generative AI lives entirely on the subsymbolic side.`,
+ s:`symbolic vs. subsymbolic`},
+{id:"I5", lec:"intro",
+ q:`One model should tell whether a photo shows a cow, another should draw new cows. What is true?`,
+ o:[`The first needs photos of cows and of things that are not cows`,`The first learns a decision boundary between the classes`,`The second learns only where cows end and other animals begin`,`The first can be trained well on cow photos alone`], c:[0,1],
+ e:`A discriminative model learns where cows end and everything else begins, so it has to see both sides; from cows alone, answering cow to every photo would be right every time. A generative model learns what cows look like overall, and for that cows are enough.`,
+ s:`generative vs. discriminative: the child and the art class`},
+{id:"I6", lec:"intro",
+ q:`A made-up joint distribution for a sensor on a farm. The sensor hears a moo. What is true?`,
+ vis:`<table class="vt"><tr><th>p(animal, sound)</th><th>moo</th><th>other sounds</th><th>sum</th></tr><tr><td>cow</td><td class="k">14 %</td><td>26 %</td><td>40 %</td></tr><tr><td>dog</td><td>1 %</td><td>29 %</td><td>30 %</td></tr><tr><td>cat</td><td>1 %</td><td>29 %</td><td>30 %</td></tr><tr><td>sum</td><td>16 %</td><td>84 %</td><td>100 %</td></tr></table>`,
+ o:[`p(cow | moo) ≈ 88 %`,`p(moo | cow) = 35 %`,`p(cow | moo) = p(moo | cow), by Bayes’ rule`,`p(cow) is 14 %`], c:[0,1],
+ e:`p(cow | moo) is the moo column divided by its sum, 0.14 / 0.16 ≈ 0.88. p(moo | cow) is the cow row divided by its sum, 0.14 / 0.40 = 0.35. Bayes’ rule turns one into the other with p(cow) / p(moo); they are not equal. p(cow) is the row sum, 40 %; 14 % is the joint p(cow, moo).`,
+ s:`joint, conditional and marginal probabilities`},
+{id:"I7", lec:"intro",
+ q:`X is the animal in front of a sensor, Y the sound it hears. What is true?`,
+ o:[`The marginal p(x) is the sum of p(x, y) over every y`,`Each row of the joint p(X, Y) adds up to 1`,`p(x, y) = p(x) · p(y | x)`,`p(y | x) is p(x, y) divided by p(y)`], c:[0,2],
+ e:`The marginal forgets Y by summing over it. All entries of the joint together add up to 1, not each row: a row adds up to the marginal p(x). The product rule builds the joint from a marginal and a conditional. p(y | x) divides by p(x), the row sum; dividing by p(y) gives p(x | y).`,
+ s:`product rule and Bayes’ rule`},
+{id:"I8", lec:"intro",
+ q:`What do discriminative and generative models learn?`,
+ o:[`A discriminative model learns p(Y | X)`,`A generative model on labelled data learns the joint p(X, Y)`,`A discriminative model’s boundary runs where the classes are equally likely`,`A generative model samples likely and unlikely data equally often`], c:[0,1,2],
+ e:`A discriminative model learns how likely each label is given the input, and its boundary runs where the classes are equally likely. A generative model learns the data’s own distribution, p(X), or p(X, Y) when labels are part of the data. It draws likely samples more often than unlikely ones.`,
+ s:`what each kind of model learns`},
+{id:"I9", lec:"intro",
+ q:`An autoregressive model generates a text token by token. What is true?`,
+ o:[`Each prediction conditions on every token before it, including tokens it generated itself`,`By predicting the next token, it indirectly models p(x) of the whole sequence`,`Each prediction also uses the tokens that come after it`,`It needs a separate model for every sequence length`], c:[0,1],
+ e:`The chain rule writes p(x<sub>1</sub>, …, x<sub>n</sub>) as a product of p(x<sub>t</sub> | x<sub>1</sub>, …, x<sub>t−1</sub>), and each factor is exactly what the model predicts. To generate, it appends the token it drew and predicts again: auto, “self”, because it predicts from its own output. Nothing after the current position is used.`,
+ s:`autoregression: the chain rule`},
+{id:"I10", lec:"intro",
+ q:`About byte-level byte-pair encoding, what is true?`,
+ o:[`No text is ever out of the vocabulary`,`A new text is encoded by merging its own most frequent pairs`,`A character too rare to be merged stays as its bytes`,`The whitespace belongs to the word before it`], c:[0,2],
+ e:`Every text is made of bytes, and all 256 bytes are in the vocabulary, so a rare character such as 牛 simply stays three bytes. A new text is encoded by applying the learned merges in the order they were learned, not by counting its own pairs. The whitespace belongs to the word after it, as in ·cow.`,
+ s:`text: byte-pair encoding`},
+{id:"I11", lec:"intro",
+ q:`Qwen3’s vocabulary has 151,669 tokens. What is true?`,
+ o:[`It starts with the 256 possible bytes`,`Every merge joins two single bytes`,`A merged unit can itself be merged again later`,`It contains a token for every word of its corpus`], c:[0,2],
+ e:`The vocabulary is 256 bytes, then 151,387 merges in the order they were learned, then 26 special tokens, such as the one for the end of a text. Merges build on earlier merges, so a token can be many bytes long. Words that never recur stay split into smaller units.`,
+ s:`text: the vocabulary`},
+{id:"I12", lec:"intro",
+ q:`A vision transformer cuts a picture into patches of 8 × 8 pixels. What is true?`,
+ o:[`A flattened RGB patch is 192 numbers`,`Every patch has its own learned matrix W`,`Where the patch was is added to its embedding`,`The codebook IDs 7554 and 7555 are close in meaning`], c:[0,2],
+ e:`8 · 8 pixels · 3 colours = 192 numbers. One matrix W, the same for every patch, turns them into the embedding, and the position, today by row and column, is added. An ID’s number means nothing in itself.`,
+ s:`pictures: patches`},
+{id:"I13", lec:"intro",
+ q:`When does a picture or a sound have to become codebook IDs, rather than staying vectors?`,
+ o:[`To understand it, for example to answer a question about a photo`,`To generate it token by token`,`To generate it with diffusion`,`Whenever a transformer reads it`], c:[1],
+ e:`An autoregressive model picks its next token from a vocabulary, so each vector is snapped to the nearest codebook entry and becomes an ID. To understand a picture or a sound, and for diffusion, the vectors are where it stops.`,
+ s:`patches, windows and codebooks`},
+{id:"I14", lec:"intro",
+ q:`EnCodec cuts 24,000 samples a second into windows of 320 and uses residual vector quantisation with eight codebooks of 1,024 entries. What is true?`,
+ o:[`That makes 75 windows and 600 IDs a second`,`Each further codebook quantises what the earlier ones still miss`,`That takes about as many bits a second as an MP3`,`The later codebooks carry most of what is said`], c:[0,1],
+ e:`24,000 / 320 = 75 windows, each with 8 IDs. Each ID is 10 bits, so 6 kilobits a second, where an MP3 takes 128. Every codebook works on the vector minus what was already matched. The first carries most of what is said; the later ones, how it sounds.`,
+ s:`sound: windows and residual vector quantisation`},
+{id:"I15", lec:"intro",
+ q:`How is a diffusion model trained?`,
+ o:[`It learns to predict the noise in a noisy example`,`The forward diffusion that adds the noise is learned too`,`Every training example gets a fresh noise level and fresh noise`,`It learns to remove all the noise in a single step`], c:[0,2],
+ e:`We take a real example, draw noise ourselves and mix the two at a random noise level. Because we drew the noise, the network’s guess can be compared with it. The forward noising is fixed: nothing in it is learned.`,
+ s:`diffusion: learning`},
+{id:"I16", lec:"intro",
+ q:`A diffusion model generates a picture from pure noise. What is true?`,
+ o:[`Each step moves only part of the way towards the current guess at the clean picture`,`From almost pure noise, the guess at the clean picture is a blur`,`The details are settled first, the coarse shape last`,`The sampler loop is a second network the model learns`], c:[0,1],
+ e:`From mostly noise, the best guess is an average of every picture that could lie under it, so each step goes only a little way and the next guess can be sharper. The coarse shape comes first, the details last. The sampler is a loop run around the network, not something it learns.`,
+ s:`diffusion: generating`},
+{id:"I17", lec:"intro",
+ q:`About diffusion across modalities, what is true?`,
+ o:[`For text, the noise is masking: the noisier, the more tokens are masked`,`Stable Diffusion adds noise to a compressed latent, not to the pixels`,`Diffusion works only on continuous data`,`For DNA, a base that is pure noise is uniform over A, C, G and T`], c:[0,1,3],
+ e:`What noise is depends on the data: Gaussian noise for pictures, sound and video, masks for text, a probability over the four bases for DNA. Like autoregression, diffusion is not tied to one modality.`,
+ s:`diffusion: all at once`},
+{id:"I18", lec:"intro",
+ q:`Autoregression vs. diffusion. What is true?`,
+ o:[`Autoregression makes the output piece by piece; diffusion changes every part in every step`,`Both can be used for pictures, sound and text`,`A diffusion model generates the tiles of a picture in reading order`,`Today’s diffusion samplers typically need about 1,000 steps`], c:[0,1],
+ e:`An autoregressive model predicts each piece from the ones before it. A diffusion model starts with the whole output as noise and makes all of it a little less noisy each step. The original models took 1,000 steps; today’s samplers typically need 20 to 50.`,
+ s:`autoregression vs. diffusion`},
+
+/* ───── Theoretical Foundations of Language Modelling ───── */
+{id:"F1", lec:"found",
+ q:`Which part of a decoder-only transformer answers which question?`,
+ o:[`Embeddings: what each token means on its own`,`Attention: how the tokens relate`,`Positional encoding: what the world knows`,`Feed forward: where each token stands`], c:[0,1],
+ e:`Positional encoding says where each token stands, and the feed forward holds what the world knows, such as Paris after “The Eiffel Tower is in”. Linear and softmax finally turn the result into a probability for every token of the vocabulary.`,
+ s:`conceptual components`},
+{id:"F2", lec:"found",
+ q:`Qwen3-0.6B’s embedding table has 151,936 rows of 1,024 numbers. What is true?`,
+ o:[`A token’s ID picks its row of the table`,`It has a few more rows than tokens, padded to a multiple of 128`,`·bank has one row for money and another for river`,`Its numbers are set by hand before training`], c:[0,1],
+ e:`The table is a learned matrix with one row per token ID: 151,669 tokens, padded to 151,936. ·bank has a single row for both meanings; which one is meant is left to attention.`,
+ s:`embeddings: the lookup table`},
+{id:"F3", lec:"found",
+ q:`In Qwen3’s embedding table, the row nearest to king − man + woman is ·queen’s. What is true?`,
+ o:[`Similar words end up close together during training`,`Some directions come to stand for relations, such as man to woman`,`The arithmetic works because the vectors were designed that way`,`The dot product of two embeddings tells attention how relevant one token is to another`], c:[0,1],
+ e:`Word2vec showed that during training similar words move close together and some directions come to represent relations; today’s tables behave the same way. Nobody designs it. On embeddings, the dot product measures similarity, which is the wrong question for attention; that is why queries and keys exist.`,
+ s:`embeddings: near means similar`},
+{id:"F4", lec:"found",
+ q:`purple and spotted both describe how a cow looks. Why does attention not compare the embeddings directly?`,
+ o:[`Their embeddings are similar, yet purple changes a cow’s meaning much more`,`Similarity is not the same as relevance`,`W<sup>Q</sup> and W<sup>K</sup> are fixed random projections`,`Embeddings cannot be compared with a dot product`], c:[0,1],
+ e:`spotted is what we already expect of a cow, so it hardly changes it. Two learned matrices carry each token into a query, what it looks for, and a key, what it offers, so that relevant tokens line up there. Embeddings can be compared with a dot product; it just measures similarity.`,
+ s:`how much: queries and keys`},
+{id:"F5", lec:"found",
+ q:`In attention, what does each part decide?`,
+ o:[`Queries and keys decide how much one token shifts another`,`The values decide how a token shifts the others`,`The values decide how far each token is moved`,`In most transformers the value is the embedding, unchanged`], c:[0,1],
+ e:`v<sub>purple</sub> moves a car, a cow and a flower in the same direction; how far it moves each one is the attention weight’s job. Most transformers learn a third matrix, W<sup>V</sup>, for the values rather than using the embeddings.`,
+ s:`how: values`},
+{id:"F6", lec:"found",
+ q:`Four tokens, d<sub>k</sub> = 64. What is true about Q K<sup>⊤</sup>?`,
+ o:[`It has one score for every pair of tokens, 4 × 4`,`Entry (i, j) says how much token j matters to token i`,`It has 64 × 64 entries`,`Its rows already add up to 1`], c:[0,1],
+ e:`Row i of Q meets column j of K<sup>⊤</sup> in one score, so n tokens give n × n scores. Scores can be any real numbers; only softmax turns each row into weights that add up to 1.`,
+ s:`attention in matrices`},
+{id:"F7", lec:"found",
+ q:`Softmax turns a row of attention scores into weights. What is true?`,
+ o:[`A score 1 higher gets about 2.7 times the weight`,`A negative score gets a weight of exactly 0`,`A higher score always gets a larger weight`,`Dividing every score by 8 can change which token gets the most weight`], c:[0,2],
+ e:`softmax(s)<sub>j</sub> = e<sup>s<sub>j</sub></sup> / Σ<sub>i</sub> e<sup>s<sub>i</sub></sup>: every weight is positive, and the ratio of two weights is e to the difference of their scores. Dividing by a positive number keeps the order of the scores, so the top token stays on top.`,
+ s:`attention scores and weights`},
+{id:"F8", lec:"found",
+ q:`·cow’s attention scores against four tokens, with d<sub>k</sub> = 64. What is true?`,
+ vis:`<table class="vt"><tr><th>token</th><th>score</th></tr><tr><td>The</td><td>4</td></tr><tr><td>·small</td><td>22</td></tr><tr><td>·purple</td><td>36</td></tr><tr><td>·cow</td><td>30</td></tr></table>`,
+ o:[`Without scaling, ·purple gets nearly all the weight`,`After dividing by 8, ·purple still gets the most weight`,`After dividing by 8, every token gets 25 %`,`Without scaling, ·cow gets the most weight because it is the token itself`], c:[0,1],
+ e:`Unscaled, ·purple leads by 6, so it gets e<sup>6</sup> ≈ 400 times ·cow’s share: nearly 100 %. Divided by √64 = 8, the gap is 0.75, and the shares become about 60, 28, 10 and 1 %. The order stays; the weights only spread out.`,
+ s:`softmax, and why the scores are scaled`},
+{id:"F9", lec:"found",
+ q:`What does attention hand on for each token?`,
+ o:[`The weighted sum Σ<sub>j</sub> α<sub>ij</sub> v<sub>j</sub> of the values`,`For n tokens, an n × n matrix`,`A result that, in the block, is added to the token’s vector`,`Only the value with the highest weight`], c:[0,2],
+ e:`softmax(Q K<sup>⊤</sup> / √d<sub>k</sub>) V has one row per token: every value counts as much as its weight says. The n × n matrix is the weights, an intermediate step. The residual connection then adds the result to the token’s vector, x + Attention(x).`,
+ s:`attention: output`},
+{id:"F11", lec:"found",
+ q:`The original transformer has d<sub>model</sub> = 512 and h = 8 heads. What is true?`,
+ o:[`Each head works on d<sub>k</sub> = 64 columns`,`The heads’ results are joined and projected by W<sup>O</sup>`,`Each head attends over all 512 dimensions`,`Eight heads need eight times the W<sup>Q</sup>, W<sup>K</sup>, W<sup>V</sup> weights of one 512-wide head`], c:[0,1],
+ e:`W<sup>Q</sup>, W<sup>K</sup> and W<sup>V</sup> are d<sub>model</sub> wide, and their results are cut into h slices of d<sub>model</sub> / h columns. So the heads split the same weights; each asks its own kind of question, and W<sup>O</sup> projects their joined results.`,
+ s:`multi-head attention`},
+{id:"F13", lec:"found",
+ q:`About absolute positions, what is true?`,
+ o:[`A learned position table cannot read a text longer than its rows`,`Sinusoidal positions need nothing learned and exist for any position`,`In the sinusoidal encoding, the first dimensions change most slowly`,`Sinusoidal positions hand attention the distance between two tokens directly`], c:[0,1],
+ e:`The smallest GPT-2 has 1,024 learned rows and no notion of positions it never saw. The sinusoidal waves are fast in the first dimensions and slower in later ones. The distance is contained in X + PE, but the model has to learn to read it.`,
+ s:`absolute positions`},
+{id:"F14", lec:"found",
+ q:`In the sinusoidal encoding, PE<sub>(pos, 2i)</sub> = sin(pos / 10000<sup>2i/d</sup>) and PE<sub>(pos, 2i+1)</sub> = cos(pos / 10000<sup>2i/d</sup>). What is true?`,
+ o:[`Each sine–cosine pair of the same speed is a point on a circle`,`Going k positions further turns that point by an angle that depends only on k`,`The position vector is concatenated to the token’s embedding`,`The position vector replaces the token’s embedding`], c:[0,1],
+ e:`Because each pair turns at a fixed speed, a step of k positions is the same rotation wherever it starts, so distances are contained in the position vectors. The vector is added to the embedding: X + PE.`,
+ s:`absolute positions: sinusoidal waves`},
+{id:"F15", lec:"found",
+ q:`About relative positional encodings, what is true?`,
+ o:[`A matrix B with one number per distance is added to Q K<sup>⊤</sup> before the softmax`,`B is the same all along each diagonal`,`ALiBi learns one number per distance for every head`,`They are added to the token embeddings, like absolute positions`], c:[0,1],
+ e:`Relative positions skip the embeddings and change the scores. T5 learns its numbers per head; ALiBi learns nothing and simply lowers a score in proportion to the distance, so far-away tokens count less.`,
+ s:`relative positions`},
+{id:"F16", lec:"found",
+ q:`About rotary positions (RoPE), what is true?`,
+ o:[`They turn pairs of numbers in each query and key by an angle that grows with the position`,`The score of a query and a key then depends on how far apart they are, not where`,`Their speeds are learned during training`,`They add a position vector to each token’s embedding`], c:[0,1],
+ e:`At position m a pair turns by mθ. Turn both query and key by their own positions, and the angle between them changes only with their distance: ·cow at 2 and ·says at 3 meet at the same angle as at 12 and 13. The speeds are fixed before training.`,
+ s:`rotary positions`},
+{id:"F17", lec:"found",
+ q:`RoPE pair i turns θ<sub>i</sub> = b<sup>−2(i−1)/d</sup> radians a position. Llama 2 has b = 10,000 and d = 128. What is true?`,
+ o:[`The fastest pair turns 1 radian a position`,`With a single speed of 1 radian, position 44 would look almost like position 0`,`The slowest pair goes round about every 6 positions`,`Each pair is about 8 times slower than the one before`], c:[0,1],
+ e:`For i = 1, θ = 1: it goes round every 2π ≈ 6 positions, and 44 is almost exactly 7 turns. The slowest pair turns 0.0001 radians and goes round about every 54,000 positions. Each pair is 0.87 times as fast as the one before, so every scale of distance has pairs that tell it apart, like a clock’s hands.`,
+ s:`rotary positions: many speeds`},
+{id:"F18", lec:"found",
+ q:`Llama 2 was trained on 4,096 positions. What is true about longer texts?`,
+ o:[`Past 4,096, its slow pairs reach angles the model has never seen`,`Position interpolation halves every θ, so 8,192 positions fit the angles seen in training`,`YaRN stretches the fast pairs and leaves the slow ones`,`Newer models start with a smaller base b`], c:[0,1],
+ e:`YaRN does the opposite: it stretches only the slow pairs, because the fast ones have seen every angle anyway. Newer models start with a larger base, 500,000 in Llama 3 and 1,000,000 in Qwen3, which makes the slow pairs slower still.`,
+ s:`rotary positions: how long a text the model can read`},
+{id:"F19", lec:"found",
+ q:`After “The Eiffel Tower is in”, Qwen3-0.6B-Base puts 75 % on ·Paris. What is true?`,
+ o:[`No token of the text says Paris, so attention alone cannot supply it`,`This knowledge is thought to sit mostly in the feed forward`,`The feed forward passes information between tokens`,`The feed forward widens each vector, usually to about 4 · d<sub>model</sub>, then narrows it back`], c:[0,1,3],
+ e:`Attention only combines what the tokens hold. The feed forward works on each token alone, the same network for every token: up, ReLU, and back down. Its first layer can be read as keys that recognise patterns, its second as the values written back.`,
+ s:`feed forward: what the world knows`},
+{id:"F20", lec:"found",
+ q:`A block has d<sub>model</sub> = 512 and d<sub>ff</sub> = 2,048, with no biases. What is true?`,
+ o:[`Attention’s W<sup>Q</sup>, W<sup>K</sup>, W<sup>V</sup> and W<sup>O</sup> hold about 1.05 million weights`,`The feed forward holds about 2.1 million weights`,`Attention holds most of the block’s weights`,`Attention’s weights grow with the length of the text`], c:[0,1],
+ e:`Attention: 4 · 512² = 1,048,576. Feed forward: 2 · 512 · 2,048 = 2,097,152, twice as many. Neither depends on the number of tokens; only the scores do.`,
+ s:`feed forward: most of a block’s weights`},
+{id:"F21", lec:"found",
+ q:`About layer norm, what is true?`,
+ o:[`It subtracts the mean of a token’s vector and divides by its spread`,`Two learned vectors, γ and β, scale and shift the result back`,`It normalises each feature across all the tokens of the batch`,`RMSNorm, which Qwen3 uses, also subtracts the mean`], c:[0,1],
+ e:`Layer norm works on each token’s d numbers, so every part gets its input in a steady range however deep the stack; ε keeps it from dividing by 0. RMSNorm skips the mean.`,
+ s:`Add & Norm: layer norm`},
+{id:"F22", lec:"found",
+ q:`About the residual connection, what is true?`,
+ o:[`Each part adds its result to the token’s vector, x + Attention(x)`,`Each part only has to learn a correction`,`The residual stream is where tokens exchange information`,`Qwen3 normalises after each part, as the original transformer does`], c:[0,1],
+ e:`Each token’s vector runs straight up through the model and every part writes a change into it, which also gives the gradient a straight path down. Only attention mixes tokens. Qwen3 normalises before each part instead of after it.`,
+ s:`Add & Norm: the residual stream`},
+{id:"F23", lec:"found",
+ q:`After the last decoder block come a linear layer and a softmax. What is true?`,
+ o:[`In training, every row predicts the token after it`,`In generation, only the last row’s distribution is used`,`The last block hands on a different shape from what went into the first`,`In Qwen3-0.6B, this linear layer has its own matrix, separate from the embedding table`], c:[0,1],
+ e:`The blocks hand on n vectors of d<sub>model</sub> numbers, the same shape they got. The linear layer turns each into logits over the vocabulary, and softmax into a distribution. In Qwen3-0.6B the matrix is the embedding table itself, used the other way round.`,
+ s:`linear and softmax: what comes next`},
+{id:"F24", lec:"found",
+ q:`About stacking decoder blocks, what is true?`,
+ o:[`Each block has its own weights`,`Each block has attention and a feed forward, each followed by Add & Norm`,`Only the first block uses masked attention`,`Each block makes the sequence of vectors shorter`], c:[0,1],
+ e:`A model stacks N blocks of masked multi-head attention and feed forward, each with its Add & Norm. Every block takes n vectors of d<sub>model</sub> numbers and hands on the same shape.`,
+ s:`decoder blocks`},
+
+/* ───── Training Paradigms I ───── */
+{id:"T1", lec:"tp1",
+ q:`What did Kaplan et al.’s scaling laws show?`,
+ o:[`On log-log axes, the loss falls along a straight line as compute grows`,`For each model size, more tokens help until the curve flattens`,`A bigger model flattens out after fewer tokens than a small one`,`More parameters keep helping even when too little data holds them back`], c:[0,1],
+ e:`Compute, data and parameters each lower the loss as long as the other two don’t hold it back. A bigger model can make use of more tokens before its curve flattens.`,
+ s:`scaling laws`},
+{id:"T2", lec:"tp1",
+ q:`What did Hoffmann et al. (Chinchilla) find?`,
+ o:[`For every compute budget there is a best model size, the bottom of a valley`,`Parameters and tokens should grow at almost the same rate with compute`,`Ten times the compute should go mostly into ten times the parameters`,`Compute-optimal training uses about 2 tokens per parameter`], c:[0,1],
+ e:`Too small a model can’t take in what the data offers; too big a model runs out of budget after too few tokens. N<sub>opt</sub> ∝ C<sup>0.49</sup> and D<sub>opt</sub> ∝ C<sup>0.51</sup>, so ten times the compute buys about three times each, and the ratio stays at about 20 tokens per parameter.`,
+ s:`compute optimality`},
+{id:"T3", lec:"tp1",
+ q:`40,000 H100-hours, a peak of 989 TFLOP/s in bf16, and an MFU of 35 %. What is true?`,
+ o:[`One H100-hour gives about 1.23 · 10<sup>18</sup> useful FLOPs`,`The budget is about 4.9 · 10<sup>22</sup> FLOPs`,`The spec sheet’s 1,979 TFLOP/s is the right peak to use`,`MFU is the share of time the GPU waits for data and the other GPUs`], c:[0,1],
+ e:`989 · 10<sup>12</sup> · 3,600 ≈ 3.56 · 10<sup>18</sup> at peak; 35 % of that is 1.23 · 10<sup>18</sup>, and 40,000 hours give 4.9 · 10<sup>22</sup>. The 1,979 assumes half of every weight matrix is zeros in a fixed pattern. MFU is the share the GPU does compute; the rest it waits.`,
+ s:`step 1: from GPU-hours to FLOPs`},
+{id:"T4", lec:"tp1",
+ q:`C ≈ 6 · N · D, and the budget is 4.9 · 10<sup>22</sup> FLOPs. What is true?`,
+ o:[`At 20 tokens per parameter, C ≈ 20 · N²`,`The compute-optimal model has about 20B parameters`,`2B parameters on 4T tokens cost about the same compute`,`2B parameters on 4T tokens reach the lowest loss for this budget`], c:[1,2],
+ e:`With D ≈ 20 N, C ≈ 6 · N · 20 N = 120 N², so N ≈ √(C / 120) ≈ 20B, on 0.4T tokens. 6 · 2 · 10<sup>9</sup> · 4 · 10<sup>12</sup> ≈ 4.8 · 10<sup>22</sup>: the same compute, but about 4 % above the best loss.`,
+ s:`step 2: parameters and tokens`},
+{id:"T5", lec:"tp1",
+ q:`The pilot takes 2B parameters on 4T tokens instead of the compute-optimal 20B on 0.4T. Why?`,
+ o:[`Post-training, evaluation and serving then each cost about a tenth`,`The loss is only about 4 % above the best`,`It needs less training compute than the 20B model`,`Training past the compute-optimal point is rare in practice`], c:[0,1],
+ e:`Every split of the budget costs the same training compute; only the loss differs, and the valley is shallow near its bottom. A ten times smaller model is cheaper everywhere afterwards. Over-training is common: DeepSeek-V3 saw about 400 tokens per active parameter.`,
+ s:`five ways to spend the same compute`},
+{id:"T6", lec:"tp1",
+ q:`How should a 2B model be shaped?`,
+ o:[`The loss barely changes while d divided by the number of blocks stays between about 20 and 250`,`d = 2,048 with 24 blocks lies inside that range`,`The width of a model is its number of decoder blocks`,`Inside that range, the losses of the candidate shapes differ by about 20 %`], c:[0,1],
+ e:`2,048 / 24 ≈ 85. Width is the embedding dimension d, depth the number of blocks. Inside the range, Kaplan et al.’s losses differ by about 1 % at most, and d is kept a multiple of the 128-wide heads.`,
+ s:`step 3: width and depth`},
+{id:"T7", lec:"tp1",
+ q:`A mixture of experts with 2B active and 30B total parameters. What is true?`,
+ o:[`A router picks a few experts for each token`,`It costs about the FLOPs per token of a 2B dense model`,`Only the active experts have to sit in memory`,`The shared expert runs only for tokens the router sends to it`], c:[0,1],
+ e:`The router sends each token to 8 of 256 experts, and one shared expert runs for every token. The trade is compute against memory: all 30B parameters, 60 GB in bf16, have to be in memory, because the next token may need any of them.`,
+ s:`step 4: expert sparsity`},
+{id:"T8", lec:"tp1",
+ q:`About designing a mixture of experts, what is true?`,
+ o:[`Experts have become finer since Mixtral`,`In OLMoE, going from 32 to 64 experts helped far more than going from 8 to 32`,`In Kimi K2, higher sparsity needed less compute for the same loss`,`Frontier models today keep about 4 times as many experts as are active`], c:[0,2],
+ e:`Mixtral’s experts were 3.5 · d wide; most since DeepSeek-V2 are a quarter to half of d. Finer helps, but less and less: OLMoE gained about 10 % from 8 to 32 and only 1 to 2 % from 32 to 64. Frontier sparsities today are 32 to 64.`,
+ s:`the experts in three steps`},
+{id:"T9", lec:"tp1",
+ q:`The same text needs 7.2 times the tokens in Greek as in English with GPT-2’s tokenizer, and 1.9 times with EuroLLM’s. What is true?`,
+ o:[`More tokens means more compute and a higher price per page`,`More tokens means less of the text fits into the context window`,`A bigger vocabulary always serves every language better`,`The size of the vocabulary matters more than the corpus it was learned on`], c:[0,1],
+ e:`EuroLLM’s 128k vocabulary is smaller than Qwen3’s 152k and still better for every EU language. What matters is the corpus a tokenizer was learned on.`,
+ s:`what a language costs`},
+{id:"T10", lec:"tp1",
+ q:`The pilot has d = 2,048 and 2B active parameters. What does a vocabulary of about 150k cost?`,
+ o:[`2 · V · d weights, for the embedding and the output layer`,`About 30 % of the pilot’s parameters`,`About 30 % for a 70B-active model with d = 7,168, too`,`Nothing lasting: the tokenizer can be swapped after training`], c:[0,1],
+ e:`2 · 150,000 · 2,048 ≈ 0.61B of 2B. For a 70B-active model it is about 3 %, so a large vocabulary is cheap there. A tokenizer can’t be changed once a model has been trained on it.`,
+ s:`what a vocabulary costs`},
+{id:"T11", lec:"tp1",
+ q:`About getting images into a language model, what is true?`,
+ o:[`The adapter route joins a vision encoder trained elsewhere to a finished language model through a projector`,`The route without an encoder sends patches through one linear layer into the model`,`Most frontier models use the route without an encoder`,`Kimi K2.5 did best adding many images late in training`], c:[0,1],
+ e:`The encoder-free route is the simplest and the least tested; no frontier model uses it yet. Kimi K2.5 did best with images early and a little at a time, on images and on text.`,
+ s:`images`},
+{id:"T12", lec:"tp1",
+ q:`About what attention costs, what is true?`,
+ o:[`Twice the tokens make four times the scores`,`At 4,096 tokens, attention adds about 10 % to the pilot’s compute per token`,`FlashAttention makes the compute of attention linear in the length`,`FlashAttention computes an approximation of attention`], c:[0,1],
+ e:`Attention adds about 6 · L · n · d FLOPs per token to the 6 N of the weights. FlashAttention works in tiles that fit on-chip, never stores the n × n scores, and gets exactly the same result: the memory is no longer quadratic, the compute still is.`,
+ s:`what attention costs`},
+{id:"T13", lec:"tp1",
+ q:`The pilot’s KV cache takes 2 · L · h · d<sub>head</sub> · 2 bytes per token. What is true?`,
+ o:[`One 2 is for the key and the value, the other for 2 bytes per bf16 number`,`For a million tokens, it is about 206 GB for one conversation`,`It grows with the model’s size but not with the length of the text`,`Generation is limited mainly by compute, not by memory`], c:[0,1],
+ e:`2 · 24 · 16 · 128 · 2 = 196,608 bytes per token, so the cache grows with every token. Every new token has to read all of it: at 3.35 TB/s, 206 GB take about 62 ms before any arithmetic. Generation is bound by memory.`,
+ s:`the KV cache`},
+{id:"T15", lec:"tp1",
+ q:`Llama 3 8B has 32 query heads and 8 key–value heads. What is true?`,
+ o:[`It uses grouped-query attention`,`Its KV cache is 4 times smaller than with multi-head attention`,`Its KV cache is 8 times smaller than with multi-head attention`,`Multi-query attention would keep 8 key–value heads`], c:[0,1],
+ e:`With g groups, the cache is h / g times smaller: 32 / 8 = 4. Multi-query attention lets all query heads share a single key and value, which shrinks the cache most but costs noticeable quality.`,
+ s:`fewer keys and values: grouped-query attention`},
+{id:"T16", lec:"tp1",
+ q:`About multi-head latent attention (MLA), what is true?`,
+ o:[`It caches a small latent per token instead of keys and values`,`The keys are never actually rebuilt: W<sup>UK</sup> folds into the query’s projection`,`RoPE fits into this folding without any change`,`It keeps fewer tokens in the cache`], c:[0,1],
+ e:`q<sub>t</sub> (c<sub>j</sub> W<sup>UK</sup>)<sup>⊤</sup> = (q<sub>t</sub> W<sup>UK⊤</sup>) c<sub>j</sub><sup>⊤</sup>, so the query meets the cached latents directly. RoPE’s rotation sits between query and key, so DeepSeek adds a separate 64-number rotary key. MLA keeps every token but makes each smaller: 512 + 64 = 576 numbers per block.`,
+ s:`a small latent: multi-head latent attention`},
+{id:"T17", lec:"tp1",
+ q:`About the ways to shrink the KV cache, what is true?`,
+ o:[`A sliding window keeps only the most recent tokens`,`Linear attention keeps a cache that grows more slowly than full attention’s`,`MiniMax-M2 found hybrids that reliably match full attention`,`Frontier models use one cheap kind of attention in every block`], c:[0],
+ e:`Linear attention keeps no growing cache at all, only a state of fixed size that every token updates. MiniMax-M2 went back to full attention because no variant reliably matched it. The frontier mixes: a few blocks with full attention and many cheap ones, such as Olmo 3’s window in three of every four blocks.`,
+ s:`four ways to shrink the cache`},
+{id:"T18", lec:"tp1",
+ q:`How is raw web data cleaned?`,
+ o:[`Cheap heuristics drop pages that are too short or repeat the same line`,`Near-duplicates are kept, since they differ in a word or a date`,`A footer repeated on thousands of pages is cut from each page`,`Classifiers drop every page about certain topics`], c:[0,2],
+ e:`Heuristic filters come first, then deduplication: exact and near copies keep one, and repeated passages are cut while the pages stay. Then small models give each page a topic and a quality score, so the mix can draw more from the good pages of each topic.`,
+ s:`cleaning`},
+{id:"T19", lec:"tp1",
+ q:`About decontamination, what is true?`,
+ o:[`Benchmark questions are taken out of the training data before training`,`Pages are found by runs of words they share with a benchmark, in the same order`,`It is done by removing the benchmark from the model after training`,`A contaminated benchmark tells us more about reasoning`], c:[0,1],
+ e:`DeepSeekMath drops any page that shares a run of 10 words with a benchmark. A model that saw the answer may recall it, and then its score no longer says whether it can reason.`,
+ s:`decontamination`},
+{id:"T20", lec:"tp1",
+ q:`How does Olmo 3 choose its data mix?`,
+ o:[`It trains a swarm of small models on random mixes`,`A regression predicts each task’s score from the mix`,`Scarce data such as maths may be repeated as often as needed`,`The best mix is derived exactly before any training`], c:[0,1],
+ e:`30M-parameter models each train on a different random mix of 3B tokens. The best predicted mix is then limited by what exists: no source should be repeated more than four to seven times.`,
+ s:`the mix`},
+{id:"T21", lec:"tp1",
+ q:`How are documents turned into training rows?`,
+ o:[`Each ends with an end-of-text token, and all are joined and cut into rows of equal length`,`A document may start in one row and end in the next`,`Every lab pads each document to its own row`,`A row never holds more than one document`], c:[0,1],
+ e:`This is packing. Padding fills the rest of each row with a token nothing is learned from, which can waste half a batch, so every lab packs.`,
+ s:`from documents to training rows`},
+{id:"T22", lec:"tp1",
+ q:`Qwen2.5-VL puts a 448 × 448 picture into a text. What is true?`,
+ vis:`<div class="tokgrid"><span class="tok">&lt;|vision_start|&gt;</span><span class="tok hl">&lt;|image_pad|&gt;<small>× 256</small></span><span class="tok">&lt;|vision_end|&gt;</span></div>`,
+ o:[`It takes 256 slots, one per 28 × 28 pixels`,`The vision encoder’s vectors overwrite the placeholders’ embeddings`,`The model is trained to predict the &lt;|image_pad|&gt; tokens`,`Every 14 × 14 patch gets its own slot`], c:[0,1],
+ e:`Patches are 14 × 14 pixels, and 2 × 2 of them make one slot: 16 × 16 = 256 slots. The placeholders all get the same vector from the table, which the encoder’s outputs replace before the first block. Their labels are −100, so the loss skips them.`,
+ s:`images as tokens`},
+{id:"T23", lec:"tp1",
+ q:`A batch is 1,024 rows of 4,096 tokens. Where do the targets come from?`,
+ o:[`They are the inputs shifted by one`,`A row of 4,097 tokens gives 4,096 inputs and 4,096 targets`,`People write them for each row`,`Only the last token of each row is a target`], c:[0,1],
+ e:`The target of every token is the token after it, so the text is its own label, at every position at once. That is why language models can learn from so much text.`,
+ s:`batch: inputs and targets`},
+{id:"T24", lec:"tp1",
+ q:`Qwen3-0.6B-Base gives each token of “The cow says moo” this probability, given the tokens before it. What is true?`,
+ vis:`<table class="vt"><tr><th>token</th><th>p</th></tr><tr><td>The</td><td>0.033</td></tr><tr><td>·cow</td><td>0.000024</td></tr><tr><td>·says</td><td>0.0014</td></tr><tr><td>·moo</td><td>0.0019</td></tr></table>`,
+ o:[`·cow carries the biggest loss`,`The losses add up to −ln of the whole sentence’s probability`,`The is the most surprising token`,`A token with probability 1 would have a loss of 1`], c:[0,1],
+ e:`The loss is −ln p: 3.41, 10.66, 6.56 and 6.27, together 26.9. By the chain rule, their sum is −ln of the product of the probabilities. Sure and right gives a loss of 0.`,
+ s:`loss`},
+{id:"T25", lec:"tp1",
+ q:`About the loss during pre-training, what is true?`,
+ o:[`An untrained model over 151,936 tokens starts at a loss of about 11.9`,`Each step’s gradient comes from its own batch alone`,`The batch losses of all steps are added up into the gradient`,`A higher loss means the model was surer of the right token`], c:[0,1],
+ e:`Spread evenly, p = 1 / 151,936, and −ln p ≈ 11.9. The 4.2 million losses of a batch are averaged into one number; each batch loss is one point on the loss curve, not added across steps.`,
+ s:`loss`},
+{id:"T26", lec:"tp1",
+ q:`About loss spikes and gradient clipping, what is true?`,
+ o:[`Clipping scales the whole gradient down when it is longer than a threshold, usually 1.0`,`Clipping changes the direction of the step`,`PaLM’s spikes came from bad data alone`,`Attention scores that grow until softmax puts everything on one token are one known cause`], c:[0,3],
+ e:`The gradients of all weights form one long vector; clipping shortens it, so the step goes in the same direction, only not as far. Replayed from another checkpoint, PaLM’s batches gave no spike: it took a batch meeting a particular state.`,
+ s:`backward`},
+{id:"T27", lec:"tp1",
+ q:`How is one training step split over many GPUs?`,
+ o:[`Data parallel: every GPU has the whole model and its own rows, and the gradients are averaged`,`Tensor parallel: the same rows, every layer cut into slices, partial results summed`,`Pipeline parallel: every GPU holds the whole model`,`The pilot’s 30B parameters fit plain data parallelism on 80 GB GPUs`], c:[0,1],
+ e:`Pipeline parallel puts layers on different GPUs and passes activations forward and gradients back. With gradients and AdamW’s state, the 30B parameters take about 480 GB, so FSDP, which splits the storage, plus expert parallelism is a reasonable start.`,
+ s:`one step on many GPUs`},
+{id:"T28", lec:"tp1",
+ q:`Every weight moves by θ ← θ − η<sub>t</sub> · Δ<sub>t</sub>. What is true?`,
+ o:[`The optimiser makes Δ<sub>t</sub>, smoothing recent gradients and sizing each weight’s step`,`The scheduler sets the learning rate η<sub>t</sub>`,`The learning rate usually stays constant through the run`,`The learning rate starts at its highest and only falls`], c:[0,1],
+ e:`AdamW adds momentum and sizes each step by how large that weight’s gradients have been. The rate warms up, stays high for most of the run and falls at the end, as in cosine or warmup–stable–decay.`,
+ s:`the update`},
+{id:"T29", lec:"tp1",
+ q:`In the training loop, inputs = batch[:, :-1] and targets = batch[:, 1:], and image slots get −100. What is true?`,
+ o:[`The inputs drop the last token, the targets the first`,`The loss skips positions whose target is −100`,`Clipping runs before loss.backward()`,`The model is saved and tested after every step`], c:[0,1],
+ e:`Backward gives the gradients, clipping caps them at 1.0, the schedule sets the rate and the optimiser steps. The model is saved and tested every 1,000 steps or so.`,
+ s:`the loop`},
+
+/* ───── Training Paradigms II ───── */
+{id:"M1", lec:"tp2",
+ q:`Why does the learning rate fall to zero at the end of pre-training?`,
+ o:[`A high rate crosses the slope fast but bounces between the walls of the valley`,`Only as the rate falls do the weights settle at the bottom`,`A small rate from the start would reach the bottom faster`,`It made no measurable difference for OLMo 2 7B`], c:[0,1],
+ e:`A small rate gets caught in the first dip. On the same data, letting the rate decay alone gave OLMo 2 7B 4.4 more points, from 69.6 to 74.0.`,
+ s:`cooling the learning rate down`},
+{id:"M2", lec:"tp2",
+ q:`Olmo 3 7B was mid-trained on 100B tokens after about 5.9T in pre-training. What is true?`,
+ o:[`The last tokens a model reads have the most impact`,`Code and maths take a larger share than in pre-training`,`The web share grows in mid-training`,`Mid-training uses the same mix as pre-training`], c:[0,1],
+ e:`The best data is kept for the end. Web falls from 76 % to 28 %, code rises to 20 % and maths to 19 %, and reasoning and Q&A appear for the first time.`,
+ s:`finishing on the best data`},
+{id:"M3", lec:"tp2",
+ q:`Why do thinking traces go into mid-training?`,
+ o:[`Reinforcement learning can only reward what the model already does now and then`,`They give later reinforcement learning something to reinforce`,`Reinforcement learning then teaches reasoning the model has never produced`,`They make the model stop writing out its reasoning`], c:[0,1],
+ e:`After mid-training the model sometimes reasons step by step, and those answers tend to be right. RL rewards correct answers, making them more common and longer.`,
+ s:`finishing on the best data: thinking traces`},
+{id:"M4", lec:"tp2",
+ q:`Olmo 3 7B is pre-trained on rows of 8,192 tokens, and its RoPE pair 48 turns at most 31° in a row. What is true?`,
+ o:[`In a row eight times as long, pair 48 would reach about 245°, an angle it never saw`,`Its slow pairs never complete a turn within a training row`,`Making the slow pairs faster from the start would solve it`,`Training on long rows with the angles simply extended works well`], c:[0,1],
+ e:`Faster slow pairs would complete turns and give distant positions the same angle. Training on long rows with extended angles grew LLaMA’s usable context from 2,048 to only 2,560 tokens.`,
+ s:`stretching the positions`},
+{id:"M5", lec:"tp2",
+ q:`About position interpolation and YaRN, what is true?`,
+ o:[`Position interpolation turns every pair slower by the stretch factor`,`Position interpolation makes neighbouring tokens harder to tell apart`,`YaRN slows the fast pairs most`,`YaRN flattens the softmax to spread attention over more tokens`], c:[0,1],
+ e:`Squeezing the fast pairs too moves neighbours closer together. YaRN slows only the slow pairs and leaves the fast ones, and it sharpens attention a little, multiplying the scores by about 1.46 for a factor of 8, because more tokens make the softmax flatter.`,
+ s:`stretching the positions: interpolation and YaRN`},
+{id:"M6", lec:"tp2",
+ q:`Olmo 3’s long-context stage uses rows of 65,536 tokens. What is true?`,
+ o:[`Most of the stage is still the short mid-training mix`,`Scores between tokens of different documents are set to −∞`,`This intra-document mask is kept at inference`,`More long documents in the mix helped the short tasks`], c:[0,1],
+ e:`34 % long documents, 66 % short mix; with the shares reversed, the model lost 2.5 points on short tasks instead of 0.8. At inference the whole context is one conversation, so every token may attend to all of it.`,
+ s:`training on long documents`},
+{id:"M7", lec:"tp2",
+ q:`The pilot should go from 4K to a context of 1M tokens. What is true?`,
+ o:[`1M is 2<sup>20</sup> tokens, 256 times 4,096`,`DeepSeek-V4 reaches 1M during pre-training, relying on compressed attention`,`Stretched positions alone make a million tokens affordable`,`Llama 3 went from 8K to 128K in a single stage`], c:[0,1],
+ e:`With full attention, the pilot’s KV cache would take 206 GB for one conversation, so a million tokens also needs attention that keeps fewer or smaller keys and values. Llama 3 used six stages; the pilot plans three: ×8, ×8, ×4.`,
+ s:`how far labs stretch the context`},
+{id:"M8", lec:"tp2",
+ q:`Post-training methods differ in what the policy learns from. What is true?`,
+ o:[`SFT and DPO learn from a dataset made once, before training`,`On-policy distillation, RLHF and RLVR learn from answers the policy writes during training`,`In RLVR, a reward model trained on human preferences scores the answers`,`A base model already follows instructions; post-training only adds knowledge`], c:[0,1],
+ e:`In RLVR a checker scores the answers. A base model can continue any text, but asked a question it may just write more questions; post-training teaches it to answer. Tülu 3 and Olmo 3 run SFT, then DPO, then RLVR.`,
+ s:`post-training`},
+{id:"M9", lec:"tp2",
+ q:`About supervised fine-tuning, what is true?`,
+ o:[`The loss is computed only on the answer`,`The prompt’s labels are set to −100`,`It uses a different loss from pre-training`,`It shows the model which answers are worse`], c:[0,1],
+ e:`SFT is pre-training again on conversations in the chat template, with the same −log p. The examples come from people, a stronger model (distillation), or the model’s own best answers (rejection sampling). It never shows a worse answer; that is what DPO adds.`,
+ s:`supervised fine-tuning`},
+{id:"M10", lec:"tp2",
+ q:`One DPO pair, with the log-probability each model gives each answer, and β = 0.1. What is true?`,
+ vis:`<table class="vt"><tr><th>answer</th><th>policy</th><th>reference</th></tr><tr><td>chosen +</td><td>−38</td><td>−40</td></tr><tr><td>rejected −</td><td>−37</td><td>−35</td></tr></table>`,
+ o:[`The chosen answer’s gain is +2`,`The loss is −log σ(0.4) ≈ 0.51`,`The policy finds the rejected answer more likely, so the loss is above log 2`,`The reference is the reward model`], c:[0,1],
+ e:`Gain = log p<sub>policy</sub> − log p<sub>ref</sub>: +2 for the chosen, −2 for the rejected, so β · 4 = 0.4. The loss is already below its start, log 2 ≈ 0.69, because the policy moved the right way for both. The reference is a frozen copy of the SFT model.`,
+ s:`direct preference optimisation`},
+{id:"M11", lec:"tp2",
+ q:`At the first step of DPO, the policy is still identical to the reference. What is true?`,
+ o:[`Both gains are 0`,`The loss is log 2 ≈ 0.69`,`The loss is 0, because nothing has been learned yet`,`The value of the loss depends on β`], c:[0,1],
+ e:`Identical models give identical log-probabilities, so both gains are 0 and the loss is −log σ(0) = −log 0.5 = log 2, whatever β is.`,
+ s:`direct preference optimisation`},
+{id:"M12", lec:"tp2",
+ q:`On-policy distillation. The student wrote “17 × 24 = 418”. What is true?`,
+ vis:`<table class="vt"><tr><th>token</th><th>student</th><th>teacher</th></tr><tr><td>17 × 24</td><td>0.60</td><td>0.70</td></tr><tr><td>=</td><td>0.90</td><td>0.90</td></tr><tr><td>418</td><td>0.30</td><td>0.02</td></tr></table>`,
+ o:[`The grade of 418 is ln(0.02 / 0.30) ≈ −2.71`,`Each token gets its own grade`,`The teacher writes its own answer to compare with`,`The grade is differentiated through like the rest of the loss`], c:[0,1],
+ e:`The teacher only reads the student’s text, in one forward pass. The loss is −Σ grade<sub>t</sub> · log p<sub>student</sub>(token<sub>t</sub>), with each grade held constant: 418 becomes much less likely, exactly where the student went wrong.`,
+ s:`on-policy distillation`},
+{id:"M13", lec:"tp2",
+ q:`Compare DPO’s gain with on-policy distillation’s grade. What is true?`,
+ o:[`The gain is the policy’s log-probability minus the reference’s`,`The grade is the teacher’s log-probability minus the student’s`,`A positive grade means the student likes the token more than the teacher`,`The gain is per token, the grade per answer`], c:[0,1],
+ e:`A positive grade means the teacher likes the token more than the student does. The scope is the other way round too: the gain is for the whole answer, the grade for every single token.`,
+ s:`on-policy distillation: grade and gain`},
+{id:"M14", lec:"tp2",
+ q:`About the reward model in RLHF, what is true?`,
+ o:[`It is a language model that outputs one number instead of a distribution`,`Scores of 1.4 for the chosen and −0.6 for the rejected answer give a loss of about 0.13`,`It reads both answers at once and picks the better one`,`It keeps learning while the policy is trained`], c:[0,1],
+ e:`Its loss is −log σ(r<sup>+</sup> − r<sup>−</sup>) = −log σ(2.0) ≈ 0.13. It reads one prompt and one answer at a time, yet learns to score better answers higher. During RL it is frozen.`,
+ s:`reinforcement learning from human feedback`},
+{id:"M15", lec:"tp2",
+ q:`After “Why do cows moo? Cows moo to”, the reference and the policy give these probabilities. What is true?`,
+ vis:`<table class="vt"><tr><th>next</th><th>reference</th><th>policy</th></tr><tr><td>call</td><td>0.50</td><td>0.80</td></tr><tr><td>warn</td><td>0.30</td><td>0.15</td></tr><tr><td>eat</td><td>0.20</td><td>0.05</td></tr></table>`,
+ o:[`The KL averages log p<sub>policy</sub> − log p<sub>ref</sub>, weighted by the policy’s probabilities`,`The KL is about 0.20`,`The KL is negative, since two of the log-ratios are negative`,`The KL weights by the reference’s probabilities`], c:[0,1],
+ e:`0.80 · 0.47 + 0.15 · (−0.69) + 0.05 · (−1.39) ≈ 0.20. The KL is 0 for identical distributions and never negative, and it grows fastest when the policy puts probability on tokens the reference finds unlikely.`,
+ s:`over-optimisation: the KL leash`},
+{id:"M16", lec:"tp2",
+ q:`The reward model scores an answer 0.8, the KL over the answer is 1.5, and β = 0.1. What is true?`,
+ o:[`The reward used for the update is 0.65`,`DPO’s β plays the same role as this β`,`The KL is measured against the reward model`,`The higher the KL, the higher the reward`], c:[0,1],
+ e:`r = 0.8 − 0.1 · 1.5 = 0.65. The KL is measured against the reference, the frozen SFT model. DPO is derived from exactly this objective, the reward minus β times the KL, which is why its gains are measured against the reference.`,
+ s:`RLHF: over-optimisation, KL, the loop`},
+{id:"M18", lec:"tp2",
+ q:`About RLAIF and judges, what is true?`,
+ o:[`In Constitutional AI, people write only the principles`,`A rubric reward is the share of rubric items the answer meets`,`A judge’s labels are noisy but carry little systematic bias`,`Judges tend to favour short answers`], c:[0,1],
+ e:`Noisy with little systematic bias describes human labels. A judge’s labels are consistent but systematically biased: judges favour long answers, and their own. A frontier model’s label costs under a cent, a human’s around a dollar.`,
+ s:`reinforcement learning from AI feedback`},
+{id:"M19", lec:"tp2",
+ q:`About reinforcement learning with verifiable rewards (RLVR), what is true?`,
+ o:[`A checker returns 1 or 0 and takes the place of the reward model`,`For code, the checker runs unit tests in a sandbox`,`A kind reply can be scored by a checker`,`A checker can reward correct answers the policy never finds`], c:[0,1],
+ e:`Checkers exist for maths, code, instructions, puzzles and formats. Anything a checker cannot verify, such as a poem or a kind reply, still needs a reward model or a judge. A checker can only reward what the policy already finds now and then.`,
+ s:`reinforcement learning with verifiable rewards`},
+{id:"M20", lec:"tp2",
+ q:`Four answers to one prompt get rewards 0.8, 0.5, 0.3 and 0.1. The loss is −(r − b) · Σ<sub>t</sub> log p(token<sub>t</sub>). What is true?`,
+ o:[`Without a baseline, even the worst answer becomes more likely`,`With the mean as baseline, the 0.3 answer has an advantage of −0.125`,`A baseline makes 0.5 a good score on every prompt`,`With the baseline, all four answers become more likely`], c:[0,1],
+ e:`b = 0.425, so the advantages are +0.375, +0.075, −0.125 and −0.325: better than expected becomes more likely, worse less. Whether 0.5 is good depends on the prompt, which is exactly what the baseline accounts for.`,
+ s:`from scores to updates`},
+{id:"M21", lec:"tp2",
+ q:`About PPO, what is true?`,
+ o:[`A value model estimates the reward still to come from the tokens so far`,`Each token gets its own advantage, A<sub>t</sub> = G<sub>t</sub> − V<sub>t</sub>`,`It uses every batch for exactly one update`,`InstructGPT was trained with it`], c:[0,1,3],
+ e:`Generating and scoring is expensive, so PPO updates several times on the same batch. Its leash is part of the reward, −0.1 KL<sub>t</sub> on every token, with the reward model’s score on the last token only.`,
+ s:`PPO: learning the baseline`},
+{id:"M22", lec:"tp2",
+ q:`In PPO with ε = 0.2, ·their has a positive advantage, and its ratio ρ rises from 1.00 to 1.11 to 1.22. What is true?`,
+ o:[`ρ is p<sub>now</sub> / p<sub>when written</sub> for that token`,`At ρ = 1.22, ·their is not pushed any further`,`At ρ = 1.11, the clip already stops ·their`,`The clip lets one batch move the policy as far as it likes`], c:[0,1],
+ e:`A token with a positive advantage stops being pushed once ρ passes 1 + ε = 1.2; a token with a negative advantage once ρ falls below 0.8. The clip keeps one batch from moving the policy too far.`,
+ s:`PPO: the ratio and the clip`},
+{id:"M23", lec:"tp2",
+ q:`GRPO scores a group of four answers: 0.8, 0.5, 0.3 and 0.1 (mean 0.425, std 0.259). What is true?`,
+ o:[`The 0.8 answer gets an advantage of about +1.45`,`Every token of an answer gets the same advantage`,`It needs a value model to compute the baseline`,`Each token gets its own advantage, as in PPO`], c:[0,1],
+ e:`A<sub>i</sub> = (r<sub>i</sub> − mean) / std = 0.375 / 0.259 ≈ 1.45. The group is the baseline, so no value model is needed, but credit is assigned less precisely. The KL moves into the loss, with β = 0.04.`,
+ s:`GRPO: measuring the baseline`},
+{id:"M24", lec:"tp2",
+ q:`PPO vs. GRPO. What is true?`,
+ o:[`PPO keeps four models in memory: policy, reference, reward model and value model`,`GRPO with a checker keeps only the policy and the reference`,`GRPO writes one answer per prompt`,`GRPO assigns credit more precisely than PPO`], c:[0,1],
+ e:`GRPO saves one model the size of the policy, or two with a checker. In return it has to write a group of 8 to 64 answers per prompt, and every token of an answer shares one advantage.`,
+ s:`PPO and GRPO compared`},
+/* ───── none or all true ───── */
+{id:"Z1", lec:"intro",
+ q:`About turning data into tokens, what is true?`,
+ o:[`A text becomes token IDs from a fixed vocabulary`,`A picture can be read as patches in reading order`,`A sound can be cut into windows, the patches of sound`,`A video can be read as the patches of one frame after another`], c:[0,1,2,3],
+ e:`Almost any data can be read as a sequence x<sub>1</sub>, …, x<sub>T</sub>: a text as its tokens, a picture as patches, a sound as samples cut into windows, a video as the patches of frame after frame, DNA as its bases.`,
+ s:`tokens, for every modality`},
+{id:"Z3", lec:"tp1",
+ q:`About the pilot’s pre-training run, what is true?`,
+ o:[`Each batch holds 4,096 rows of 1,024 tokens`,`The model generates text during the forward pass`,`The model is saved and tested every 100,000 steps`,`The run takes about 95,000 steps`], c:[],
+ e:`None is true. A batch is 1,024 rows of 4,096 tokens, about 4.2 million. The forward pass generates nothing; it scores the given text at every position. The model is saved every 1,000 steps or so, and 4T tokens take about 954,000 steps.`,
+ s:`pre-training`},
+{id:"Z4", lec:"tp2",
+ q:`About GRPO, what is true?`,
+ o:[`The policy writes a group of answers to the same prompt`,`An answer’s advantage is measured in units of the group’s standard deviation`,`The ratio and the clip work as in PPO`,`DeepSeek-R1 was trained with it`], c:[0,1,2,3],
+ e:`All four are true. The group, 8 to 64 answers in practice, is its own baseline, so no value model is needed; A<sub>i</sub> = (r<sub>i</sub> − mean) / std. The KL leash moves from the reward into the loss.`,
+ s:`GRPO: measuring the baseline`},
+{id:"Z5", lec:"tp2",
+ q:`About the KL leash in RLHF, what is true?`,
+ o:[`The KL can be negative when the policy is surer than the reference`,`The KL term adds to the reward the further the policy drifts`,`The KL is 1 when the policy and the reference are identical`,`The leash pulls equally hard however far the policy drifts`], c:[],
+ e:`None is true. The KL is never negative and is 0 for identical distributions. It is measured against the reference, the frozen SFT model, and subtracted from the reward, so it pulls back harder the further the policy drifts.`,
+ s:`over-optimisation: the KL leash`}
+];
+
+/* ───────── state ───────── */
+const KEY = "genai-quiz-v1";
+const store = (() => { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } })();
+store.res = store.res || {};
+function save(){ try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} }
+
+let seed = store.seed || Math.floor(Math.random() * 1e9);
+let mode = "practice";           // practice | mock
+let filter = store.filter || "all";
+let order = [];                  // question ids in the current set
+let idx = 0;
+const picks = {};                // id -> Set of original option indexes
+const checked = {};              // id -> true once checked (practice)
+let mock = null;                 // {ids, done}
+
+function rng(s){ return () => { s = (s * 1664525 + 1013904223) % 4294967296; return s / 4294967296; }; }
+function hash(str){ let h = 2166136261; for (const ch of str) { h ^= ch.charCodeAt(0); h = Math.imul(h, 16777619); } return h >>> 0; }
+function shuffled(arr, s){ const a = arr.slice(), r = rng(s); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+const byId = Object.fromEntries(Q.map(q => [q.id, q]));
+function perm(q){ return shuffled([0,1,2,3], (hash(q.id) ^ seed) >>> 0); }
+
+/* The test's rule: +1.5/n for each correct tick (n = number of true statements), −0.75 for each wrong tick,
+   never below 0 per question; with no true statement, no tick at all earns the 1.5. */
+function scoreOf(q){
+  const p = picks[q.id] || new Set(), n = q.c.length;
+  let right = 0, wrong = 0; p.forEach(i => q.c.includes(i) ? right++ : wrong++);
+  if (n === 0) return p.size ? 0 : 1.5;
+  return Math.max(0, Math.round((right * 1.5 / n - 0.75 * wrong) * 1000) / 1000);
+}
+function grade(s){ return s >= 1.5 ? "perfect" : s > 0 ? "partial" : "wrong"; }
+function pts(x){ return (Math.round(x * 100) / 100).toLocaleString("en", {maximumFractionDigits: 2}); }
+
+const FILTERS = [
+  ["all", "All"], ["intro", LECT.intro.short], ["found", LECT.found.short],
+  ["tp1", LECT.tp1.short], ["tp2", LECT.tp2.short], ["ex", "Example sheet"], ["missed", "Not yet right"]
+];
+function inFilter(q, f){
+  if (f === "all") return true;
+  if (f === "ex") return !!q.ex;
+  if (f === "missed") return store.res[q.id] && store.res[q.id] !== "perfect";
+  return q.lec === f;
+}
+function buildOrder(){
+  const ids = Q.filter(q => inFilter(q, filter)).map(q => q.id);
+  order = store.shuffled ? shuffled(ids, seed) : ids;
+  if (idx >= order.length) idx = 0;
+}
+
+/* ───────── rendering ───────── */
+const $ = s => document.querySelector(s);
+const tick = `<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.2 8.4l3 3 6.6-7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const cross = `<svg class="x" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>`;
+const bulb = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2v.5h5v-.5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+function renderChips(){
+  $("#chips").innerHTML = FILTERS.map(([k, label]) => {
+    const n = Q.filter(q => inFilter(q, k)).length;
+    return `<button class="chip" data-f="${k}" aria-pressed="${filter === k}">${label}<span class="n">${n}</span></button>`;
+  }).join("");
+  $("#chips").hidden = mode === "mock";
+}
+
+function renderStat(){
+  if (mode === "mock") {
+    const answered = mock.ids.filter(id => (picks[id] || new Set()).size).length;
+    $("#stat").innerHTML = mock.done
+      ? `Mock test · <b>${pts(mock.ids.reduce((a, id) => a + scoreOf(byId[id]), 0))}</b> / 30 points`
+      : `Mock test · <b>${answered}</b> of ${mock.ids.length} ticked · <b id="clock">${clockText()}</b> left`;
+    return;
+  }
+  const tried = Object.keys(store.res).filter(id => byId[id]);
+  const right = tried.filter(id => store.res[id] === "perfect").length;
+  $("#stat").innerHTML = `<b>${right}</b> fully right · ${tried.length} of ${Q.length} tried`;
+}
+
+function renderDots(){
+  const ids = mode === "mock" ? mock.ids : order;
+  $("#dots").innerHTML = ids.map((id, i) => {
+    let cls = "";
+    if (mode === "mock") cls = mock.done ? grade(scoreOf(byId[id])) : ((picks[id] || new Set()).size ? "answered" : "");
+    else cls = store.res[id] || "";
+    return `<button class="dot ${cls} ${i === idx ? "cur" : ""}" data-i="${i}" aria-label="Question ${i + 1}"></button>`;
+  }).join("");
+}
+
+function revealed(q){ return mode === "mock" ? mock.done : !!checked[q.id]; }
+
+function renderQuestion(){
+  const ids = mode === "mock" ? mock.ids : order;
+  if (!ids.length) {
+    $("#view").innerHTML = `<div class="empty">${filter === "missed" ? "Nothing here yet. Questions you check and don’t get fully right collect here, so you can go back to them." : "No questions in this set."}</div>`;
+    return;
+  }
+  const q = byId[ids[idx]];
+  const p = picks[q.id] || new Set();
+  const show = revealed(q);
+  const pm = perm(q);
+  const letters = "ABCD";
+  const opts = pm.map((oi, pos) => {
+    const truth = q.c.includes(oi), on = p.has(oi);
+    let cls = on ? "picked" : "";
+    let mark = "";
+    if (show) {
+      cls += truth ? " true" : " false";
+      if (truth && !on) mark = `<span class="mark">missed</span>`;
+      if (!truth && on) mark = `<span class="mark">false</span>`;
+    }
+    return `<li><button class="opt ${cls}" data-o="${oi}" ${show ? "disabled" : ""} aria-pressed="${on}">
+      <span class="box">${tick}${cross}</span><span class="letter">${letters[pos]}</span><span class="otext">${q.o[oi]}</span>${mark}</button></li>`;
+  }).join("");
+
+  let answer = "";
+  if (show) {
+    const s = scoreOf(q), g = grade(s);
+    const n = q.c.length;
+    const label = `${pts(s)} of 1.5 points · ${n === 0 ? "no statement is true" : n === 4 ? "all four are true" : n === 1 ? "one statement is true" : (n === 2 ? "two" : "three") + " statements are true"}`;
+    answer = `<div class="answer">${bulb}<div><div class="result ${g}">${label}</div><p>${q.e}</p><p class="src">${LECT[q.lec].full} · ${q.s}</p></div></div>`;
+  }
+
+  const last = idx === ids.length - 1;
+  let primary;
+  if (mode === "mock" && !mock.done) primary = last ? `<button class="btn primary" id="handin">Hand in</button>` : `<button class="btn primary" id="next">Next</button>`;
+  else if (mode === "mock") primary = last ? `<button class="btn primary" id="summary">See results</button>` : `<button class="btn primary" id="next">Next</button>`;
+  else primary = show ? `<button class="btn primary" id="next" ${last ? "disabled" : ""}>Next</button>` : `<button class="btn primary" id="check">Check</button>`;
+
+  $("#view").innerHTML = `<main class="card">
+    <div class="qhead"><span class="eyebrow">Question ${idx + 1}${mode === "mock" ? ` of ${ids.length}` : ""}</span>
+      <span class="tag ${q.ex ? "ex" : ""}">${q.ex ? "From the example sheet · " : ""}${LECT[q.lec].full}</span></div>
+    <div class="qrow"><p class="qtext ${q.vis ? "" : "wide"}">${q.q}</p>${q.vis ? `<div class="vis">${q.vis}</div>` : ""}</div>
+    <ol class="opts">${opts}</ol>
+    ${answer}
+    <div class="controls">
+      <button class="btn" id="prev" ${idx === 0 ? "disabled" : ""}>Previous</button>
+      ${primary}
+      <span class="spacer"></span>
+      <span class="hint"><kbd>A</kbd>–<kbd>D</kbd> tick · <kbd>Enter</kbd> ${mode === "mock" ? "next" : "check, then next"} · <kbd>←</kbd> <kbd>→</kbd> move</span>
+    </div>
+  </main>`;
+}
+
+function renderSummary(){
+  const total = mock.ids.reduce((a, id) => a + scoreOf(byId[id]), 0);
+  const max = mock.ids.length * 1.5;
+  $("#dots").innerHTML = "";
+  $("#view").innerHTML = `<section class="summary">
+    <h2>Mock test results</h2>
+    <p>Twenty questions from across the four lectures, scored like the test: +1.5 ÷ n per correct tick, −0.75 per wrong tick, never below 0 per question. You need 30 of 60 over both tests, so 15 here is on track.</p>
+    <div class="big">${pts(total)} / ${max}</div>
+    <div class="rows">${mock.ids.map((id, i) => {
+      const q = byId[id], s = scoreOf(q);
+      return `<button class="rowq" data-i="${i}"><span class="sc result ${grade(s)}">${pts(s)}</span><span class="t">${q.q}</span></button>`;
+    }).join("")}</div>
+    <div class="controls"><button class="btn primary" id="newmock">New mock test</button><button class="btn" id="review">Review answers</button></div>
+  </section>`;
+  renderStat();
+}
+
+function render(){ renderChips(); renderStat(); renderDots(); renderQuestion(); }
+
+/* ───────── actions ───────── */
+function currentIds(){ return mode === "mock" ? mock.ids : order; }
+function toggle(oi){
+  const q = byId[currentIds()[idx]];
+  if (!q || revealed(q)) return;
+  const p = picks[q.id] || (picks[q.id] = new Set());
+  p.has(oi) ? p.delete(oi) : p.add(oi);
+  renderQuestion(); renderDots(); renderStat();
+}
+function check(){
+  const q = byId[order[idx]];
+  if (!q || checked[q.id]) return;
+  checked[q.id] = true;
+  store.res[q.id] = grade(scoreOf(q)); save();
+  render();
+}
+function go(i){
+  const n = currentIds().length;
+  if (i < 0 || i >= n) return;
+  idx = i; renderDots(); renderQuestion();
+  $("#view").scrollIntoView({block: "nearest"});
+}
+function newMock(){
+  const by = l => shuffled(Q.filter(q => q.lec === l).map(q => q.id), Math.floor(Math.random() * 1e9));
+  const pick = [...by("intro").slice(0, 4), ...by("found").slice(0, 6), ...by("tp1").slice(0, 5), ...by("tp2").slice(0, 5)];
+  mock = {ids: shuffled(pick, Math.floor(Math.random() * 1e9)), done: false, end: Date.now() + 40 * 60 * 1000};
+  mock.ids.forEach(id => { delete picks[id]; delete checked[id]; });
+  idx = 0;
+}
+function clockText(){
+  if (!mock) return "";
+  const left = Math.max(0, mock.end - Date.now()), m = Math.floor(left / 60000), s = Math.floor(left / 1000) % 60;
+  return `${m}:${String(s).padStart(2, "0")}`;
+}
+function handIn(){
+  mock.done = true;
+  mock.ids.forEach(id => { store.res[id] = grade(scoreOf(byId[id])); }); save();
+  renderSummary();
+}
+setInterval(() => {
+  if (mode !== "mock" || !mock || mock.done) return;
+  if (Date.now() >= mock.end) return handIn();
+  const c = document.getElementById("clock"); if (c) c.textContent = clockText();
+}, 1000);
+function setMode(m){
+  mode = m;
+  $("#m-practice").setAttribute("aria-pressed", m === "practice");
+  $("#m-mock").setAttribute("aria-pressed", m === "mock");
+  if (m === "mock") newMock(); else { buildOrder(); idx = Math.min(store.idx || 0, Math.max(order.length - 1, 0)); }
+  render();
+}
+
+document.addEventListener("click", e => {
+  const t = e.target.closest("button"); if (!t) return;
+  if (t.matches(".opt")) return toggle(+t.dataset.o);
+  if (t.matches(".chip")) { filter = t.dataset.f; store.filter = filter; idx = 0; save(); buildOrder(); return render(); }
+  if (t.matches(".dot")) return go(+t.dataset.i);
+  if (t.matches(".rowq")) { idx = +t.dataset.i; return render(); }
+  switch (t.id) {
+    case "check": return check();
+    case "next": go(idx + 1); if (mode === "practice") { store.idx = idx; save(); } return;
+    case "prev": go(idx - 1); if (mode === "practice") { store.idx = idx; save(); } return;
+    case "handin": return handIn();
+    case "summary": return renderSummary();
+    case "review": idx = 0; return render();
+    case "newmock": newMock(); return render();
+    case "m-practice": return setMode("practice");
+    case "m-mock": return setMode("mock");
+    case "shuffle":
+      seed = Math.floor(Math.random() * 1e9); store.seed = seed; store.shuffled = true; save();
+      if (mode === "practice") { buildOrder(); idx = 0; }
+      return render();
+    case "reset":
+      store.res = {}; save(); Object.keys(checked).forEach(k => delete checked[k]); Object.keys(picks).forEach(k => delete picks[k]);
+      return render();
+  }
+});
+
+document.addEventListener("keydown", e => {
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  if (e.target.closest && e.target.closest("input,textarea")) return;
+  const ids = currentIds(); if (!ids.length) return;
+  const q = byId[ids[idx]]; if (!q) return;
+  const k = e.key.toLowerCase();
+  const pos = "abcd".indexOf(k) >= 0 ? "abcd".indexOf(k) : "1234".indexOf(k);
+  if (pos >= 0 && document.querySelector(".opt")) { e.preventDefault(); return toggle(perm(q)[pos]); }
+  if (e.key === "ArrowRight") { e.preventDefault(); return go(idx + 1); }
+  if (e.key === "ArrowLeft") { e.preventDefault(); return go(idx - 1); }
+  if (e.key === "Enter" && (!(e.target.closest && e.target.closest("button")) || e.target.closest(".opt"))) {
+    e.preventDefault();
+    if (mode === "practice") return revealed(q) ? go(idx + 1) : check();
+    if (idx < ids.length - 1) return go(idx + 1);
+    const b = document.getElementById("handin") || document.getElementById("summary"); if (b) b.click();
+  }
+});
+
+store.seed = seed; save();
+$("#subline").textContent = `194.207 Generative AI · ${Q.length} questions as on the test, each with its answer`;
+buildOrder(); idx = Math.min(store.idx || 0, Math.max(order.length - 1, 0));
+render();
+</script>
+</body>
+</html>
