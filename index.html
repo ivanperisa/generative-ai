@@ -221,6 +221,14 @@ footer button{border:0;background:none;padding:0;color:var(--muted);text-decorat
 .wp small{display:block;font-weight:400;font-size:.76rem}
 .rep{display:inline-flex;flex-wrap:wrap;gap:6px;align-items:center;border:1.5px dashed var(--muted);border-radius:8px;padding:18px 8px 6px;position:relative}
 .rn{position:absolute;top:2px;left:8px;font-size:.66rem;color:var(--muted);font-weight:600}
+.wherev{display:flex;flex-direction:column;align-items:stretch;gap:2px;width:100%;max-width:320px}
+.vp{border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:5px 12px;font-size:.84rem;font-weight:600;color:var(--sub);line-height:1.3;text-align:center}
+.vp small{display:block;font-weight:400;font-size:.72rem;color:var(--muted)}
+.vp:hover{border-color:var(--fg)}
+.vp.on{border-color:var(--accent);background:var(--accent);color:var(--accent-ink)}
+.vp.on small{color:var(--accent-ink);opacity:.85}
+.vup{text-align:center;color:var(--muted);font-size:.8rem;line-height:1.1}
+.vrep{display:flex;flex-direction:column;gap:2px;border:1.5px dashed var(--muted);border-radius:8px;padding:20px 10px 10px;position:relative}
 .wstack{display:grid;gap:6px}
 .wstack .wp{text-align:left;width:100%}
 .stackd{display:grid;gap:6px;max-width:440px}
@@ -1012,12 +1020,15 @@ const LX = {
   },
   /* where a part sits in the decoder-only transformer */
   where(hl){
-    const p = (k, t) => `<button class="wp${hl === k ? " on" : ""}" data-go="found:${k}">${t}</button>`;
-    return `<figure class="fig"><div class="where">
-      ${p("emb", "Embedding")}<span class="arr">→</span>${p("pos", "Positions")}<span class="arr">→</span>
-      <span class="rep"><span class="rn">× N decoder blocks</span>${p("att", "Masked multi-head attention")}<span class="arr">→</span>${p("norm", "Add &amp; Norm")}<span class="arr">→</span>${p("ffn", "Feed forward")}<span class="arr">→</span>${p("norm", "Add &amp; Norm")}</span>
-      <span class="arr">→</span>${p("lin", "Linear")}<span class="arr">→</span>${p("lin", "Softmax")}</div>
-      <figcaption>Where this part sits in the decoder-only transformer. Click a part to open its lesson.</figcaption></figure>`;
+    const p = (k, t, sub) => `<button class="vp${hl === k ? " on" : ""}" data-go="found:${k}">${t}${sub ? `<small>${sub}</small>` : ""}</button>`;
+    const up = `<span class="vup" aria-hidden="true">↑</span>`;
+    return `<figure class="fig"><div class="wherev">
+      ${p("lin", "Softmax", "next-token distribution")}${up}${p("lin", "Linear", "logits")}${up}
+      <div class="vrep"><span class="rn">× N decoder blocks</span>
+        ${p("norm", "Add &amp; Norm")}${up}${p("ffn", "Feed forward", "per token")}${up}${p("norm", "Add &amp; Norm")}${up}${p("att", "Masked multi-head attention", "between tokens")}
+      </div>${up}
+      ${p("pos", "Positions")}${up}${p("emb", "Embedding", "token IDs → vectors")}
+      </div><figcaption>Where this part sits in the decoder-only transformer, read bottom to top. Click a part to open its lesson.</figcaption></figure>`;
   },
   /* where a stage sits in the training pipeline */
   pipe(hl){
