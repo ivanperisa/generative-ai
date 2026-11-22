@@ -40,6 +40,8 @@ nav.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:va
 .chips{display:flex;flex-wrap:wrap;gap:6px}
 .chip{border:1px solid var(--line);background:transparent;border-radius:999px;padding:3px 11px;font-size:.8rem;font-weight:600;color:var(--fg)}
 .chip[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.secrow{flex-basis:100%;order:3}
+.chip.sec{font-size:.76rem;padding:2px 10px}
 .chip .n{color:var(--muted);font-weight:600;margin-left:3px;font-variant-numeric:tabular-nums}
 .stat{margin-left:auto;font-size:.82rem;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
 .stat b{color:var(--fg)}
@@ -158,6 +160,7 @@ footer button{border:0;background:none;padding:0;color:var(--muted);text-decorat
       <button id="m-mock" aria-pressed="false">Mock test</button>
     </div>
     <div class="chips" id="chips" role="group" aria-label="Lecture"></div>
+    <div class="chips secrow" id="secchips" role="group" aria-label="Section" hidden></div>
     <div class="stat" id="stat"></div>
   </nav>
 
@@ -182,7 +185,7 @@ const LECT = {
 /* Each question: id, lec, q, optional vis (HTML), o (four statements), c (indexes of the true ones), e (why), s (topic in the lecture), ex (from the example sheet) */
 const Q = [
 /* ───── Example sheet ───── */
-{id:"E1", lec:"intro", ex:true,
+{id:"E1", lec:"found", ex:true, src:"Introduction to Generative AI",
  q:`In a decoder-only transformer, what is true about “·bank” in these two phrases?`,
  vis:`<div class="tokgrid" style="grid-template-columns:repeat(3,auto)"><span class="pos">1</span><span class="pos">2</span><span class="pos">3</span><span class="tok">the</span><span class="tok">·river</span><span class="tok hl">·bank</span><span class="tok">the</span><span class="tok">·savings</span><span class="tok hl">·bank</span></div>`,
  o:[`The embedding layer gives ·bank the same vector in both phrases`,`After attention, ·bank’s vector holds meaning from the words before it`,`After positional encoding, the two ·bank vectors are different`,`The feed-forward layers add meaning from the neighbouring words`], c:[0,1],
@@ -198,7 +201,7 @@ const Q = [
  o:[`Forward pass: each weight does one multiply and one add per token`,`Backward pass: each weight is used twice, for two different gradients`,`Optimizer step: two more operations for each weight and token`,`Attention: two more operations for comparing the tokens`], c:[0,1],
  e:`Forward: 2 operations for each weight and token. Backward: 4. Together: 6. The optimizer runs once per step, not once per token, and the formula leaves attention out.`,
  s:`where C ≈ 6 · N · D comes from`},
-{id:"E4", lec:"tp2", ex:true,
+{id:"E4", lec:"tp1", ex:true, src:"Training Paradigms II",
  q:`A model generates text one token at a time, with a standard KV cache. What happens for each new token?`,
  o:[`Only the new token goes through all the layers`,`Its query is compared with the cached keys of all earlier tokens`,`Its key and value are stored in the cache for later tokens`,`The keys of earlier tokens are updated to include the new token`], c:[0,1,2],
  e:`Earlier tokens are needed only inside attention, through their keys and values. Because of the mask, a token never sees later tokens, so its key and value never change.`,
@@ -702,8 +705,172 @@ const Q = [
  q:`About the KL leash in RLHF, what is true?`,
  o:[`The KL can be negative when the policy is surer than the reference`,`The KL term adds to the reward the further the policy drifts`,`The KL is 1 when the policy and the reference are identical`,`The leash pulls equally hard however far the policy drifts`], c:[],
  e:`None is true. The KL is never negative and is 0 for identical distributions. It is measured against the reference, the frozen SFT model, and subtracted from the reward, so it pulls back harder the further the policy drifts.`,
- s:`over-optimisation: the KL leash`}
+ s:`over-optimisation: the KL leash`},
+/* ───── added for full coverage ───── */
+{id:"N1", lec:"intro", sec:"sym",
+ q:`Where does generative AI sit on the map of AI?`,
+ o:[`Entirely on the subsymbolic side`,`Approaches that bridge symbolic and subsymbolic AI are called neuro-symbolic or bilateral AI`,`Generative AI is a branch of symbolic AI`,`Expert systems are an example of subsymbolic AI`], c:[0,1],
+ e:`Generative models are learned from examples, so they belong to subsymbolic AI, next to statistical methods, ensembles and neural networks. Expert systems, search and planning, and knowledge representation are symbolic.`,
+ s:`what is generative AI?`},
+{id:"N3", lec:"intro", sec:"sym",
+ q:`Every input reaches a subsymbolic system as numbers. What is true?`,
+ o:[`Text becomes token IDs, a picture pixel values, a sound its samples`,`None of these numbers means anything by itself`,`A person first attaches a meaning to each number, as with symbols`,`What the system knows sits in single numbers you can read off`], c:[0,1],
+ e:`Symbolic systems need a person to define symbols and their meaning first. Subsymbolic systems skip that step and work on the world as raw numbers; whatever they learn sits in patterns across many numbers, below the level of symbols, hence the name.`,
+ s:`subsymbolic AI`},
+{id:"N5", lec:"intro", sec:"gen",
+ q:`About decision boundaries and generative models, what is true?`,
+ o:[`A decision boundary can be linear or non-linear`,`A generative model can draw new samples from what it learned`,`A discriminative model can draw new samples of each class`,`A decision boundary describes what each class looks like overall`], c:[0,1],
+ e:`A discriminative model only learns where one class ends and the other begins. A generative model learns what the data itself looks like, so it can draw new samples from it.`,
+ s:`generative vs. discriminative models`},
+{id:"N2", lec:"intro", sec:"prob",
+ q:`Most state-of-the-art machine learning rests on a probabilistic view of intelligence. What is true?`,
+ o:[`Regularities of the world show up as differences in probability`,`A model that finds “The cow says moo” far more likely than “The cow says meow” has some understanding of what cows say`,`Under this view, a model needs explicit rules about cows`,`Only generative models learn probability distributions`], c:[0,1],
+ e:`The stance is that intelligence can show in knowing probability distributions. Discriminative models learn one too, the conditional p(Y | X); generative models learn p(X) or p(X, Y).`,
+ s:`the probabilistic view`},
+{id:"N4", lec:"intro", sec:"diff",
+ q:`Some diffusion models predict the clean picture, or a mix of picture and noise, instead of the noise. What is true?`,
+ o:[`The idea stays the same, since each of these determines the others`,`From the predicted noise, the clean picture can be worked out in a single step`,`Samplers therefore jump straight to the clean picture`,`Only noise prediction can be used for generating`], c:[0,1],
+ e:`Samplers work out the clean picture at every step: it is the model’s current guess at the finished picture. They still move only a little of the way towards it, because from heavy noise the guess is a blur.`,
+ s:`diffusion: generating`},
+{id:"N7", lec:"found", sec:"overview",
+ q:`About the decoder-only transformer, what is true?`,
+ o:[`Nothing in its architecture is specific to text`,`It autoregressively produces a probability distribution over the next token`,`It reads the whole text in both directions to predict each token`,`It sits on the symbolic side of AI`], c:[0,1],
+ e:`Almost every state-of-the-art language model is a decoder-only transformer, a neural network on the subsymbolic side. Text is only the easiest modality to follow. Each prediction uses the tokens before it, never after it.`,
+ s:`neural networks and conceptual components`},
+{id:"N11", lec:"found", sec:"att",
+ q:`In “the small purple cow”, the words before ·cow change which cow it is. What is true?`,
+ o:[`Each earlier word shifts ·cow’s vector, and attention adds the shifts in one step`,`The same words can shift different tokens by different amounts`,`Attention changes ·cow’s row in the embedding table`,`The shifts are applied one word after another, in separate steps`], c:[0,1],
+ e:`purple moves cow and flower in the same direction, but cow much further: it tells us more about a cow. The embedding row stays the same; attention computes how much and how each token shifts the others, all at once.`,
+ s:`attention: how the elements relate`},
+{id:"N6", lec:"found", sec:"att",
+ q:`a · b = ‖a‖ ‖b‖ cos φ. What is true about the dot product?`,
+ o:[`It is largest when the two vectors point the same way`,`It is 0 when they are at right angles`,`It is always positive`,`It ignores the lengths of the vectors`], c:[0,1],
+ e:`It measures how well two vectors align: largest when they point the same way, 0 at right angles, negative when they point apart, and it grows with their lengths. That is why attention compares queries with keys by dot products.`,
+ s:`how much: queries and keys`},
+{id:"N8", lec:"found", sec:"ffn",
+ q:`How can the two layers of the feed forward be read?`,
+ o:[`The first as keys that recognise patterns in a token’s vector`,`The second as the values written back when they match`,`The first as queries that look at the other tokens`,`Most of today’s models still use the plain ReLU version`], c:[0,1],
+ e:`The feed forward never looks at other tokens. Read as a memory, the first layer detects patterns and the second writes back what goes with them. Most of today’s models use a gated variant, SwiGLU, instead of the plain ReLU.`,
+ s:`feed forward: what the world knows`},
+{id:"N10", lec:"found", sec:"lin",
+ q:`From the last decoder block to the next token. What is true?`,
+ o:[`A linear layer gives each row one score per token of the vocabulary, the logits`,`Softmax turns the logits into a probability distribution`,`Every row is checked against the token after it only during generation`,`The model always outputs the single most likely token`], c:[0,1],
+ e:`In training, every row is scored against the token after it; in generation only the last row is used, and the next token is drawn from its distribution. The likeliest token is not always what comes next.`,
+ s:`linear and softmax: what comes next`},
+{id:"N14", lec:"tp1", sec:"shape",
+ q:`The core ideas of the transformer are the same across frontier models. Which parts still carry design decisions?`,
+ o:[`The tokenizer: vocabulary size and which languages it serves`,`Sparsity: dense, or a mixture of experts`,`Positions: the context length RoPE is trained for`,`Whether each token gets an embedding at all`], c:[0,1,2],
+ e:`Also open: how images come in, the width and depth, the feed-forward width, and how attention shares or compresses keys and values. Every token is still embedded; that part is not up for decision.`,
+ s:`architecture`},
+{id:"N16", lec:"tp1", sec:"ctx",
+ q:`About “squeeze, then select” and a sliding window, what is true?`,
+ o:[`Squeeze, then select compresses every few tokens into one entry and reads only the most relevant entries`,`A sliding window keeps only the most recent tokens`,`Squeeze, then select keeps every token at full size`,`A sliding window and squeeze, then select keep the same tokens`], c:[0,1],
+ e:`Both keep fewer entries than full attention. A window drops everything but the recent tokens; squeeze, then select keeps a compressed entry for the whole text and reads the relevant ones. Frontier models interleave such blocks with ones that see more.`,
+ s:`four ways to shrink the cache`},
+{id:"N15", lec:"tp1", sec:"data",
+ q:`Where does training data come from?`,
+ o:[`Most text comes from the web, sampled by crawls such as Common Crawl`,`Code, papers and Wikipedia are often better taken from their source than from the crawl`,`The crawl covers pages behind logins and most of social media`,`Curated sets like FineWeb are written from scratch for training`], c:[0,1],
+ e:`Curated sets are cut from the crawl. Some sources are on the web but in worse form there; others are never crawled at all, such as pages behind logins, sites that opt out, most social media and video. Licensed data, scanned books and synthetic data come from outside the open web.`,
+ s:`where training data comes from`},
+{id:"N18", lec:"tp1", sec:"pre",
+ q:`About the pre-training loop, what is true?`,
+ o:[`Each step takes a batch, runs forward, computes the loss, runs backward and updates the weights`,`The hard part is keeping many GPUs busy for weeks without spikes, dead nodes or silent errors`,`The weights are updated once, after the whole dataset`,`The loop itself is the hard part to write`], c:[0,1],
+ e:`The loop fits in a few lines and runs about once per batch until the tokens are used up, with the model saved and tested every so often. Most of a training team’s work goes into keeping the run healthy.`,
+ s:`pre-training: the loop`},
+{id:"N17", lec:"tp1", sec:"pre",
+ q:`A model is too big for data parallelism alone. What is true?`,
+ o:[`FSDP stores each layer split across the GPUs and gathers it in full when it is computed`,`Expert parallelism puts different experts on different GPUs, and tokens travel to them and back`,`FSDP keeps a full copy of the model on every GPU`,`Expert parallelism cuts each expert’s matrices across all GPUs`], c:[0,1],
+ e:`FSDP is data parallelism with the storage split: weights and gradients travel. With expert parallelism, attention runs on every GPU and the experts are spread out. Large runs combine several schemes.`,
+ s:`one step on many GPUs`},
+{id:"N21", lec:"tp2", sec:"mid",
+ q:`What is mid-training?`,
+ o:[`Either the conclusion of pre-training or a stage of its own`,`It cools the learning rate down, finishes on the best data and stretches the context if needed`,`It teaches the model to follow instructions`,`It is where the model first sees long documents in one piece`], c:[0,1,3],
+ e:`The long-context stage on long rows is part of mid-training. Its result is a base model: it continues any text but does not yet follow instructions or hold a conversation. That is post-training’s job.`,
+ s:`mid-training`},
+{id:"N28", lec:"tp2", sec:"sft",
+ q:`About post-training as a whole, what is true?`,
+ o:[`From post-training on, the model being trained is called the policy`,`Labs combine several methods in sequence, such as SFT, then DPO, then RLVR`,`Post-training replaces pre-training`,`Each lab uses a single post-training method`], c:[0,1],
+ e:`“Policy” is a term from reinforcement learning. The methods differ mainly in what the policy learns from: a fixed dataset, or its own answers scored as they are generated.`,
+ s:`post-training`},
+{id:"N27", lec:"tp2", sec:"sft",
+ q:`Where do the examples for supervised fine-tuning come from?`,
+ o:[`People write them`,`A stronger model writes them`,`The model writes many answers and only the best ones are kept`,`The policy’s own answers, graded token by token by a teacher`], c:[0,1,2],
+ e:`These are human examples, distillation and rejection sampling; whoever wrote them, SFT teaches the model to imitate them. Grading the policy’s own answers token by token is on-policy distillation, a different method.`,
+ s:`supervised fine-tuning`},
+{id:"N23", lec:"tp2", sec:"sft",
+ q:`Who decides which answer of a DPO pair is better?`,
+ o:[`People can rank the answers`,`A strong model’s answer can be taken as chosen and a weak model’s as rejected`,`The policy decides during training`,`The pairs are relabelled at every training step`], c:[0,1],
+ e:`People, a model acting as judge, or no judge at all, with a strong and a weak model writing the two answers. Either way the pairs are labelled once and form a fixed dataset, just like the examples for SFT.`,
+ s:`direct preference optimisation`},
+{id:"N25", lec:"tp2", sec:"rlhf",
+ q:`Why does RLHF take a detour through a reward model instead of learning from the pairs directly?`,
+ o:[`The reward model can score new answers that nobody has ranked`,`The feedback then concerns the policy’s answers as they are now`,`It needs no preference pairs at all`,`The reward model keeps learning along with the policy`], c:[0,1],
+ e:`The pairs train the reward model first. Then the policy writes fresh answers, the frozen reward model scores them, and the policy learns from the scores, round after round.`,
+ s:`reinforcement learning from human feedback`},
+{id:"N24", lec:"tp2", sec:"rlhf",
+ q:`The simplest RLHF update is −r · Σ<sub>t</sub> log p<sub>policy</sub>(token<sub>t</sub>). What is true?`,
+ o:[`It is SFT on the policy’s own answer, weighted by the answer’s reward`,`It is like on-policy distillation, but with one weight for the whole answer`,`Each token gets its own weight`,`It learns from answers in a fixed dataset`], c:[0,1],
+ e:`On-policy distillation weights each token by its own grade; here the whole answer shares one reward. The answer is the policy’s own, written during training.`,
+ s:`reinforcement learning from human feedback`},
+{id:"N26", lec:"tp2", sec:"ppo",
+ q:`How does PPO’s value model learn?`,
+ o:[`It pulls its estimate V<sub>t</sub> towards the reward actually received, G<sub>t</sub>`,`G<sub>t</sub> adds up the rewards from token t to the end of the answer`,`It is a frozen copy of the reward model`,`It only estimates the reward once the answer is finished`], c:[0,1],
+ e:`The value model estimates, from the tokens generated so far, how much reward the answer will eventually get. The advantage of each token is A<sub>t</sub> = G<sub>t</sub> − V<sub>t</sub>: received minus expected.`,
+ s:`PPO: learning the baseline`},
+{id:"A2", lec:"intro", sec:"ar",
+ q:`p(x<sub>1</sub>, x<sub>2</sub>, x<sub>3</sub>) = p(x<sub>1</sub>) · p(x<sub>2</sub> | x<sub>1</sub>) · p(x<sub>3</sub> | x<sub>1</sub>, x<sub>2</sub>). What is true?`,
+ o:[`It is the product rule, applied again and again`,`Every factor is exactly what an autoregressive model predicts`,`It only holds when the tokens are independent of each other`,`Each factor conditions only on the token directly before it`], c:[0,1],
+ e:`The chain rule holds for any sequence: the probability of the first, times the second given the first, times the third given both. Each factor conditions on all earlier tokens, which is what the model predicts.`,
+ s:`autoregression: the chain rule`},
+{id:"A3", lec:"intro", sec:"ar",
+ q:`How does an autoregressive model generate?`,
+ o:[`It draws the next token from its predicted distribution`,`It appends that token and predicts again from the longer sequence`,`It always picks the single most likely token`,`It revises earlier tokens once later ones are drawn`], c:[0,1],
+ e:`Likely tokens are drawn more often than unlikely ones, but not always. What it made becomes part of its own input: auto, “self”.`,
+ s:`autoregression: piece by piece`},
+{id:"B2", lec:"found", sec:"blocks",
+ q:`About the whole stack of a decoder-only transformer, what is true?`,
+ o:[`Token embeddings plus positional encoding go into the first block`,`Each block’s attention is masked multi-head attention`,`Linear and softmax come after every block`,`Each block hands on a single vector for the whole text`], c:[0,1],
+ e:`Embedding plus positions, then N blocks of masked multi-head attention and feed forward, each with Add & Norm, then linear and softmax once at the top. Every block hands on one vector per token.`,
+ s:`decoder blocks`},
+{id:"D2", lec:"tp2", sec:"dist",
+ q:`Why learn by on-policy distillation rather than by SFT on a teacher’s answers?`,
+ o:[`In SFT and DPO the policy’s own mistakes never appear`,`The teacher’s grades fall exactly where the student went wrong`,`The teacher has to write a full answer to every prompt`,`It needs a separately trained reward model`], c:[0,1],
+ e:`The student writes its own answer and the teacher only reads it, in one forward pass, giving every token its own grade. No reward model is involved.`,
+ s:`on-policy distillation`},
+{id:"V2", lec:"tp2", sec:"rlvr",
+ q:`Which checkers can replace a reward model in RLVR?`,
+ o:[`Maths: the final answer is compared with the known one`,`Instructions: a script checks constraints such as “under 50 words”`,`Puzzles: human raters judge each solution`,`Format: a reward model judges whether the JSON looks good`], c:[0,1],
+ e:`Puzzles are generated, so their answer is known in advance; a format checker tests for valid JSON or the right tool call. Code is checked by unit tests in a sandbox.`,
+ s:`reinforcement learning with verifiable rewards`}
 ];
+
+/* Sections of each lecture, in the order the material teaches them */
+const SECTIONS = {
+  intro: [["sym","Symbolic & subsymbolic"],["gen","Generative vs. discriminative"],["prob","Probabilistic view"],["ar","Autoregression"],["tok","Tokens"],["diff","Diffusion"]],
+  found: [["overview","Components"],["emb","Embeddings"],["att","Attention"],["pos","Positional encoding"],["ffn","Feed forward"],["norm","Add & Norm"],["blocks","Decoder blocks"],["lin","Linear & softmax"]],
+  tp1:   [["shape","Architecture: shape"],["inputs","Architecture: inputs"],["ctx","Architecture: long context"],["data","Data"],["pre","Pre-training"]],
+  tp2:   [["mid","Mid-training"],["sft","SFT & DPO"],["dist","On-policy distillation"],["rlhf","RLHF & RLAIF"],["rlvr","RLVR"],["ppo","PPO & GRPO"]]
+};
+const SEC = {
+  I1:"sym",I2:"sym",I3:"sym",I4:"sym", I5:"gen",I8:"gen", I6:"prob",I7:"prob", I9:"ar",
+  I10:"tok",I11:"tok",I12:"tok",I13:"tok",I14:"tok",Z1:"tok", I15:"diff",I16:"diff",I17:"diff",I18:"diff",
+  F1:"overview", E1:"emb",F2:"emb",F3:"emb",
+  F4:"att",F5:"att",F6:"att",F7:"att",F8:"att",F9:"att",F11:"att",E5:"att",E7:"att",
+  E2:"pos",F13:"pos",F14:"pos",F15:"pos",F16:"pos",F17:"pos",F18:"pos",
+  F19:"ffn",F20:"ffn", F21:"norm",F22:"norm", F24:"blocks", F23:"lin",
+  T1:"shape",T2:"shape",T3:"shape",T4:"shape",T5:"shape",T6:"shape",T7:"shape",T8:"shape",E3:"shape",
+  T9:"inputs",T10:"inputs",T11:"inputs",
+  T12:"ctx",T13:"ctx",T15:"ctx",T16:"ctx",T17:"ctx",E4:"ctx",
+  T18:"data",T19:"data",T20:"data",T21:"data",T22:"data",
+  T23:"pre",T24:"pre",T25:"pre",T26:"pre",T27:"pre",T28:"pre",T29:"pre",Z3:"pre",
+  M1:"mid",M2:"mid",M3:"mid",M4:"mid",M5:"mid",M6:"mid",M7:"mid",
+  M8:"sft",M9:"sft",M10:"sft",M11:"sft", M12:"dist",M13:"dist",
+  E6:"rlhf",M14:"rlhf",M15:"rlhf",M16:"rlhf",M18:"rlhf",Z5:"rlhf", M19:"rlvr",
+  M20:"ppo",M21:"ppo",M22:"ppo",M23:"ppo",M24:"ppo",Z4:"ppo"
+};
+Q.forEach((q, i) => { q.sec = q.sec || SEC[q.id]; q.n = i; });
+const LORDER = ["intro","found","tp1","tp2"];
+function secName(q){ const s = SECTIONS[q.lec].find(x => x[0] === q.sec); return s ? s[1] : ""; }
 
 /* ───────── state ───────── */
 const KEY = "genai-quiz-v1";
@@ -715,6 +882,7 @@ function save(){ try { localStorage.setItem(KEY, JSON.stringify(store)); } catch
 let seed = store.seed || Math.floor(Math.random() * 1e9);
 let mode = "practice";           // practice | mock
 let filter = store.filter || "all";
+let sec = store.sec || "";
 let order = [];                  // question ids in the current set
 let idx = 0;
 const picks = {};                // id -> Set of original option indexes
@@ -748,8 +916,12 @@ function inFilter(q, f){
   if (f === "missed") return store.res[q.id] && store.res[q.id] !== "perfect";
   return q.lec === f;
 }
+function sortKey(q){ return [LORDER.indexOf(q.lec), SECTIONS[q.lec].findIndex(x => x[0] === q.sec), q.n]; }
+function cmp(a, b){ const x = sortKey(a), y = sortKey(b); for (let i = 0; i < 3; i++) if (x[i] !== y[i]) return x[i] - y[i]; return 0; }
 function buildOrder(){
-  const ids = Q.filter(q => inFilter(q, filter)).map(q => q.id);
+  const isLec = !!SECTIONS[filter];
+  if (!isLec) sec = "";
+  const ids = Q.filter(q => inFilter(q, filter) && (!sec || q.sec === sec)).sort(cmp).map(q => q.id);
   order = store.shuffled ? shuffled(ids, seed) : ids;
   if (idx >= order.length) idx = 0;
 }
@@ -766,6 +938,13 @@ function renderChips(){
     return `<button class="chip" data-f="${k}" aria-pressed="${filter === k}">${label}<span class="n">${n}</span></button>`;
   }).join("");
   $("#chips").hidden = mode === "mock";
+  const list = SECTIONS[filter];
+  const sc = $("#secchips");
+  sc.hidden = mode === "mock" || !list;
+  if (list) sc.innerHTML = [["", "All sections"], ...list].map(([k, label]) => {
+    const n = Q.filter(q => q.lec === filter && (!k || q.sec === k)).length;
+    return `<button class="chip sec" data-s="${k}" aria-pressed="${sec === k}">${label}<span class="n">${n}</span></button>`;
+  }).join("");
 }
 
 function renderStat(){
@@ -824,7 +1003,7 @@ function renderQuestion(){
     const s = scoreOf(q), g = grade(s);
     const n = q.c.length;
     const label = `${pts(s)} of 1.5 points · ${n === 0 ? "no statement is true" : n === 4 ? "all four are true" : n === 1 ? "one statement is true" : (n === 2 ? "two" : "three") + " statements are true"}`;
-    answer = `<div class="answer">${bulb}<div><div class="result ${g}">${label}</div><p>${q.e}</p><p class="src">${LECT[q.lec].full} · ${q.s}</p></div></div>`;
+    answer = `<div class="answer">${bulb}<div><div class="result ${g}">${label}</div><p>${q.e}</p><p class="src">${q.src || LECT[q.lec].full} · ${q.s}</p></div></div>`;
   }
 
   const last = idx === ids.length - 1;
@@ -835,7 +1014,7 @@ function renderQuestion(){
 
   $("#view").innerHTML = `<main class="card">
     <div class="qhead"><span class="eyebrow">Question ${idx + 1}${mode === "mock" ? ` of ${ids.length}` : ""}</span>
-      <span class="tag ${q.ex ? "ex" : ""}">${q.ex ? "From the example sheet · " : ""}${LECT[q.lec].full}</span></div>
+      <span class="tag ${q.ex ? "ex" : ""}">${q.ex ? "From the example sheet · " : ""}${LECT[q.lec].short} · ${secName(q)}</span></div>
     <div class="qrow"><p class="qtext ${q.vis ? "" : "wide"}">${q.q}</p>${q.vis ? `<div class="vis">${q.vis}</div>` : ""}</div>
     <ol class="opts">${opts}</ol>
     ${answer}
@@ -922,7 +1101,8 @@ function setMode(m){
 document.addEventListener("click", e => {
   const t = e.target.closest("button"); if (!t) return;
   if (t.matches(".opt")) return toggle(+t.dataset.o);
-  if (t.matches(".chip")) { filter = t.dataset.f; store.filter = filter; idx = 0; save(); buildOrder(); return render(); }
+  if (t.matches(".chip.sec")) { sec = t.dataset.s; store.sec = sec; idx = 0; save(); buildOrder(); return render(); }
+  if (t.matches(".chip")) { filter = t.dataset.f; sec = ""; store.filter = filter; store.sec = ""; idx = 0; save(); buildOrder(); return render(); }
   if (t.matches(".dot")) return go(+t.dataset.i);
   if (t.matches(".rowq")) { idx = +t.dataset.i; return render(); }
   switch (t.id) {
