@@ -709,6 +709,7 @@ const Q = [
 const KEY = "genai-quiz-v1";
 const store = (() => { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } })();
 store.res = store.res || {};
+store.pts = store.pts || {};
 function save(){ try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} }
 
 let seed = store.seed || Math.floor(Math.random() * 1e9);
@@ -777,7 +778,9 @@ function renderStat(){
   }
   const tried = Object.keys(store.res).filter(id => byId[id]);
   const right = tried.filter(id => store.res[id] === "perfect").length;
-  $("#stat").innerHTML = `<b>${right}</b> fully right · ${tried.length} of ${Q.length} tried`;
+  const scored = tried.filter(id => store.pts[id] != null);
+  const got = scored.reduce((a, id) => a + store.pts[id], 0);
+  $("#stat").innerHTML = `<b>${pts(got)}</b> / ${pts(scored.length * 1.5)} points · ${right} fully right · ${tried.length} of ${Q.length} tried`;
 }
 
 function renderDots(){
@@ -877,7 +880,7 @@ function check(){
   const q = byId[order[idx]];
   if (!q || checked[q.id]) return;
   checked[q.id] = true;
-  store.res[q.id] = grade(scoreOf(q)); save();
+  store.res[q.id] = grade(scoreOf(q)); store.pts[q.id] = scoreOf(q); save();
   render();
 }
 function go(i){
@@ -900,7 +903,7 @@ function clockText(){
 }
 function handIn(){
   mock.done = true;
-  mock.ids.forEach(id => { store.res[id] = grade(scoreOf(byId[id])); }); save();
+  mock.ids.forEach(id => { store.res[id] = grade(scoreOf(byId[id])); store.pts[id] = scoreOf(byId[id]); }); save();
   renderSummary();
 }
 setInterval(() => {
@@ -937,7 +940,7 @@ document.addEventListener("click", e => {
       if (mode === "practice") { buildOrder(); idx = 0; }
       return render();
     case "reset":
-      store.res = {}; save(); Object.keys(checked).forEach(k => delete checked[k]); Object.keys(picks).forEach(k => delete picks[k]);
+      store.res = {}; store.pts = {}; save(); Object.keys(checked).forEach(k => delete checked[k]); Object.keys(picks).forEach(k => delete picks[k]);
       return render();
   }
 });
