@@ -136,9 +136,115 @@ ol.opts{list-style:none;margin:0;padding:0;display:grid;gap:4px}
 .empty{padding:40px 0;color:var(--muted)}
 footer{margin-top:40px;font-size:.8rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center}
 footer button{border:0;background:none;padding:0;color:var(--muted);text-decoration:underline;font-size:.8rem}
+/* Learn: a table of contents beside one lesson, laid out with the example sheet's tokens */
+.learn{display:grid;grid-template-columns:220px minmax(0,1fr);gap:40px;padding-top:26px}
+.toc{position:sticky;top:76px;align-self:start;max-height:calc(100vh - 96px);overflow:auto;font-size:.85rem;padding-bottom:12px}
+.tocg{margin-bottom:14px}
+.toch{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--sub);margin:0 0 4px 8px}
+.tocl{display:flex;gap:8px;align-items:center;width:100%;border:0;background:transparent;text-align:left;padding:4px 8px;border-radius:6px;color:var(--fg);font-size:.85rem;line-height:1.3}
+.tocl:hover{background:var(--panel)}
+.tocl.cur{background:var(--accent-soft);color:var(--accent);font-weight:700}
+.rd{flex:none;width:8px;height:8px;border-radius:50%;border:1.5px solid var(--muted)}
+.rd.on{background:var(--accent);border-color:var(--accent)}
+.tocl .tt{flex:1;min-width:0}
+.tocl .n{color:var(--muted);font-size:.72rem;font-variant-numeric:tabular-nums;white-space:nowrap}
+.lsel{display:none;width:100%;font:inherit;font-size:.95rem;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);margin-bottom:18px}
+#view{scroll-margin-top:72px}
+.lesson{min-width:0}
+.lesson h2{font-family:var(--display);font-weight:500;color:var(--accent);font-size:clamp(1.6rem,3.6vw,2.2rem);line-height:1.15;margin:8px 0 14px;text-wrap:balance}
+.lesson h3{font-family:var(--display);font-weight:600;font-size:1.18rem;margin:32px 0 8px;color:var(--fg)}
+.lesson p{margin:0 0 12px;max-width:70ch}
+.lesson .lead{font-size:1.08rem}
+.lesson i{font-family:"Cambria Math","STIX Two Math","Latin Modern Math",Georgia,serif}
+.fig{margin:16px 0 22px;min-width:0;max-width:100%}
+.fig figcaption{font-size:.8rem;color:var(--sub);margin-top:8px;max-width:70ch;line-height:1.45}
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch}
+.node{border:1px solid var(--line);border-radius:8px;padding:8px 12px;background:var(--bg);min-width:0;flex:1 1 120px;max-width:280px}
+.node b{display:block;font-size:.92rem;line-height:1.3}
+.node span{display:block;font-size:.8rem;color:var(--sub);line-height:1.35;margin-top:3px}
+.node.acc{border-color:var(--accent);background:var(--accent-soft)}
+.node.a{border-color:var(--mid);background:#fbf4e6}
+.node.b{border-color:var(--accent);background:var(--accent-soft)}
+.node.bad{border-color:var(--bad);background:var(--bad-soft)}
+.arr{align-self:center;color:var(--muted);font-weight:700}
+.arr.op{font-size:1.15rem;color:var(--fg)}
+.bars{display:grid;grid-template-columns:auto minmax(60px,1fr) auto;gap:6px 10px;align-items:center;max-width:480px}
+.br{display:contents}
+.bl{font-family:var(--mono);font-size:.82rem}
+.bt{height:14px;background:var(--panel);border-radius:3px;overflow:hidden}
+.bt span{display:block;height:100%;background:var(--muted)}
+.br.hl .bt span{background:var(--accent)}
+.br.hl .bl{font-weight:500;color:var(--accent)}
+.bv{font-variant-numeric:tabular-nums;font-size:.8rem;color:var(--sub);text-align:right;white-space:nowrap}
+.tw{overflow-x:auto;max-width:100%}
+.vt.lt{font-size:.86rem;width:100%}
+.vt.lt th,.vt.lt td{white-space:normal;text-align:left;vertical-align:top;padding:6px 10px;line-height:1.4}
+.vt.lt td:first-child,.vt.lt th:first-child{font-family:var(--body);font-size:.86rem}
+.vt.lt th:first-child{font-size:.78rem}
+.vt.lt.num td,.vt.lt.num th{text-align:right;white-space:nowrap}
+.vt.lt.num td:first-child,.vt.lt.num th:first-child{text-align:left;white-space:normal}
+.ok{color:var(--accent);font-weight:700}
+.no{color:var(--bad);font-weight:700}
+.formula{background:var(--panel);border-left:3px solid var(--accent);padding:12px 16px;margin:14px 0;font-family:"Cambria Math","STIX Two Math","Latin Modern Math",Georgia,serif;font-size:1.06rem;overflow-x:auto;line-height:1.8;max-width:100%}
+.fnote{display:block;font-family:var(--body);font-size:.8rem;color:var(--sub);margin-top:2px;line-height:1.4}
+.callout{background:var(--panel);padding:12px 16px;border-radius:2px;margin:16px 0;font-size:.94rem;max-width:70ch}
+.keys{border:1px solid var(--accent);border-radius:10px;padding:14px 18px 10px;margin:34px 0 8px;background:#f6fafa}
+.kh{font-family:var(--display);font-weight:600;color:var(--accent);margin-bottom:6px;font-size:.86rem;letter-spacing:.1em;text-transform:uppercase}
+.keys ul{margin:0;padding-left:18px}
+.keys li{margin:0 0 6px;font-size:.93rem}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:14px 0}
+.cols.two{grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
+.colc{border:1px solid var(--line);border-radius:8px;padding:10px 14px;min-width:0}
+.colc h4{margin:0 0 6px;font-size:.95rem}
+.colc p{margin:0 0 6px;font-size:.9rem}
+.colc.acc{border-color:var(--accent);background:#f6fafa}
+.colc.bad{border-color:#f0c2b2;background:#fff8f5}
+.big2{font-size:1.3rem}
+.small{font-size:.82rem;color:var(--sub)}
+.code{font-family:var(--mono);font-size:.78rem;background:var(--panel);padding:12px 14px;border-radius:6px;overflow-x:auto;line-height:1.55;margin:12px 0;max-width:100%}
+.toks{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}
+.tk{display:inline-flex;flex-direction:column;align-items:center;background:var(--accent-soft);border-radius:5px;padding:4px 8px;font-family:var(--mono);font-size:.85rem;line-height:1.3}
+.tk small{font-size:.68rem;color:var(--muted)}
+.tk.hl{background:var(--hl);outline:1.5px solid var(--hl-line)}
+.mgrid{display:grid;gap:3px;font-size:.72rem;font-family:var(--mono);width:max-content;max-width:100%;overflow-x:auto}
+.ml{color:var(--sub);text-align:center;white-space:nowrap;align-self:end}
+.ml.r{text-align:right;padding-right:6px;align-self:center}
+.mc{height:28px;display:grid;place-items:center;border-radius:3px}
+.mc.on{background:var(--accent-soft)}
+.mc.on.d1{background:#f3e9d6}.mc.on.d2{background:#fde6df}.mc.on.d3{background:#e9e4f2}
+.mc.off{background:var(--panel);color:var(--muted)}
+.mc.off.x{color:var(--bad)}
+.where{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.wp{border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:4px 10px;font-size:.8rem;font-weight:600;color:var(--sub);line-height:1.35}
+.wp:hover{border-color:var(--fg)}
+.wp.on{border-color:var(--accent);background:var(--accent);color:var(--accent-ink)}
+.wp small{display:block;font-weight:400;font-size:.76rem}
+.rep{display:inline-flex;flex-wrap:wrap;gap:6px;align-items:center;border:1.5px dashed var(--muted);border-radius:8px;padding:18px 8px 6px;position:relative}
+.rn{position:absolute;top:2px;left:8px;font-size:.66rem;color:var(--muted);font-weight:600}
+.wstack{display:grid;gap:6px}
+.wstack .wp{text-align:left;width:100%}
+.stackd{display:grid;gap:6px;max-width:440px}
+.sl{border:1px solid var(--line);border-radius:6px;padding:7px 12px;font-size:.88rem;font-weight:600;text-align:center;position:relative}
+.sl small{display:block;font-weight:400;color:var(--sub);font-size:.76rem}
+.sl.k{background:var(--accent-soft);border-color:var(--accent)}
+.sl.repb{border:1.5px dashed var(--muted);display:grid;gap:6px;padding:22px 10px 10px}
+.sl.out,.sl.in{background:var(--panel)}
+.clks{display:flex;gap:28px;flex-wrap:wrap}
+.clk{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:.8rem;color:var(--sub)}
+.dstrip{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;max-width:540px}
+.ds svg{width:100%;height:auto;border-radius:4px;display:block}
+.ds span{font-size:.72rem;color:var(--sub)}
+.pic{width:100%;max-width:260px;height:auto;display:block}
+.pic.wide{max-width:440px}
+.pic text{font-family:var(--body)}
+.steps,.tight{padding-left:22px;margin:8px 0 14px;max-width:70ch}
+.steps li,.tight li{margin:4px 0}
+.lnk{border:0;background:none;padding:0;color:var(--accent);font-weight:700;text-decoration:underline;font-size:inherit;text-align:left}
+.lfoot{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:28px;border-top:1px solid var(--line);padding-top:18px}
+@media (max-width:899px){.learn{grid-template-columns:minmax(0,1fr);gap:0;padding-top:18px}.toc{display:none}.lsel{display:block}}
 @media (max-width:560px){
   nav.bar{position:static}
-  .stat{margin-left:0;width:100%}
+  .stat{margin-left:0;width:100%;white-space:normal}
   .qrow{gap:16px}
   .hint{display:none}
 }
@@ -150,12 +256,13 @@ footer button{border:0;background:none;padding:0;color:var(--muted);text-decorat
 <div class="wrap">
   <header class="top">
     <span class="corner" aria-hidden="true"></span>
-    <h1>Test 1 · Practice questions</h1>
+    <h1>Test 1 · Learn and practise</h1>
     <p class="sub" id="subline">194.207 Generative AI · questions as on the test, each with its answer</p>
   </header>
 
   <nav class="bar" aria-label="Quiz controls">
     <div class="seg" role="group" aria-label="Mode">
+      <button id="m-learn" aria-pressed="false">Learn</button>
       <button id="m-practice" aria-pressed="true">Practice</button>
       <button id="m-mock" aria-pressed="false">Mock test</button>
     </div>
@@ -872,6 +979,1044 @@ Q.forEach((q, i) => { q.sec = q.sec || SEC[q.id]; q.n = i; });
 const LORDER = ["intro","found","tp1","tp2"];
 function secName(q){ const s = SECTIONS[q.lec].find(x => x[0] === q.sec); return s ? s[1] : ""; }
 
+/* ───────── Learn: one lesson per section, in the order the material teaches it ───────── */
+const LX = {
+  bars(rows, cap){
+    return `<figure class="fig"><div class="bars">${rows.map(([l, v, h]) =>
+      `<div class="br${h ? " hl" : ""}"><span class="bl">${l}</span><span class="bt"><span style="width:${Math.max(v, 0.6)}%"></span></span><span class="bv">${v} %</span></div>`).join("")}</div>${cap ? `<figcaption>${cap}</figcaption>` : ""}</figure>`;
+  },
+  flow(items, cap){
+    return `<figure class="fig"><div class="flow">${items.map(it => {
+      if (it === ">") return `<span class="arr" aria-hidden="true">→</span>`;
+      if (it === "+" || it === "=" || it === "×") return `<span class="arr op" aria-hidden="true">${it}</span>`;
+      const [t, s, cls] = Array.isArray(it) ? it : [it];
+      return `<div class="node ${cls || ""}"><b>${t}</b>${s ? `<span>${s}</span>` : ""}</div>`;
+    }).join("")}</div>${cap ? `<figcaption>${cap}</figcaption>` : ""}</figure>`;
+  },
+  tbl(head, rows, cap, cls){
+    return `<figure class="fig"><div class="tw"><table class="vt lt ${cls || ""}"><thead><tr>${head.map(h => `<th>${h}</th>`).join("")}</tr></thead><tbody>${
+      rows.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>${cap ? `<figcaption>${cap}</figcaption>` : ""}</figure>`;
+  },
+  f(html, note){ return `<div class="formula">${html}${note ? `<span class="fnote">${note}</span>` : ""}</div>`; },
+  keys(items){ return `<div class="keys"><div class="kh">Remember for the test</div><ul>${items.map(i => `<li>${i}</li>`).join("")}</ul></div>`; },
+  note(html){ return `<div class="callout">${html}</div>`; },
+  cols(cards){ return `<div class="cols">${cards.map(([h, body, cls]) => `<div class="colc ${cls || ""}"><h4>${h}</h4>${body}</div>`).join("")}</div>`; },
+  code(txt){ return `<pre class="code">${txt.replace(/&/g, "&amp;").replace(/</g, "&lt;")}</pre>`; },
+  toks(list){ return `<div class="toks">${list.map(([t, id, hl]) => `<span class="tk${hl ? " hl" : ""}"><span>${t}</span>${id != null ? `<small>${id}</small>` : ""}</span>`).join("")}</div>`; },
+  /* a square grid of attention cells: fn(i, j) -> [text, cls] */
+  grid(labels, fn, cap){
+    const n = labels.length;
+    let h = `<div class="mgrid" style="grid-template-columns:auto repeat(${n},minmax(30px,44px))"><span></span>${labels.map(l => `<span class="ml">${l}</span>`).join("")}`;
+    labels.forEach((l, i) => { h += `<span class="ml r">${l}</span>`; for (let j = 0; j < n; j++) { const [t, c] = fn(i, j); h += `<span class="mc ${c || ""}">${t}</span>`; } });
+    return `<figure class="fig">${h}</div>${cap ? `<figcaption>${cap}</figcaption>` : ""}</figure>`;
+  },
+  /* where a part sits in the decoder-only transformer */
+  where(hl){
+    const p = (k, t) => `<button class="wp${hl === k ? " on" : ""}" data-go="found:${k}">${t}</button>`;
+    return `<figure class="fig"><div class="where">
+      ${p("emb", "Embedding")}<span class="arr">→</span>${p("pos", "Positions")}<span class="arr">→</span>
+      <span class="rep"><span class="rn">× N decoder blocks</span>${p("att", "Masked multi-head attention")}<span class="arr">→</span>${p("norm", "Add &amp; Norm")}<span class="arr">→</span>${p("ffn", "Feed forward")}<span class="arr">→</span>${p("norm", "Add &amp; Norm")}</span>
+      <span class="arr">→</span>${p("lin", "Linear")}<span class="arr">→</span>${p("lin", "Softmax")}</div>
+      <figcaption>Where this part sits in the decoder-only transformer. Click a part to open its lesson.</figcaption></figure>`;
+  },
+  /* where a stage sits in the training pipeline */
+  pipe(hl){
+    const st = [["shape", "Architecture"], ["data", "Data"], ["pre", "Pre-training"], ["mid", "Mid-training"], ["post", "Post-training"]];
+    const lec = {shape: "tp1", data: "tp1", pre: "tp1", mid: "tp2", post: "tp2"};
+    const go = {shape: "tp1:shape", data: "tp1:data", pre: "tp1:pre", mid: "tp2:mid", post: "tp2:sft"};
+    return `<figure class="fig"><div class="where">${st.map(([k, t], i) =>
+      `${i ? `<span class="arr">→</span>` : ""}<button class="wp${hl === k ? " on" : ""}" data-go="${go[k]}">${t}</button>`).join("")}</div>
+      <figcaption>The pilot's pipeline, from design to a model that answers. Click a stage to open it.</figcaption></figure>`;
+  },
+  /* a dial with two hands at angles a and b (radians) */
+  clock(a, b, label){
+    const x = r => 40 + 30 * Math.cos(r), y = r => 40 - 30 * Math.sin(r);
+    return `<div class="clk"><svg viewBox="0 0 80 80" width="96" height="96" aria-hidden="true">
+      <circle cx="40" cy="40" r="34" fill="none" stroke="var(--line)" stroke-width="2"/>
+      <line x1="40" y1="40" x2="${x(a).toFixed(1)}" y2="${y(a).toFixed(1)}" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/>
+      <line x1="40" y1="40" x2="${x(b).toFixed(1)}" y2="${y(b).toFixed(1)}" stroke="var(--bad)" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="40" cy="40" r="3" fill="var(--fg)"/></svg><span>${label}</span></div>`;
+  }
+};
+
+const LESSONS = [
+/* ═════════════ Introduction to Generative AI ═════════════ */
+{lec: "intro", sec: "sym", title: "Symbolic and subsymbolic AI", html: `
+<p class="lead">AI has two branches from its first days on. A symbolic system reasons with rules that people write. A subsymbolic one learns patterns from data. Generative AI lives entirely on the subsymbolic side.</p>
+
+<h3>Where the field started</h3>
+<p>In August 1955 John McCarthy, Marvin Minsky, Nathaniel Rochester and Claude Shannon asked the Rockefeller Foundation for $13,500 to study “how to make machines use language, form abstractions and concepts, solve kinds of problems now reserved for humans, and improve themselves”. They proposed “a 2 month, 10 man study” and expected “a significant advance” in one summer. The foundation gave about half, “a modest gamble”. That summer gave the field its name, Artificial Intelligence.</p>
+${LX.flow([["Artificial intelligence", "1955"], ">", ["Symbolic AI", "symbols + rules people write", "a"], ["Subsymbolic AI", "patterns learned from data", "b"]], "The two branches of the map of AI.")}
+
+<h3>Symbolic AI: symbols and explicit rules</h3>
+<p>A symbolic system defines formal symbols and draws logical conclusions with explicit rules. To describe animals it could use <i>Horns(x)</i>, <i>Udder(x)</i>, <i>Hooves(x)</i>, <i>Tail(x)</i> and <i>Cow(x)</i>, and one rule:</p>
+${LX.f(`∀<i>x</i> ( <i>Horns</i>(<i>x</i>) ∧ <i>Udder</i>(<i>x</i>) ∧ <i>Hooves</i>(<i>x</i>) ∧ <i>Tail</i>(<i>x</i>) → <i>Cow</i>(<i>x</i>) )`, "every animal with horns, an udder, hooves and a tail is a cow")}
+<p>A person can follow every step from input to output, because both the symbols and the rules are human-understandable. Symbolic AI covers <b>expert systems</b>, <b>search and planning</b> algorithms and <b>knowledge representation</b>. Known as “Good Old Fashioned AI”, it was arguably the dominant approach until the late 1980s.</p>
+<p>Its main limit: a symbolic system only knows what its rules say, so it cannot handle what its authors did not foresee.</p>
+${LX.tbl(["Animal", "Horns", "Udder", "Hooves", "Tail", "The rule concludes"], [
+  ["The Holstein", "✓", "✓", "✓", "✓", "Cow(x) <span class='ok'>✓ right</span>"],
+  ["The same cow, dehorned", "–", "✓", "✓", "✓", "nothing <span class='no'>✗ wrong</span>"],
+  ["A female goat", "✓", "✓", "✓", "✓", "Cow(x) <span class='no'>✗ wrong</span>"],
+  ["A dog", "–", "–", "–", "✓", "nothing <span class='ok'>✓ right</span>"]],
+  "The cow rule is right about 2 of 4 animals. Many dairy cows have their horns removed, so the rule no longer applies, though anyone can see it is still a cow. A female goat has all four, so the rule calls it a cow. Each fix is another rule someone must think of, and there is always one more exception.")}
+<p>Purely symbolic systems struggle to base outputs on unknown relationships, because they can only reason within patterns that are explicitly encoded or derived.</p>
+
+<h3>Subsymbolic AI: learning from raw numbers</h3>
+<p>Subsymbolic AI, usually called <b>machine learning</b>, uses mathematical models that learn patterns from data without explicit rules. Every AI system works with numbers in the end. A symbolic system first has a person define symbols and attach meaning to them. A subsymbolic system skips that step and works on the world as raw numbers, none of which means anything by itself. What it knows, it holds as patterns across many numbers, below the level of symbols, hence <i>sub</i>symbolic.</p>
+${LX.tbl(["Input", "becomes", "for example"], [
+  ["picture", "pixels", "103 100 99 73 146 121 …"],
+  ["text", "tokens", "The 785 · cow 19362 · says 2727 · moo 45871"],
+  ["sound", "samples", "−0.36 0.31 −0.56 0.38 …"],
+  ["video", "frames", "204 174 146 182 …"],
+  ["DNA", "bases", "A 0 · T 3 · G 2 · A 0 …"],
+  ["record", "fields", "weight 650 · milk 28 · age 4 · horns 1"]], "Each input is parsed into numbers.")}
+<p>The field spans <b>classical statistics</b> such as linear regression, <b>ensembles</b> such as random forests and, most prominently, <b>artificial neural networks</b>.</p>
+${LX.note(`<b>A random forest that sorts spam is subsymbolic.</b> Its trees split on rules such as <i>contains “winner”</i>, but nobody wrote them: they were learned from a million labelled e-mails, hundreds of trees, and no single one says why an e-mail is spam. What makes a system subsymbolic is where its knowledge comes from, examples rather than rules people write. It does not have to be a neural network.`)}
+
+<h3>What learning costs: interpretability and control</h3>
+<p>The knowledge of a subsymbolic system is spread across learned values, its <b>parameters</b>, not rules anyone can read. It learns whatever pattern tells its examples apart, whether or not that is the one we meant, and it cannot simply be told what it got wrong.</p>
+${LX.flow([["Trained on cows on green pastures"], ">", ["Learns: a cow comes with grass around it"], ">", ["Fails on a cow on a beach", "", "bad"], ">", ["Remedy: more cows in other places, train again, check"]])}
+<p>There is no rule to correct. Interpretability and controllability are limited: decisions are hard to explain, and errors can only be corrected indirectly, by retraining on other data.</p>
+${LX.tbl(["", "Symbolic", "Subsymbolic"], [
+  ["Where the knowledge comes from", "rules people write", "examples"],
+  ["Can you read why it decided?", "yes", "hardly"],
+  ["How you correct it", "change the rule", "train on other examples"],
+  ["Cases nobody thought of beforehand", "usually fails", "often handles them"]])}
+<p>Approaches that bridge the two worlds are called <b>neuro-symbolic</b> or <b>bilateral AI</b>.</p>
+${LX.keys([
+  "Symbolic: formal symbols and explicit rules written by people; readable and traceable; expert systems, search and planning, knowledge representation; “GOFAI”, dominant until the late 1980s.",
+  "Symbolic fails on what its authors did not foresee (the dehorned cow, the goat).",
+  "Subsymbolic = machine learning: knowledge from examples, held in parameters, below the level of symbols. Linear regression and random forests count too, not only neural networks.",
+  "A learned model can pick up unwanted patterns (grass) and is corrected only indirectly, by retraining on other data.",
+  "Generative AI is entirely subsymbolic. Bridges between the two are neuro-symbolic or bilateral AI."])}
+`},
+
+{lec: "intro", sec: "gen", title: "Generative vs. discriminative models", html: `
+<p class="lead">Machine intelligence is built with one of two aims: a discriminative model learns where one class ends and another begins; a generative model learns what the data itself looks like, so it can make new samples.</p>
+
+<h3>Discriminative: a child learning what a cow is</h3>
+<p>Someone points. A tree: not a cow. A donkey: not a cow. A Holstein: a cow. A goat with horns: not a cow. The same Holstein without horns: still a cow. With every example the child moves a mental line between cow and not-cow, until it sits where it should. That line is the <b>decision boundary</b>, and it is what a discriminative model learns.</p>
+${LX.note(`<b>It needs cows and non-cows.</b> From cows alone the line could be anywhere: a model that answers “cow” to every photo would be right about all of them. A list of what makes a cow is the symbolic way, and the horn rule showed where that ends.`)}
+<p>The boundary can be <b>linear</b> (a straight line through the feature space) or <b>non-linear</b> (a curve that bends around the classes).</p>
+
+<h3>Generative: art class</h3>
+<p>Asked to draw a cow, you start poorly, but every drawing and correction teaches you more of what a cow looks like overall, not only where cows end and other animals begin. That is what a generative model learns, and for it cows alone are enough.</p>
+
+<figure class="fig"><div class="cols two">
+<div class="colc"><h4>Discriminative</h4>
+<svg viewBox="0 0 200 130" class="pic" aria-hidden="true">
+${[[30,30],[50,55],[25,80],[60,25],[45,100],[70,75]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="6" fill="var(--accent)"/>`).join("")}
+${[[140,35],[160,70],[130,95],[175,30],[150,110],[120,60]].map(([x,y])=>`<rect x="${x-6}" y="${y-6}" width="12" height="12" fill="var(--mid)"/>`).join("")}
+<path d="M95 5 C 80 50, 110 80, 92 125" fill="none" stroke="var(--fg)" stroke-width="2.5" stroke-dasharray="6 4"/>
+</svg><p class="small">Learns the boundary between puppies (●) and kittens (■).</p></div>
+<div class="colc"><h4>Generative</h4>
+<svg viewBox="0 0 200 130" class="pic" aria-hidden="true">
+<ellipse cx="50" cy="62" rx="42" ry="50" fill="var(--accent-soft)"/><ellipse cx="50" cy="62" rx="22" ry="28" fill="none" stroke="var(--accent)" stroke-width="1.5"/>
+<ellipse cx="150" cy="70" rx="42" ry="48" fill="#f3e9d6"/><ellipse cx="150" cy="70" rx="22" ry="26" fill="none" stroke="var(--mid)" stroke-width="1.5"/>
+${[[30,30],[50,55],[25,80],[60,25],[45,100],[70,75]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="6" fill="var(--accent)"/>`).join("")}
+${[[140,35],[160,70],[130,95],[175,50],[150,110],[125,60]].map(([x,y])=>`<rect x="${x-6}" y="${y-6}" width="12" height="12" fill="var(--mid)"/>`).join("")}
+<path d="M58 44 l3 7 7 1 -5 5 1 7 -6-3 -6 3 1-7 -5-5 7-1z" fill="var(--bad)"/>
+</svg><p class="small">Learns what each class looks like, and draws a new sample (★) from it.</p></div>
+</div><figcaption>Discriminative models learn a decision boundary; generative models learn the data itself and can draw new samples from it.</figcaption></figure>
+
+<p>In the language of probability (next section): a discriminative model learns <i>p</i>(<i>Y</i> | <i>X</i>), a generative model learns <i>p</i>(<i>X</i>), or <i>p</i>(<i>X</i>, <i>Y</i>) when the data come with labels.</p>
+${LX.keys([
+  "Discriminative = decision boundary between classes; needs examples from both sides of the line.",
+  "Generative = what the data looks like overall; can sample new data points; examples of the class itself are enough.",
+  "Boundaries can be linear or non-linear.",
+  "Both are learned (subsymbolic) families; a list of rules is the symbolic way."])}
+`},
+
+{lec: "intro", sec: "prob", title: "The probabilistic view", html: `
+<p class="lead">Most state-of-the-art machine learning rests on one stance: intelligence can show itself in knowing probability distributions, and regularities of the world show up as differences in probability.</p>
+${LX.bars([["“The cow says moo”", 80, 1], ["“The cow says meow”", 20]], "Qwen3-0.6B-Base finds “The cow says moo” about four times as likely as “The cow says meow” (shown as shares of the two). In that sense it knows something about what cows say.")}
+
+<h3>Joint, marginal and conditional</h3>
+<p>Take two random variables: <i>X</i>, the animal an audio sensor records, and <i>Y</i>, the sound it hears. Their <b>joint distribution</b> <i>p</i>(<i>X</i>, <i>Y</i>) gives every pair a probability, and all of them add up to 1. Everything else follows from it.</p>
+${LX.tbl(["animal ↓ · sound →", "moo", "woof", "meow", "nothing", "sum = p(X)"], [
+  ["cow", "<b>14 %</b>", "1 %", "1 %", "24 %", "<b>40 %</b>"],
+  ["dog", "1 %", "12 %", "1 %", "16 %", "30 %"],
+  ["cat", "1 %", "1 %", "10 %", "18 %", "30 %"],
+  ["sum = p(Y)", "<b>16 %</b>", "14 %", "12 %", "58 %", "100 %"]], "A made-up joint distribution for a sensor on a farm. The row and column sums are the marginals.", "num")}
+<ul class="tight">
+<li><b>Marginal</b> <i>p</i>(<i>X</i>) forgets the other variable: how likely each animal is, whatever the sound. It is a sum: <i>p</i>(<i>x</i>) = Σ<sub><i>y</i></sub> <i>p</i>(<i>x</i>, <i>y</i>).</li>
+<li><b>Conditional</b> <i>p</i>(<i>Y</i> | <i>X</i> = <i>x</i>) is the distribution of <i>Y</i> once <i>X</i> is known: the joint probabilities of that <i>x</i> divided by their sum, so they add up to 1 again.</li>
+</ul>
+${LX.f(`<i>p</i>(<i>y</i> | <i>x</i>) = <i>p</i>(<i>x</i>, <i>y</i>) / <i>p</i>(<i>x</i>)`)}
+${LX.bars([["moo", 35, 1], ["woof", 3], ["meow", 3], ["nothing", 60]], "p(sound | animal = cow): the cow row divided by its sum, 40 %.")}
+
+<h3>Product rule and Bayes' rule</h3>
+<p>Read the other way round, the conditional gives the <b>product rule</b>: the probability of both is that of the first times that of the second given the first. Since it holds with <i>X</i> and <i>Y</i> swapped too, a conditional can be turned around: <b>Bayes' rule</b>.</p>
+${LX.f(`<i>p</i>(<i>x</i>, <i>y</i>) = <i>p</i>(<i>x</i>) · <i>p</i>(<i>y</i> | <i>x</i>) &nbsp;&nbsp;&nbsp;&nbsp; <i>p</i>(<i>x</i> | <i>y</i>) = <i>p</i>(<i>y</i> | <i>x</i>) · <i>p</i>(<i>x</i>) / <i>p</i>(<i>y</i>)`)}
+${LX.note(`<b>Worked example.</b> The sensor hears a moo. <i>p</i>(cow | moo) = <i>p</i>(cow, moo) / <i>p</i>(moo) = 0.14 / 0.16 ≈ <b>88 %</b>: the moo column divided by its sum. The other way round it is far less sure: <i>p</i>(moo | cow) = 0.14 / 0.40 = <b>35 %</b>, because a cow is mostly silent. The two conditionals are not the same thing.`)}
+
+<h3>What each kind of model learns</h3>
+${LX.cols([
+  ["Discriminative", `<p class="big2"><i>p</i>(<i>Y</i> | <i>X</i>)</p><p>How likely “cow” is, given the picture. <i>X</i> is the set of input features, <i>Y</i> the labels. Its decision boundary runs where the classes are equally likely.</p>`],
+  ["Generative", `<p class="big2"><i>p</i>(<i>X</i>) or <i>p</i>(<i>X</i>, <i>Y</i>)</p><p>How likely the picture itself is. With labels, the labels are part of the data, so it is the joint. It generates by <b>sampling</b> <i>x</i> from the learned distribution, the likely ones more often than the unlikely.</p>`, "acc"]])}
+<p class="small">Features are the individual, more or less independent variables that the model learns and decides from.</p>
+${LX.keys([
+  "Joint p(X, Y) sums to 1 over all pairs; marginal = sum over the other variable; conditional = joint ÷ marginal.",
+  "Product rule p(x, y) = p(x) p(y | x); Bayes' rule turns a conditional around.",
+  "p(cow | moo) = 88 % but p(moo | cow) = 35 %: read the right row or column.",
+  "Discriminative learns p(Y | X); generative learns p(X), or p(X, Y) with labels, and samples from it."])}
+`},
+
+{lec: "intro", sec: "ar", title: "Autoregression: piece by piece", html: `
+<p class="lead">Generative models mostly approximate <i>p</i>(<i>x</i>) in one of two ways: autoregressive next-token prediction, which makes the output piece by piece, or diffusion, which makes all of it at once.</p>
+${LX.cols([["Autoregression", "<p>Piece by piece: one element at a time, each predicted from all the ones before it.</p>", "acc"], ["Diffusion", "<p>All at once: starts with the whole output as noise and makes every part a little less noisy, step after step.</p>"]])}
+
+<h3>Everything is a sequence</h3>
+<p>Almost any data can be read as a sequence <i>x</i><sub>1</sub>, <i>x</i><sub>2</sub>, …, <i>x</i><sub><i>T</i></sub>: a text as its tokens, a picture as small patches in reading order, a sound as its samples, a video as the patches of one frame after another, DNA as its bases. An autoregressive model predicts the next element from all the elements before it:</p>
+${LX.f(`<i>p</i>(<i>x</i><sub><i>t</i></sub> | <i>x</i><sub>1</sub>, <i>x</i><sub>2</sub>, …, <i>x</i><sub><i>t</i>−1</sub>)`)}
+
+<h3>Generating: draw, append, predict again</h3>
+${LX.bars([["· is", 41, 1], ["· jumped", 12], ["· was", 10], ["· gives", 7.0], ["· says", 5.0], ["other", 25]], "After “The cow” (made-up probabilities). The model draws one token, as likely as its bar, appends it, and predicts again from the longer text.")}
+<p>To generate, the model draws <i>x</i><sub><i>t</i></sub> from this distribution, appends it, and predicts <i>x</i><sub><i>t</i>+1</sub> from the longer sequence, which now contains what the model just made itself. The name says exactly that: <b>auto</b>, Greek <i>autós</i>, “self”, because it predicts from its own output; <b>regressive</b>, Latin <i>regressus</i>, “a going back”, because it predicts a value from the values before it, as autoregressive time-series models do.</p>
+
+<h3>The chain rule: why next-token prediction models p(x)</h3>
+<p>The product rule applied again and again gives a whole sequence's probability from its parts:</p>
+${LX.f(`<i>p</i>(<i>x</i><sub>1</sub>, <i>x</i><sub>2</sub>, <i>x</i><sub>3</sub>) = <i>p</i>(<i>x</i><sub>1</sub>) · <i>p</i>(<i>x</i><sub>2</sub> | <i>x</i><sub>1</sub>) · <i>p</i>(<i>x</i><sub>3</sub> | <i>x</i><sub>1</sub>, <i>x</i><sub>2</sub>)<br><i>p</i>(<i>x</i><sub>1</sub>, …, <i>x</i><sub><i>n</i></sub>) = ∏<sub><i>i</i>=1</sub><sup><i>n</i></sup> <i>p</i>(<i>x</i><sub><i>i</i></sub> | <i>x</i><sub>1</sub>, …, <i>x</i><sub><i>i</i>−1</sub>)`, "the chain rule")}
+<p>Every factor is exactly what an autoregressive model predicts: the next token given all before it. So a model that predicts the next token <b>indirectly models <i>p</i>(<i>x</i>) of the whole sequence</b>. The same chain rule returns in the next lectures: the causal mask enforces it, and the pre-training loss summed over a sentence is −log of the sentence's probability.</p>
+${LX.keys([
+  "Autoregressive: p(x<sub>t</sub> | x<sub>1</sub>…x<sub>t−1</sub>); generation = draw, append, repeat on the model's own output.",
+  "Any modality works once it is a sequence: text tokens, picture patches, sound samples, video patches, DNA bases.",
+  "auto = self (its own output), regressive = going back (values before it).",
+  "Chain rule: the product of next-token probabilities is the probability of the whole sequence."])}
+`},
+
+{lec: "intro", sec: "tok", title: "Tokens, for every modality", html: `
+<p class="lead">An autoregressive model picks its next piece from a fixed list, its <b>vocabulary</b>. So before it can model anything, the data has to become a sequence of tokens: text through a tokenizer, pictures cut into patches, sound into windows.</p>
+
+<h3>Text: byte-pair encoding (BPE)</h3>
+<p>Most of today's language models learn their vocabulary with byte-pair encoding, in the version that starts from bytes:</p>
+<ol class="steps">
+<li>Take a corpus, normally a huge one, and split it into words. The whitespace belongs to the word <i>after</i> it, shown as ·.</li>
+<li>Split every word into its bytes: one for most letters, more for others, like the two of é.</li>
+<li>Count which two neighbouring units occur together most often, and merge them into one new unit, numbered from 256.</li>
+<li>Repeat. A merged unit can itself be merged again when it is part of a recurring sequence.</li>
+</ol>
+${LX.tbl(["Round", "Most frequent pair", "New token", "The corpus as units"], [
+  ["start", "", "", "· c o w (×3) · c o w s (×2) · c a l f"],
+  ["1", "· + c (6 times)", "256 = ·c", "·c o w · ·c o w s · ·c a l f"],
+  ["2", "·c + o (5 times)", "257 = ·co", "·co w · ·co w s · ·c a l f"],
+  ["3", "·co + w (5 times)", "258 = ·cow", "·cow · ·cow s · ·c a l f"],
+  ["4", "·cow + s (2 times)", "259 = ·cows", "·cow · ·cows · ·c a l f"]], "A made-up corpus, merged one round at a time. Merges build on earlier merges.")}
+<p>The <b>vocabulary</b> is the 256 possible bytes, then every merge in the order it was learned, then a few <b>special tokens</b>, for instance one that marks the end of a text. A new text is encoded by applying the merges <b>in the order they were learned</b>. Since every text is made of bytes, nothing is ever out of the vocabulary: a character too rare to be merged, such as 牛, simply stays three bytes.</p>
+${LX.flow([["256", "bytes"], "+", ["151,387", "merges"], "+", ["26", "special tokens"], "=", ["151,669", "Qwen3's vocabulary", "acc"]])}
+
+<h3>Pictures: patches</h3>
+<p>To a machine a picture is a grid of pixels, three numbers each: red, green and blue. A <b>vision transformer</b> cuts it into square patches, 16 × 16 pixels in the original, and reads them <b>row by row</b>, like a sentence's tokens.</p>
+${LX.flow([["patch", "8 × 8 pixels"], ">", ["flatten", "8 × 8 × 3 = 192 numbers, x<sub>i</sub> ∈ ℝ<sup>192</sup>"], ">", ["× W", "W ∈ ℝ<sup>d×192</sup>, one learned matrix, the same for every patch"], ">", ["+ p<sub>i</sub>", "where it was: row, column"], ">", ["embedding", "W x<sub>i</sub> + p<sub>i</sub> ∈ ℝ<sup>d</sup>", "acc"]], "One patch becomes one token vector. Positions by row and column let pictures of any size and shape be read.")}
+<p>These tokens are <b>vectors, with no IDs and no vocabulary</b>, and for understanding a picture that is enough. To <b>generate</b> a picture token by token, though, the model must pick from a vocabulary. So each vector is snapped to the nearest vector of a <b>codebook</b>, and the picture becomes a sequence of IDs, like a text. Emu3's codebook has 32,768 entries, and reads video the same way: one code for 8 × 8 pixels through 4 frames. An ID's number means nothing in itself: 7554 is not near 7555.</p>
+
+<h3>Sound: windows</h3>
+<p>A sound is a waveform, the air pressure <i>f</i><sub>s</sub> times a second for <i>T</i> seconds, <i>x</i> ∈ ℝ<sup><i>f</i><sub>s</sub>·<i>T</i></sup>: 24,000 a second in the EnCodec codec, 44,100 on a CD. It is cut into <b>windows</b>, the patches of sound.</p>
+${LX.flow([["waveform", "24,000 samples a second"], ">", ["windows", "320 samples = 13 ms, so 75 a second"], ">", ["encoder", "one vector z<sub>t</sub> ∈ ℝ<sup>d</sup> a window"], ">", ["codebook IDs", "only to generate token by token", "acc"]], "For understanding sound, or for diffusion, the vectors are where it stops.")}
+<p>A codebook of 1,024 entries is far too coarse for sound. So codecs repeat it on <b>what is still missing</b>, the vector minus the entry it was snapped to, with a new codebook each time: <b>residual vector quantisation</b>.</p>
+${LX.tbl(["", ""], [
+  ["IDs per window", "8 (one per codebook)"],
+  ["IDs per second", "75 windows × 8 = 600"],
+  ["bits per ID", "10 (1,024 = 2<sup>10</sup> entries)"],
+  ["bit rate", "600 × 10 = 6 kbit/s, where an MP3 takes 128"],
+  ["one codebook as precise", "would need 2<sup>80</sup> entries"],
+  ["what the codebooks carry", "the first: most of <b>what</b> is said; the later ones: <b>how</b> it sounds"]], "Eight codebooks in EnCodec.")}
+${LX.keys([
+  "BPE from bytes: whitespace goes with the word after it; merge the most frequent neighbouring pair, repeat; merges can build on merges.",
+  "Vocabulary = 256 bytes + merges in learned order + special tokens; encoding applies merges in that order; nothing is ever out of vocabulary.",
+  "Qwen3: 151,669 = 256 + 151,387 + 26.",
+  "Pictures: patches read row by row; flatten (8×8×3 = 192), one shared W, plus row/column position. Vectors suffice to understand; a codebook gives IDs to generate. IDs carry no order.",
+  "Sound: EnCodec 24 kHz, windows of 320 samples (13 ms, 75/s); residual vector quantisation: each codebook matches what is still missing; 8 codebooks → 600 IDs/s → 6 kbit/s."])}
+`},
+
+{lec: "intro", sec: "diff", title: "Diffusion: all at once", html: `
+<p class="lead">A diffusion model does not cut its output into pieces. It starts with the whole output as noise and in every step changes every part at once, so the whole becomes a little less noisy, until no noise is left.</p>
+
+<h3>What noise means depends on the data</h3>
+${LX.tbl(["Modality", "Noise"], [
+  ["pictures, sound, video", "Gaussian noise added to the signal; today's models such as Stable Diffusion add it to a compressed version, a <b>latent</b>, rather than the pixels"],
+  ["text", "masks: the noisier a sentence, the more of its tokens are masked"],
+  ["DNA", "each base becomes a probability over A, C, G and T, uniform when the base is pure noise"]], "Diffusion, like autoregression, is not tied to one modality.")}
+
+<h3>Learning: predict the noise</h3>
+<p>The network learns one thing only: <b>to predict the noise in a noisy example</b>. Take a real cow, draw noise ourselves, mix the two.</p>
+${LX.flow([["the data, x<sub>0</sub>", "a real cow, × 0.63"], "+", ["noise we drew, ε", "× 0.78"], "=", ["the noisy picture, x<sub>t</sub>", "", "acc"]], "Forward diffusion at one noise level (linear schedule, T = 1000): x<sub>t</sub> = 0.63 · x<sub>0</sub> + 0.78 · ε. By t ≈ 650 the cow can hardly be made out.")}
+<ul class="tight">
+<li>The <b>noise level</b> runs from none at all, the cow itself, to so much that only noise is left.</li>
+<li>This noising is <b>forward diffusion</b>. It is fixed: nothing in it is learned.</li>
+<li>Every training example gets a <b>fresh noise level and fresh noise</b>.</li>
+<li>Because we drew the noise, we can compare the network's guess with it and train the network to make the difference small.</li>
+</ul>
+
+<h3>Generating: backward diffusion</h3>
+<figure class="fig"><div class="dstrip">${[0, 3, 6, 12, 24, 50].map((s, i) => {
+  const blur = [9, 7, 5, 3, 1.2, 0][i], noise = [1, .8, .6, .35, .15, 0][i];
+  return `<div class="ds"><svg viewBox="0 0 60 44" aria-hidden="true"><defs><filter id="db${i}"><feGaussianBlur stdDeviation="${blur}"/></filter><filter id="dn${i}"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="${i + 3}"/><feColorMatrix type="saturate" values="0"/></filter></defs>
+  <rect width="60" height="44" fill="#9cc79a"/><g filter="url(#db${i})"><rect x="14" y="14" width="26" height="15" rx="5" fill="#fafafa"/><rect x="38" y="10" width="10" height="10" rx="3" fill="#fafafa"/><circle cx="22" cy="20" r="3.5" fill="#1a2230"/><circle cx="32" cy="23" r="3" fill="#1a2230"/><rect x="16" y="28" width="3" height="9" fill="#fafafa"/><rect x="34" y="28" width="3" height="9" fill="#fafafa"/></g>
+  <rect width="60" height="44" filter="url(#dn${i})" opacity="${noise}"/></svg><span>step ${s}</span></div>`;}).join("")}</div>
+<figcaption>Backward diffusion, schematic. The sampler starts from pure noise and removes a little of it per step: the coarse shape first, the details last. Stable Diffusion XL takes 50 steps in the lecture's figure.</figcaption></figure>
+<ol class="steps">
+<li>Start from pure noise.</li>
+<li>The network predicts the noise in it; a <b>scaled part</b> of that prediction is subtracted, and the result is a little less noisy.</li>
+<li>The same network predicts the noise in the result, and so on, until the noise is gone.</li>
+</ol>
+<p>This loop is run around the network by a <b>sampler</b>. It is not a second thing the network learns.</p>
+
+<h3>Why not jump to the end at once?</h3>
+<p>From the predicted noise the clean picture <i>can</i> be worked out in a single step, and samplers do work it out at every step: it is the model's current guess at the finished picture. But from a picture that is almost all noise the best guess is a <b>blur</b>, an average of every cow that could lie under that noise. So each step moves only a little of the way towards the guess, and the next guess, made from a picture with a little less noise, can be a little sharper. The coarse shape is settled first, the details last.</p>
+${LX.tbl(["", ""], [["original models", "1,000 steps"], ["today's samplers", "typically 20 to 50 steps"], ["what the network predicts", "the noise, or the clean picture, or a mix: each determines the others, so the idea stays the same"]])}
+${LX.tbl(["", "Autoregression", "Diffusion"], [
+  ["How the output is made", "piece by piece, in order", "all at once, refined over many steps"],
+  ["What is learned", "next-token distribution", "the noise in a noisy example"],
+  ["Each step", "draw one token, append it", "subtract a scaled part of the predicted noise"],
+  ["Tied to a modality?", "no", "no"]])}
+${LX.keys([
+  "Forward diffusion (adding noise) is fixed, nothing learned; each training example gets a fresh noise level and fresh noise.",
+  "The network only learns to predict the noise; the training signal exists because we drew the noise ourselves.",
+  "Backward diffusion = the sampler's loop from pure noise; it is not learned separately.",
+  "Early guesses are blurs (an average of everything that fits), so steps are small: coarse shape first, details last. 1,000 steps originally, 20–50 today.",
+  "Noise per modality: Gaussian (often on a latent), masks for text, uniform over A, C, G, T for DNA."])}
+`},
+];
+LESSONS.push(
+/* ═════════════ Theoretical Foundations of Language Modelling ═════════════ */
+{lec: "found", sec: "overview", title: "The decoder-only transformer and its components", html: `
+<p class="lead">Almost every state-of-the-art language model is a <b>decoder-only transformer</b>, a neural network design based on “Attention Is All You Need”. The lecture follows text because it is easiest, but nothing in the architecture is specific to text.</p>
+<p>On the map of AI the transformer sits on the subsymbolic side: a neural network that <b>autoregressively generates probability distributions</b>, one for the next token at a time.</p>
+
+<h3>Five things a model must grasp, and the part that does each</h3>
+${LX.tbl(["The model must know…", "Example", "Part"], [
+  ["what each element means on its own", "cow is an animal; bank is money, or a river", "<button class='lnk' data-go='found:emb'>Embeddings</button>"],
+  ["how the elements relate", "in “the cow says ___”, cow shapes what says means", "<button class='lnk' data-go='found:att'>Attention</button>"],
+  ["where each element stands", "“The cow licks the calf” is not “the calf licks the cow”", "<button class='lnk' data-go='found:pos'>Positional encoding</button>"],
+  ["what the world knows", "“The Eiffel Tower is in ___”: no word in the text says Paris", "<button class='lnk' data-go='found:ffn'>Feed forward</button>"],
+  ["how to predict what comes next", "a probability for every token of the vocabulary", "<button class='lnk' data-go='found:lin'>Linear &amp; softmax</button>"]],
+  "Two more parts keep the deep stack trainable: Add &amp; Norm after every attention and feed forward, and the repetition into many decoder blocks.")}
+${LX.where("")}
+
+<h3>The whole model, bottom to top</h3>
+<ol class="steps">
+<li><b>Tokenizer → IDs → embedding table:</b> one vector per token, in the order of the text.</li>
+<li><b>Positions</b> tell the model where each token stands (today usually RoPE, inside attention).</li>
+<li><b>N decoder blocks</b>, each: masked multi-head attention → Add &amp; Norm → feed forward → Add &amp; Norm. Every block takes <i>n</i> vectors of <i>d</i><sub>model</sub> numbers and hands on the same shape.</li>
+<li><b>Linear</b> turns each final vector into a score (logit) per vocabulary token; <b>softmax</b> turns the scores into a distribution over the next token.</li>
+</ol>
+<p>The vector of each token runs straight up through the model, the <b>residual stream</b>; each part adds a change to it.</p>
+${LX.keys([
+  "Decoder-only transformer: subsymbolic, autoregressive, outputs a probability distribution per position.",
+  "Meaning → embeddings; relations → attention; position → positional encoding; world knowledge → feed forward; next token → linear + softmax.",
+  "Add &amp; Norm and the stack of decoder blocks keep it deep and trainable.",
+  "Nothing in the architecture is specific to text."])}
+`},
+
+{lec: "found", sec: "emb", title: "Embeddings: what each element means on its own", html: `
+${LX.where("emb")}
+<p class="lead">The tokenizer turns text into token IDs. Each ID is a lookup index into the <b>embedding table</b>, a learned matrix with one row per token ID. The rows, in the order of the text, are the matrix the model works on.</p>
+${LX.flow([["text", "“The cow mooed”"], ">", ["tokenizer", "one integer ID per token"], ">", ["embedding table", "151,936 rows × 1,024 numbers (Qwen3-0.6B-Base)"], ">", ["X", "one row per token, in text order", "acc"]], "From text to vectors. The table has 151,936 rows, a few more than the 151,669 tokens, padded to a multiple of 128.")}
+
+<h3>What the rows learn</h3>
+<p>Word2vec showed that during training the vectors move so that <b>similar words end up close together</b> and some <b>directions come to stand for natural relations</b>. Today's embedding tables behave the same way.</p>
+<figure class="fig"><svg viewBox="0 0 300 150" class="pic wide" aria-hidden="true">
+<g font-family="var(--mono)" font-size="11" fill="var(--fg)">
+<circle cx="60" cy="110" r="4" fill="var(--accent)"/><text x="68" y="114">·man</text>
+<circle cx="60" cy="40" r="4" fill="var(--accent)"/><text x="68" y="44">·woman</text>
+<circle cx="210" cy="110" r="4" fill="var(--mid)"/><text x="218" y="114">·king</text>
+<circle cx="210" cy="40" r="4" fill="var(--mid)"/><text x="218" y="44">·queen</text>
+</g>
+<path d="M60 104 V48" stroke="var(--bad)" stroke-width="2" marker-end="url(#ah)"/><path d="M210 104 V48" stroke="var(--bad)" stroke-width="2" marker-end="url(#ah)"/>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--bad)"/></marker></defs>
+</svg><figcaption>Near means similar, and the step from man to woman is the step from king to queen. In Qwen3-0.6B-Base, of all 151,936 rows (leaving out king, man and woman), the nearest to king − man + woman is ·queen, with a cosine of 0.60.</figcaption></figure>
+
+<h3>One row per token, whatever it means</h3>
+<p><b>bank</b> has <b>one</b> row, for money and river alike. The embedding is the same in every sentence; which meaning is intended is left to the next step, attention.</p>
+${LX.keys([
+  "Token ID = row index into a learned embedding table; the looked-up rows in text order form X.",
+  "Qwen3-0.6B-Base: 151,936 rows (151,669 tokens padded to a multiple of 128), 1,024 numbers each.",
+  "Similar tokens end up close; directions encode relations (king − man + woman ≈ queen).",
+  "An embedding is context-free: bank has one row; attention disambiguates."])}
+`},
+
+{lec: "found", sec: "att", title: "Attention: how the elements relate", html: `
+${LX.where("att")}
+<p class="lead">The context changes what a token means: “cow”, “the small cow”, “the small purple cow”. Attention computes <b>how much</b> and <b>how</b> each token should shift the vector of every other token. Those shifts are the contextualisation, and attention adds them all up in a single step.</p>
+<p>The same words in front of <b>flower</b> move it in the same directions but by different amounts: <i>purple</i> tells us more about a cow than about a flower. Two questions follow: how to quantify how much one token shifts another, and in which direction.</p>
+
+<h3>How much: queries and keys</h3>
+<p>The dot product measures how well vectors align: <i>a</i> · <i>b</i> = ‖<i>a</i>‖ ‖<i>b</i>‖ cos φ. Largest when they point the same way, 0 at right angles, negative when apart. On the embeddings themselves it measures <b>similarity</b>, and similarity is the wrong question: <i>purple</i> and <i>spotted</i> both describe looks and are about equally similar to <i>cow</i>, yet <i>purple</i> changes our picture of a cow a lot and <i>spotted</i> hardly at all, because spotted is what we already expect.</p>
+${LX.cols([
+  ["W<sup>Q</sup> → query", "<p>What a token <b>looks for</b>.</p>", "acc"],
+  ["W<sup>K</sup> → key", "<p>What a token <b>offers</b>.</p>"],
+  ["W<sup>V</sup> → value", "<p><b>How</b> a token moves whatever it describes; the same for a car, a cow, a flower.</p>"]])}
+<p>Two learned matrices carry the tokens into a space where relevant ones line up: what <i>cow</i> looks for lines up with what <i>purple</i> offers, and <i>spotted</i>'s key points elsewhere. <b>Similar is not relevant.</b> The influence itself could just be the embedding, but most transformers learn a third matrix for the values: queries and keys decide <b>how much</b> token <i>a</i> shifts token <i>b</i>, values decide <b>how</b>.</p>
+
+<h3>In matrices</h3>
+${LX.flow([["X", "a row per token"], ">", ["Q = XW<sup>Q</sup>, K = XW<sup>K</sup>, V = XW<sup>V</sup>", "every token's query, key, value in parallel"], ">", ["QK<sup>⊤</sup>", "n × n: row i, column j = how much token j matters to token i"], ">", ["softmax(· / √d<sub>k</sub>)", "each row → weights that sum to 1"], ">", ["× V", "each token: weighted sum of values", "acc"]])}
+
+<h3>Scores, softmax and the √d<sub>k</sub> scaling</h3>
+<p>The dot products are the <b>attention scores</b>, any real numbers. A token's attention should be split into shares that add up to 1. <b>Softmax</b> does that: every share positive, the shares sum to 1, and a higher score always gets a larger share.</p>
+${LX.f(`softmax(<i>s</i>)<sub><i>j</i></sub> = e<sup><i>s<sub>j</sub></i></sup> / Σ<sub><i>i</i></sub> e<sup><i>s<sub>i</sub></i></sup>`, "a score 1 higher gets e ≈ 2.7 times the share; 10 higher gets 22,000 times")}
+<p>Dot products spread further apart the more dimensions they have, by about √<i>d</i><sub>k</sub>. Then one token easily gets nearly all the share. Dividing by √<i>d</i><sub>k</sub> (here √64 = 8) <b>keeps the order</b> and brings the values back into a range softmax can work with.</p>
+<div class="cols two">
+${LX.bars([["· purple", 100, 1], ["· cow", 0.3], ["· small", 0.0], ["The", 0.0]], "(a) softmax of the raw scores → almost everything on one token.")}
+${LX.bars([["· purple", 60, 1], ["· cow", 28], ["· small", 10], ["The", 1.1]], "(b) softmax of the scores ÷ √64 = 8 → same order, sensible shares.")}
+</div>
+<p class="small">What ·cow takes from each word, from the made-up scores 4 (The), 22 (·small), 36 (·purple) and 30 (·cow). These shares are the <b>attention weights</b> α<sub><i>ij</i></sub>.</p>
+
+<h3>Output</h3>
+${LX.f(`out<sub><i>i</i></sub> = Σ<sub><i>j</i></sub> α<sub><i>ij</i></sub> <i>v</i><sub><i>j</i></sub> &nbsp;&nbsp;&nbsp; Attention(<i>Q</i>, <i>K</i>, <i>V</i>) = softmax( <i>QK</i><sup>⊤</sup> / √<i>d</i><sub>k</sub> ) <i>V</i>`)}
+${LX.code(`Q, K, V = W_Q(x), W_K(x), W_V(x)    # [n, d_k] each
+scores = Q @ K.T / math.sqrt(d_k)    # [n, n]: every query against every key
+weights = scores.softmax(dim=-1)     # each row sums to 1
+out = weights @ V                    # [n, d_k]: weighted sums of the values`)}
+
+<h3>Masked (causal) attention</h3>
+<p>The chain rule writes a text's probability as a product of <i>p</i>(<i>x</i><sub><i>t</i></sub> | <i>x</i><sub>1</sub>…<i>x</i><sub><i>t</i>−1</sub>). In training the whole text is there, so without a stop the model could simply look at the token it must predict. The mask adds <b>−∞ to every score above the diagonal</b>; softmax turns e<sup>−∞</sup> into 0, so each token's weights fall only on <b>itself and the tokens before it</b>.</p>
+${LX.grid(["The", "·cow", "·says", "·moo"], (i, j) => j <= i ? ["", "on"] : ["−∞", "off"], "The causal (look-ahead) mask. Rows are the token attending, columns the token attended to. It also lets training check all n predictions of a text in one pass.")}
+
+<h3>Multi-head attention</h3>
+<p>One set of queries and keys asks one kind of question, such as “which adjective describes this noun?”. A text holds many relations at once: who does what, what a pronoun refers to, which word came just before. Multi-head attention runs <b><i>h</i> attentions side by side</b>.</p>
+${LX.flow([["W<sup>Q</sup>, W<sup>K</sup>, W<sup>V</sup>", "d<sub>model</sub> wide"], ">", ["cut into h slices", "d<sub>k</sub> = d<sub>model</sub> / h columns each"], ">", ["h heads attend", "each on its own slice"], ">", ["concatenate", "side by side"], ">", ["× W<sup>O</sup>", "one more learned matrix", "acc"]], "The original transformer: h = 8 heads of d<sub>k</sub> = 64, so d<sub>model</sub> = 512.")}
+${LX.keys([
+  "Attention shifts every token's vector by a weighted sum of the others' values; all shifts in one step.",
+  "Similarity ≠ relevance: W<sup>Q</sup> (looks for) and W<sup>K</sup> (offers) give the scores = how much; W<sup>V</sup> gives how.",
+  "Row i, column j of QK<sup>⊤</sup>: how much token j matters to token i. Softmax per row → weights summing to 1.",
+  "÷ √d<sub>k</sub> keeps the order but stops softmax from putting almost everything on one token.",
+  "Causal mask: −∞ above the diagonal → weight 0 on later tokens; all n predictions trained in one pass.",
+  "Multi-head: h heads of d<sub>model</sub>/h, concatenated, then W<sup>O</sup>. Original: 8 × 64 = 512."])}
+`},
+
+{lec: "found", sec: "pos", title: "Positional encoding: where each element stands", html: `
+${LX.where("pos")}
+<p class="lead">Attention alone does not know where tokens stand. Each output is a sum over pairs, out<sub><i>i</i></sub> = Σ<sub><i>j</i></sub> softmax<sub><i>j</i></sub>(<i>q<sub>i</sub></i> · <i>k<sub>j</sub></i> / √<i>d</i><sub>k</sub>) <i>v<sub>j</sub></i>; <i>i</i> and <i>j</i> only label the tokens. Shuffle the tokens and the same results come out, shuffled the same way.</p>
+${LX.f(`Attention(<i>PX</i>) = <i>P</i> · Attention(<i>X</i>) &nbsp; for any permutation <i>P</i>`, "(leaving the mask aside) so “the cow licks the calf” and “the calf licks the cow” give every word the same new vector")}
+${LX.cols([
+  ["Absolute", "<p>Every place gets its own number: 0, 1, 2, …</p><p class='small'>Learned table · sinusoidal</p>"],
+  ["Relative", "<p>Every pair gets its distance.</p><p class='small'>Shaw et al. · T5 · ALiBi</p>"],
+  ["Rotary (RoPE)", "<p>Relative too, but encodes the distance by <b>rotating</b> queries and keys.</p><p class='small'>Most of today's models</p>", "acc"]])}
+
+<h3>Absolute: a learned table</h3>
+<p>The simplest way: a second learned table, one row per position, added to the token's embedding. The smallest GPT-2 has 1,024 such rows of 768 numbers. The model learns what a position should look like, but <b>it cannot read a text longer than its table</b>, and has no notion of positions it never saw.</p>
+
+<h3>Absolute: sinusoidal (the original transformer)</h3>
+${LX.f(`<i>PE</i><sub>(<i>pos</i>, 2<i>i</i>)</sub> = sin( <i>pos</i> / 10000<sup>2<i>i</i>/<i>d</i></sup> ) &nbsp;&nbsp; <i>PE</i><sub>(<i>pos</i>, 2<i>i</i>+1)</sub> = cos( <i>pos</i> / 10000<sup>2<i>i</i>/<i>d</i></sup> )`)}
+${(() => { const d = 8, rows = []; for (let p = 0; p <= 6; p++) { const r = [String(p)]; for (let k = 0; k < 6; k++) { const i = Math.floor(k / 2), a = p / Math.pow(10000, 2 * i / d); r.push((k % 2 ? Math.cos(a) : Math.sin(a)).toFixed(2)); } rows.push(r); } return LX.tbl(["pos", "sin, 1 rad/pos", "cos", "sin, 0.1", "cos", "sin, 0.01", "cos"], rows, "Computed PE for d = 8: each column is a wave down the positions, slower to the right. The first wave turns 1 radian a position and has almost gone round once by position 6; the third turns a hundred times slower and has hardly moved. Each row is the vector added to the token at that position.", "num"); })()}
+<p>Nothing is learned, and there is a vector for <b>any</b> position. Each sine–cosine pair of the same speed is a point on a circle. Going <i>k</i> positions further rotates it by an angle that depends <b>only on <i>k</i></b>, wherever it starts. So the distance between two tokens is contained in their position vectors, but the model <b>has to learn to read it</b>: the distance is never given to attention directly, only mixed into the sum <i>X</i> + <i>PE</i>.</p>
+
+<h3>Relative positions</h3>
+<p>Relative positions (first proposed by Shaw et al.) skip the detour through the embeddings and change the <b>scores</b>: a matrix <i>B</i> with one number per distance <i>i</i> − <i>j</i>, the same all along each diagonal, is added to <i>QK</i><sup>⊤</sup> before the softmax.</p>
+${LX.grid(["0", "1", "2", "3"], (i, j) => j <= i ? [`b<sub>${i - j}</sub>`, "on d" + (i - j)] : ["", "off"], "A relative bias: one number per distance nudges every score.")}
+${LX.tbl(["Variant", "The numbers in B"], [["T5", "learned, per head"], ["ALiBi", "not learned: the score is simply lowered in proportion to the distance, so far-away tokens count less"]])}
+
+<h3>Rotary positions (RoPE)</h3>
+<p>RoPE takes the numbers of each <b>query and key</b> two dimensions at a time, reads each pair as an arrow in a plane, and turns it by an angle that grows with the position: at position <i>m</i>, by <i>m</i>θ.</p>
+${LX.f(`( <i>x</i>′<sub>1</sub> , <i>x</i>′<sub>2</sub> ) = ( <i>x</i><sub>1</sub> cos <i>m</i>θ − <i>x</i><sub>2</sub> sin <i>m</i>θ , &nbsp;<i>x</i><sub>1</sub> sin <i>m</i>θ + <i>x</i><sub>2</sub> cos <i>m</i>θ )`)}
+<p>The dot product of a query and a key depends on the angle between them. Turn both by their own positions, and that angle changes only with <b>how far apart</b> they are. So attention sees relative distances.</p>
+<figure class="fig"><div class="clks">${(() => { const t = 0.42, q0 = 0.3, k0 = 1.4; return LX.clock(q0 + 2 * t, k0 + 3 * t, "·cow at 2, ·says at 3") + LX.clock(q0 + 12 * t, k0 + 13 * t, "·cow at 12, ·says at 13"); })()}</div>
+<figcaption>One pair of ·cow's query (teal) and ·says's key (red), turned by mθ with θ = 0.42. The hands point elsewhere at 12 and 13 than at 2 and 3, but the angle between them is the same.</figcaption></figure>
+
+<h3>Many speeds, like a clock</h3>
+<p>Every pair turns at its own speed. With a single speed of 1 radian a position, the hand comes round again: position 44 is almost exactly 7 full turns and looks like position 0. With many speeds, from fast to slow, every position gets its own set of hands, as a clock's second, minute and hour hands tell every time of day apart.</p>
+${LX.f(`θ<sub><i>i</i></sub> = <i>b</i><sup>−2(<i>i</i>−1)/<i>d</i></sup> &nbsp; radians a position, for pair <i>i</i> of the <i>d</i>/2 pairs`, "fixed before training, never learned")}
+${LX.tbl(["Llama 2: b = 10,000, d = 128", ""], [
+  ["fastest pair", "1 radian a position: goes round every 6 positions"],
+  ["slowest pair", "0.0001 radians: goes round about every 54,000 positions"],
+  ["between", "each pair 0.87 times as fast as the one before, so every scale of distance has pairs that tell it apart"]])}
+
+<h3>The speeds set the context length</h3>
+<p>Llama 2 was trained on 4,096 positions, so its slow pairs only saw a small part of their turn. Past 4,096 they reach <b>angles the model has never seen</b>, and its attention breaks down.</p>
+${LX.tbl(["Fix", "What it does"], [
+  ["Position interpolation", "halves every θ, so 8,192 positions fit into the angles seen in training"],
+  ["YaRN", "stretches only the slow pairs and leaves the fast ones, which have seen every angle anyway; Qwen3 uses it to go from 32,768 to 131,072 tokens"],
+  ["A larger base b", "newer models start with b = 500,000 (Llama 3) or 1,000,000 (Qwen3)"]], "More on stretching in Mid-training.")}
+${LX.keys([
+  "Without positions attention is permutation-equivariant: Attention(PX) = P · Attention(X).",
+  "Learned absolute table (GPT-2: 1,024 × 768): cannot go past its length. Sinusoidal: computed, any position, distance implicit but must be learned since it is mixed into X + PE.",
+  "Relative: one bias per distance added to QK<sup>⊤</sup> before softmax, constant along diagonals; T5 learns it per head, ALiBi is a fixed penalty growing with distance.",
+  "RoPE rotates query and key pairs by mθ; their dot product depends only on the distance. Speeds θ<sub>i</sub> = b<sup>−2(i−1)/d</sup>, fixed, fast to slow like clock hands.",
+  "Beyond the trained length, slow pairs reach unseen angles: position interpolation (slow all), YaRN (slow only the slow pairs), larger bases."])}
+`},
+
+{lec: "found", sec: "ffn", title: "Feed forward: what the world knows", html: `
+${LX.where("ffn")}
+<p class="lead">Attention only combines what is already in the text. In “The Eiffel Tower is in ___” no token says Paris, yet Qwen3-0.6B-Base puts 75 % on it. What the model knows about the world has to sit in its own weights, and most of it is thought to sit in the feed forward network.</p>
+${LX.bars([["· Paris", 75, 1], ["· France", 6.0], ["· the", 4.3], ["other", 15]], "What Qwen3-0.6B-Base expects after “The Eiffel Tower is in”.")}
+
+<h3>Every token on its own</h3>
+<p>The feed forward works on <b>each token's vector separately</b>, the same small network for every token. <b>Nothing passes between tokens there</b>; mixing between tokens is attention's job alone.</p>
+${LX.flow([["x", "d<sub>model</sub> = 512"], ">", ["× W<sub>1</sub>", "up to d<sub>ff</sub> = 4 · d<sub>model</sub> = 2,048"], ">", ["ReLU", "negatives to 0"], ">", ["× W<sub>2</sub>", "back down to 512", "acc"]])}
+${LX.f(`FFN(<i>x</i>) = ReLU(<i>x W</i><sub>1</sub>) <i>W</i><sub>2</sub>`)}
+
+<h3>It holds most of a block's weights</h3>
+${LX.tbl(["Part", "Matrices", "Weights"], [["Attention", "four d × d: W<sup>Q</sup>, W<sup>K</sup>, W<sup>V</sup>, W<sup>O</sup>", "4 d²"], ["Feed forward", "two d × 4d: W<sub>1</sub>, W<sub>2</sub>", "<b>8 d²</b>, twice as many"]])}
+<p>Conceptually, the first layer can be read as <b>keys that recognise patterns</b> in a token's vector, and the second as the <b>values written back</b> when they match. Most of today's models use a gated variant, <b>SwiGLU</b>, instead of plain ReLU.</p>
+${LX.keys([
+  "Feed forward = where world knowledge mostly sits; attention can only recombine what the tokens already hold.",
+  "Per token, same network for every token, no communication between tokens.",
+  "Up to 4 × d<sub>model</sub>, ReLU, back down; FFN(x) = ReLU(xW<sub>1</sub>)W<sub>2</sub>.",
+  "Two d × 4d matrices = twice attention's four d × d. First layer ≈ pattern keys, second ≈ values written back. Today: SwiGLU."])}
+`},
+
+{lec: "found", sec: "norm", title: "Add & Norm", html: `
+${LX.where("norm")}
+<p class="lead">Two small parts keep a deep network trainable. Each comes after every attention and every feed forward: layer norm rescales, and the residual connection adds instead of replacing.</p>
+
+<h3>Norm: layer normalisation</h3>
+<p>Layer norm rescales <b>each token's vector</b> to a steady range: subtract the mean μ of its <i>d</i> numbers, divide by their spread σ, then let the model scale and shift the result back with two learned vectors γ and β.</p>
+${LX.f(`LayerNorm(<i>x</i>) = γ ⊙ ( <i>x</i> − μ ) / √( σ² + ε ) + β`, "ε ≈ 10<sup>−6</sup> so it never divides by 0; ⊙ multiplies element by element")}
+${LX.tbl(["", "1", "2", "3", "4", "5", "6"], [
+  ["·cow after layer 1", "−3.77", "39.92", "−0.13", "−13.9", "0.93", "0.81"],
+  ["normalised", "−0.46", "2.13", "−0.24", "−1.06", "−0.18", "−0.19"]], "The first six numbers of ·cow's vector in Qwen3, normalised on their own for illustration (mean 3.98, spread 16.9). The real layer uses all 1,024.", "num")}
+<p>This way every part gets its input in the same range, however deep the stack.</p>
+${LX.note(`<b>Qwen3's choices.</b> RMSNorm, which <b>skips the mean</b>; normalising <b>before</b> each part instead of after it; and QK-norm, which also normalises each query and key.`)}
+
+<h3>Add: the residual connection</h3>
+<p>Attention does not replace a token's vector; it adds what it found, <i>x</i> + Attention(<i>x</i>). The feed forward does the same, <i>x</i> + FFN(<i>x</i>).</p>
+${LX.flow([["x", "the token's vector"], ">", ["Attention(x)", "a change"], "+", ["x + Attention(x)", ""], ">", ["FFN(·)", "a change"], "+", ["x + … + FFN(…)", "the residual stream", "acc"]])}
+<p>Each token's vector runs straight up through the model, the <b>residual stream</b>, and every part writes a change into it. Each part only has to learn a <b>correction</b>, and in training the gradient has a <b>straight path down</b> through the sums.</p>
+${LX.keys([
+  "Add &amp; Norm follows every attention and every feed forward.",
+  "LayerNorm per token: (x − μ)/√(σ² + ε), then learned γ (scale) and β (shift).",
+  "RMSNorm skips the mean; pre-norm normalises before each part; QK-norm normalises queries and keys (all in Qwen3).",
+  "Residual: x + Part(x); the residual stream; parts learn corrections; gradients flow straight through the sums."])}
+`},
+
+{lec: "found", sec: "blocks", title: "Decoder blocks", html: `
+${LX.where("")}
+<p class="lead">Attention and feed forward, each with its Add &amp; Norm, together are a <b>decoder block</b>. A model stacks many of them.</p>
+<figure class="fig"><div class="stackd">
+<div class="sl out">Linear → Softmax → next-token distribution</div>
+<div class="sl repb"><span class="rn">× N, each block with its own weights</span>
+<div class="sl">Add &amp; Norm</div><div class="sl k">Feed forward <small>per token, world knowledge</small></div><div class="sl">Add &amp; Norm</div><div class="sl k">Masked multi-head attention <small>between tokens</small></div></div>
+<div class="sl">Embedding (+ positions)</div>
+<div class="sl in">Token IDs</div>
+</div><figcaption>Read bottom to top. Every block takes n vectors of d<sub>model</sub> numbers and hands on the same shape; the residual stream runs through all of them.</figcaption></figure>
+<ul class="tight">
+<li>Each block has <b>its own weights</b>; the blocks are not shared copies.</li>
+<li>In and out: <i>n</i> × <i>d</i><sub>model</sub>, always the same shape, so blocks can be stacked as deep as wanted (depth is a design decision; see Architecture: shape).</li>
+<li>Inside a block, attention is the only place where tokens exchange information; the feed forward handles each token alone.</li>
+<li>After the last block there is still one vector per token; Linear and softmax turn it into a prediction.</li>
+</ul>
+${LX.keys([
+  "Decoder block = (masked multi-head attention + Add &amp; Norm) + (feed forward + Add &amp; Norm).",
+  "N blocks stacked, each with its own weights; shape n × d<sub>model</sub> in and out.",
+  "The residual stream runs through every block; each part adds a change."])}
+`},
+
+{lec: "found", sec: "lin", title: "Linear and softmax: what comes next", html: `
+${LX.where("lin")}
+<p class="lead">After the last block, each vector stands for one token of the input, contextualised by the tokens before it. A last learned matrix turns each vector into a score per vocabulary token, the <b>logits</b>; softmax turns the logits into a distribution.</p>
+${LX.flow([["last block", "n × d<sub>model</sub>"], ">", ["Linear", "n × V logits"], ">", ["Softmax", "n distributions over the vocabulary", "acc"]])}
+<ul class="tight">
+<li>In Qwen3-0.6B the linear matrix <b>is the embedding table itself</b>, used the other way round.</li>
+<li><b>Training:</b> every row, i.e. every position, predicts the token after it, all at once (the causal mask makes this possible).</li>
+<li><b>Generation:</b> only the <b>last row</b> is used, then the drawn token is appended and the model runs again.</li>
+</ul>
+${LX.bars([["“,”", 17, 1], ["other tokens", 83]], "After “The cow says”, Qwen3-0.6B-Base's likeliest next token is a comma, at 17 %. Trained on books and the web, it expects someone to be quoted, not moo.")}
+${LX.note(`<b>That completes the decoder-only transformer.</b> Tokens → embeddings (+ positions) → N × [attention, Add &amp; Norm, feed forward, Add &amp; Norm] → Linear → Softmax. The residual stream runs from the embeddings to the last block.`)}
+${LX.keys([
+  "Linear gives logits, one per vocabulary token; softmax makes them a distribution.",
+  "Qwen3-0.6B ties the output matrix to the embedding table.",
+  "Training scores every row against the next token; generation draws from the last row only.",
+  "The base model's top guess reflects its data (a comma after “The cow says”)."])}
+`}
+);
+LESSONS.push(
+/* ═════════════ Training Paradigms I ═════════════ */
+{lec: "tp1", sec: "shape", title: "Architecture: the shape of the model", html: `
+${LX.pipe("shape")}
+<p class="lead">Training an LLM is not an exact science but an iterative, empirical process. The lecture plans a <b>pilot</b>: a smaller version of a multilingual, multimodal model with a context window of one million tokens, on a budget of <b>40,000 GPU-hours</b>. Along the way it collects rough guidelines.</p>
+${LX.tbl(["Part", "Decision"], [
+  ["tokenizer", "vocabulary size, which languages it serves well"],
+  ["images", "added later or trained in from the start, with an encoder of their own or none"],
+  ["width", "the embedding dimension d, the number of heads"],
+  ["depth", "the number of decoder blocks L"],
+  ["feed-forward", "its width"],
+  ["sparsity", "dense or a mixture of experts, how many experts, how many per token"],
+  ["attention", "sharing or compressing keys and values, a window, a fixed-size state"],
+  ["positions", "the context length RoPE is trained for"]], "The core of the transformer is the same across frontier models, but most of its parts still carry design decisions.")}
+
+<h3>Guideline 1: scaling laws (Kaplan et al., 2020)</h3>
+<p>Trained across many sizes and amounts of data, the loss on held-out text falls along a <b>straight line on log–log axes</b> as compute, data or parameters grow, as long as the other two don't hold it back. For each model size, more tokens help until the curve flattens, and a bigger model can use more tokens before it does.</p>
+${LX.note(`<b>Guideline 1:</b> more compute, larger models and more training data usually lead to better performance.`)}
+
+<h3>Guideline 2: compute optimality (Chinchilla)</h3>
+<p>Hoffmann et al. picked nine compute budgets, from 6 · 10<sup>18</sup> to 3 · 10<sup>21</sup> FLOPs, and trained models of different sizes on as many tokens as each budget allowed. <b>Every budget gives a valley</b>: too small a model can't take in what the data offers; too big a model runs out of budget after too few tokens.</p>
+${LX.tbl(["At 10<sup>20</sup> FLOPs", "Parameters", "Tokens"], [["too small", "0.42B", "39B"], ["<b>best</b>", "<b>1.07B</b>", "<b>16B</b>"], ["too big", "3B", "5.6B"]])}
+<p>With more compute the bottom moves to bigger models: 0.19B at the smallest budget, about 4B at the largest. The fit: <i>N</i><sub>opt</sub> ∝ <i>C</i><sup>0.49</sup>, <i>D</i><sub>opt</sub> ∝ <i>C</i><sup>0.51</sup>. Both about ½, so <b>ten times the compute buys about three times the parameters and three times the tokens</b>, and their ratio stays put. Named after the 70B model trained to test it.</p>
+${LX.note(`<b>Guideline 2:</b> compute-optimal training gives a model about <b>20 tokens per parameter</b> (14 to 31 across the nine budgets).`)}
+
+<h3>Step 1: from GPU-hours to FLOPs</h3>
+${LX.tbl(["", ""], [
+  ["H100 peak, bf16", "989 trillion FLOPs a second (the spec sheet's 1,979 assumes half of every weight matrix is zeros in a fixed pattern)"],
+  ["one H100-hour at peak", "989 · 10<sup>12</sup> · 3,600 ≈ 3.56 · 10<sup>18</sup> FLOPs"],
+  ["model FLOPs utilisation (MFU)", "about 35 %: the rest of the time the GPU waits for memory and for the other GPUs' gradients"],
+  ["one real H100-hour", "≈ 1.23 · 10<sup>18</sup> FLOPs (DeepSeek-V3: 6 · 37B · 14.8T ≈ 3.3 · 10<sup>24</sup> FLOPs in 2.664M H800-hours; Olmo 3 7B: 1.21 · 10<sup>18</sup>)"],
+  ["<b>our budget</b>", "<b>40,000 · 1.23 · 10<sup>18</sup> ≈ 4.9 · 10<sup>22</sup> FLOPs</b>"]], "DeepSeek-V3 did most matrix products in FP8, which runs twice as fast, so against the FP8 peak its share was half that.")}
+
+<h3>Step 2: parameters and tokens, C ≈ 6ND</h3>
+${LX.flow([["forward", "w · x added: 1 multiply + 1 add = 2 FLOPs"], "+", ["backward", "∂x += w · ∂y and ∂w += x · ∂y = 4 FLOPs"], "=", ["6 FLOPs", "per weight per token", "acc"]])}
+${LX.f(`<i>C</i> ≈ 6 · <i>N</i> · <i>D</i> &nbsp;&nbsp; with <i>D</i> ≈ 20<i>N</i>: &nbsp; <i>C</i> ≈ 120 <i>N</i>² , &nbsp; <i>N</i> ≈ √(<i>C</i> / 120)`, "for 4.9 · 10<sup>22</sup> FLOPs: about 20B parameters on 0.4T tokens")}
+${LX.tbl(["Parameters", "Tokens", "Tokens per parameter", "Loss above the best"], [
+  ["40B", "0.21T", "5", "+0.3 %"], ["<b>20.5B</b>", "<b>0.40T</b>", "<b>20</b>", "<b>0, the best</b>"], ["3.6B", "2.3T", "640", "+2.3 %"],
+  ["<b>2B ← our choice</b>", "<b>4T</b>", "<b>2,000</b>", "<b>+4.1 %</b>"], ["1B", "8.2T", "8,200", "+7.4 %"]], "Five ways to spend the same 4.9 · 10<sup>22</sup> FLOPs (Besiroglu et al.'s refit of Chinchilla, dense models, so an illustration). The valley is shallow near its bottom and steep further out.", "num")}
+<p>Every split costs the same compute; only the loss differs. But one must also count the compute the model costs <b>afterwards</b>. The 2B model ends about 4 % above the best loss, a loss an optimal model would reach with about a fifth of the compute. In exchange it is <b>ten times smaller</b>, and post-training, reinforcement learning, evaluation and serving all run it over and over, each at a tenth of the cost. So: <b>2B parameters on 4T tokens</b>. Training past the compute-optimal point is common: DeepSeek-V3 saw 14.8T tokens with 37B active parameters, about 400 per parameter.</p>
+
+<h3>Step 3 and guideline 3: width and depth</h3>
+<p>Width is the embedding dimension <i>d</i>; depth the number of decoder blocks. Kaplan et al. tried both at fixed sizes (50M, 274M, 1.5B): the loss barely changes as long as <b><i>d</i> ÷ blocks stays between about 20 and 250</b>.</p>
+${LX.tbl(["For 2B parameters", ""], [
+  ["widths inside the range", "about 1,320 (66 blocks) to 2,780 (11 blocks)"],
+  ["heads are usually 128 wide", "so d a multiple of 128: eleven candidates, 1,408 to 2,688, losses within about 1 %"],
+  ["<b>our choice</b>", "<b>d = 2,048, 24 blocks, 16 heads of 128</b>, near the middle on a log scale; the shape of EuroLLM-1.7B"]])}
+
+<h3>Step 4: expert sparsity (mixture of experts)</h3>
+<p>A dense feed-forward runs in full for every token. A <b>mixture of experts</b> (MoE) cuts it into many small feed-forward networks, the <b>experts</b>, and adds a <b>router</b>, a small learned layer that picks a few experts for each token. The others do nothing for that token. In our model the router sends ·cow to 8 of 256 experts and ·says to 8 others, and one <b>shared</b> expert runs for every token.</p>
+${LX.cols([
+  ["Dense", "<p>2B parameters, all used by every token.</p>"],
+  ["Mixture of experts", "<p>The same 2B <b>active</b> per token, same FLOPs per token, but <b>30B in total</b>: far more room for what it learns. All 30B must sit in memory (60 GB in bf16).</p>", "acc"]])}
+<p>OLMoE reached a dense model's quality with about a third of the FLOPs. The trade is <b>compute against memory</b>. Three design questions:</p>
+${LX.tbl(["Question", "Answer for the pilot", "Evidence"], [
+  ["How wide per token?", "about as wide as a dense FFN: 9 experts × 768 = 6,912 ≈ 3.4 d", "dense models use 2.7–5 × d (Llama 2 7B 2.7, Llama 3 8B 3.5, Qwen3-32B 5); a convention, not derived"],
+  ["Cut into how many?", "experts 0.375 d = 768 wide: 8 routed + 1 shared", "finer over time: Mixtral 3.5 d (Dec 2023); since DeepSeek-V2 a quarter to half of d. Finer helps less and less: OLMoE 8 → 32 experts ≈ 10 %, 32 → 64 only 1–2 %"],
+  ["How many in total?", "32 × the active ones: 256", "Kimi K2 at equal loss needed 1.69, 1.39, 1.15, 1.00 × the compute at sparsity 8, 16, 32, 48; more keeps helping until memory stops it. DeepSeek-V3's layout; frontier sparsity 32–64"]])}
+${LX.tbl(["", "Our model"], [["H100-hours", "40,000"], ["compute", "4.9 · 10<sup>22</sup> FLOPs"], ["tokens", "4T"], ["active parameters", "2B"], ["width d", "2,048"], ["blocks", "24"], ["heads", "16 of 128"], ["experts", "8 of 256, plus 1 shared"], ["total parameters", "30B"]], "The shape is settled.")}
+${LX.keys([
+  "Kaplan: loss falls as a straight line in log–log with compute, data and parameters.",
+  "Chinchilla: every budget has a best size; N and D grow alike (exponents ≈ 0.5); ≈ 20 tokens per parameter (14–31).",
+  "C ≈ 6ND: 2 FLOPs forward + 4 backward per weight per token.",
+  "MFU ≈ 35 %; an H100-hour ≈ 1.23 · 10<sup>18</sup> useful FLOPs; 40,000 h ≈ 4.9 · 10<sup>22</sup>.",
+  "Overtraining a smaller model (2B on 4T) costs a little loss but makes everything after training cheaper.",
+  "Width/depth: d ÷ blocks between ≈ 20 and 250; heads 128 wide.",
+  "MoE: router picks a few experts per token; same active FLOPs, many more total parameters, all in memory."])}
+`},
+
+{lec: "tp1", sec: "inputs", title: "Architecture: the inputs, tokenizer and images", html: `
+${LX.pipe("shape")}
+<p class="lead">A tokenizer serves best the languages of the corpus it was learned on. A bigger vocabulary costs parameters. Images can enter the model in three ways, and when they enter the training mix matters.</p>
+
+<h3>What a language costs</h3>
+${LX.tbl(["Language", "GPT-2, 50k, English", "Qwen3, 152k", "EuroLLM, 128k, EU languages"], [
+  ["Greek", "7.2×", "5.3×", "1.9×"], ["Bulgarian", "6.3×", "2.4×", "1.5×"], ["Hungarian", "3.2×", "2.5×", "1.6×"],
+  ["Polish", "3.2×", "2.0×", "1.3×"], ["German", "2.3×", "1.6×", "1.2×"], ["French", "2.0×", "1.5×", "1.3×"]], "Tokens each language needs for the Universal Declaration of Human Rights, compared with English.", "num")}
+<p>Seven times the tokens is seven times the compute for the same page, a seventh of the text in the same context window, and seven times the price per page. EuroLLM's vocabulary is <b>smaller</b> than Qwen3's and still better for every EU language: <b>what matters is the corpus a tokenizer was learned on, not its size</b>.</p>
+
+<h3>What a vocabulary costs</h3>
+<p>Every entry lives in two tables, the embedding going in and the output layer coming out: <b>2 · V · d</b> weights.</p>
+${LX.tbl(["Vocabulary", "Used by about", "Share of our model (2B, d = 2,048)", "Share of a 70B-active model (d = 7,168)"], [
+  ["50k", "GPT-2", "10 %", "1.0 %"], ["100k", "Olmo 3", "20 %", "2.0 %"], ["128k", "Llama 3, EuroLLM", "26 %", "2.6 %"], ["150k", "Qwen3", "30 %", "3.1 %"], ["256k", "Gemma 3", "51 %", "5.2 %"]], "", "num")}
+<p>For a large model a large vocabulary is cheap; for our pilot about 150k takes almost a third of the parameters. We take it anyway, because the model must serve many languages and code, and <b>a tokenizer can't be changed once a model has been trained on it</b>. Four 150k candidates are tested, scored by what each language costs and by the loss a small model reaches <b>per byte</b> of text.</p>
+
+<h3>Three routes for images</h3>
+${LX.tbl(["Route", "How", "Example", "For", "Against"], [
+  ["adapter", "a vision encoder trained elsewhere, joined to a finished language model by a small projector", "Qwen2.5-VL, most open models", "cheap: reuses two finished models", "images join a model built for text"],
+  ["native, with an encoder", "encoder, projector and model trained together from the start", "Kimi K3", "text and images learn together", "one large joint run, from scratch"],
+  ["native, without an encoder", "patches go through one linear layer straight into the model", "Fuyu-8B", "the simplest: one network", "less proven at scale"]])}
+<p>The third route is the least tested. Shukor et al. compared it with an encoder in 457 models of 0.3B to 4B parameters and found it <b>as good at equal compute, and better at small budgets</b>. No frontier model uses it yet.</p>
+
+<h3>When to add images</h3>
+${LX.tbl(["Run (same number of image tokens)", "Images", "Image benchmarks", "Text benchmarks"], [
+  ["<b>early</b>", "<b>10 % of the data, start to end</b>", "<b>45.1</b>", "<b>42.9</b>"], ["mid-way", "20 %, in the second half", "43.3", "42.2"], ["late", "50 %, in the last fifth", "41.6", "41.6"]], "Kimi K2.5's experiment.", "num")}
+<p><b>Early and a little at a time was best, on images and on text as well.</b> The pilot puts images in from the start.</p>
+${LX.keys([
+  "Token cost per language depends on the tokenizer's training corpus, not vocabulary size (EuroLLM 128k beats Qwen3 152k on EU languages).",
+  "More tokens per page = more compute, less text per context window, higher price.",
+  "Vocabulary costs 2 · V · d weights: large for small models, cheap for big ones. A tokenizer is fixed once training starts.",
+  "Images: adapter (cheap, reuse), native with encoder (learn together, costly), native without encoder (simplest, least proven; as good at equal compute in Shukor et al.).",
+  "Images early and a little at a time beat mid-way or late, on both image and text benchmarks."])}
+`},
+
+{lec: "tp1", sec: "ctx", title: "Architecture: long context, attention and the KV cache", html: `
+${LX.pipe("shape")}
+<p class="lead">The pilot should read one million tokens. Attention compares every token with every earlier one, so its cost grows with the <b>square</b> of the length. Labs therefore pre-train on short rows and stretch the context only at the end.</p>
+${LX.tbl(["Model", "Pre-trains on", "Extends to"], [["Qwen3", "4,096", "32,768"], ["DeepSeek-V4", "4,096", "one million"], ["Olmo 3", "8,192", "65,536"], ["our pilot", "4,096", "one million"]], "", "num")}
+${LX.cols([
+  ["1 · Attention", "<p>Quadratic cost. Must be settled in the <b>architecture</b>, before pre-training. This section.</p>", "acc"],
+  ["2 · Positions", "<p>Beyond 4,096 RoPE turns its pairs to angles never seen. Fixed in <b>mid-training</b>.</p>"],
+  ["3 · Long documents", "<p>They are rare. Dealt with in <b>mid-training</b>.</p>"]])}
+
+<h3>What attention costs</h3>
+<p>For <i>n</i> tokens, <i>QK</i><sup>⊤</sup> is <i>n</i> × <i>n</i>: twice the tokens make four times the scores. In training, attention adds about <b>6 · L · n · d</b> FLOPs a token to the 6<i>N</i> the weights cost.</p>
+${LX.tbl(["Row length", "Attention per token", "Against the weights (12 GFLOPs)"], [["4,096", "1.2 GFLOPs", "+10 %"], ["32,768", "9.7 GFLOPs", "+81 %"], ["131,072", "38.7 GFLOPs", "3.2 times"], ["1,048,576", "309 GFLOPs", "26 times"]], "6 · 24 · 2,048 · n = 294,912 · n for our model.", "num")}
+<p>The scores also need memory: one head at 131,072 tokens takes 131,072² · 2 bytes = 34.4 GB. <b>FlashAttention</b> never stores them: it computes attention in tiles that fit the GPU's fast on-chip memory, updates the softmax tile by tile, and gets <b>exactly the same result</b>. Compute stays quadratic; memory no longer is.</p>
+
+<h3>The KV cache</h3>
+<p>A model generates one token at a time. Done naively, every step runs the whole text through the model again, although only the last row's distribution is used. The last row needs the other rows only inside attention, through their <b>keys and values</b>, and since a token never looks at later ones, those never change once computed. So they are kept.</p>
+${LX.flow([["new token", "computes only its own row"], ">", ["its query", "scored against every cached key"], ">", ["mix", "every cached value"], ">", ["add its own K and V", "to the cache, in each of the L blocks", "acc"]])}
+${LX.f(`2 · <i>L</i> · <i>h</i> · <i>d</i><sub>head</sub> · 2 bytes = 2 · 24 · 16 · 128 · 2 = 196,608 bytes per token`, "key and value · blocks · heads · head width · bf16")}
+${LX.tbl(["Context", "KV cache, one conversation"], [["4,096", "0.8 GB"], ["128K", "25.8 GB"], ["1M", "206 GB"]], "Next to it the weights take 60 GB in bf16; an H100 holds 80 GB. Every new token reads the whole cache: 206 GB at 3.35 TB/s ≈ 62 ms per token before any arithmetic.", "num")}
+${LX.note(`<b>Generation is limited by memory, not compute.</b> So most work on efficient attention goes into a smaller cache.`)}
+
+<h3>Fewer keys and values: MQA and GQA</h3>
+<p>The heads' keys and values largely say the same thing.</p>
+${LX.tbl(["", "Query heads", "Key/value heads", "Cache", "Quality"], [
+  ["multi-head (MHA)", "h", "h", "full", "the reference"],
+  ["multi-query (MQA)", "h", "1, shared by all", "h times smaller", "drops noticeably"],
+  ["<b>grouped-query (GQA)</b>", "h, in g groups", "g, one per group", "h / g times smaller", "close to MHA"]], "Llama 3 8B: 32 query heads, 8 for keys and values. Most open models today use GQA.")}
+
+<h3>A small latent: multi-head latent attention (MLA)</h3>
+<p>DeepSeek-V2 caches a <b>compressed</b> version of every token instead of fewer heads. A down-projection <i>W</i><sup>DKV</sup> turns the token's vector into a small latent <i>c</i> of <i>d</i><sub>c</sub> numbers, and only <i>c</i> goes into the cache. Up-projections could rebuild every head's keys and values: <i>K</i> = <i>CW</i><sup>UK</sup>, <i>V</i> = <i>CW</i><sup>UV</sup>.</p>
+${LX.f(`<i>q<sub>t</sub> k<sub>j</sub></i><sup>⊤</sup> = <i>q<sub>t</sub></i> ( <i>c<sub>j</sub> W</i><sup>UK</sup> )<sup>⊤</sup> = ( <i>q<sub>t</sub> W</i><sup>UK⊤</sup> ) <i>c<sub>j</sub></i><sup>⊤</sup>`, "so the keys and values are never rebuilt")}
+<ul class="tight">
+<li>The query is moved into the latent space once per step and meets every cached <i>c<sub>j</sub></i> directly; <i>W</i><sup>UK</sup> folds into <i>W</i><sup>Q</sup>, and <i>W</i><sup>UV</sup> into the output projection <i>W</i><sup>O</sup>.</li>
+<li>RoPE gets in the way, because its rotation sits between query and key and changes with <i>t</i> − <i>j</i>. So DeepSeek adds a <b>separate rotary key of 64 numbers</b>, shared by all heads and cached too.</li>
+<li>DeepSeek-V3 caches 512 + 64 = <b>576 numbers per block</b>; MHA with 128 heads of 128 would cache 2 · 128 · 128 = 32,768, 57 times as many. Over 61 blocks in bf16: <b>70 KB a token</b>, against 516 KB for Llama 3.1 405B with GQA. In DeepSeek-V2's comparisons MLA was as good as MHA or better.</li>
+</ul>
+
+<h3>Four ways to shrink the cache (plus full attention)</h3>
+${LX.tbl(["Way", "What a block keeps", "Example"], [
+  ["full attention", "a key and value for every token", "MiniMax-M2 tried hybrids and went back: no variant reliably matched full attention"],
+  ["compress each token", "every token, but smaller (MLA)", "DeepSeek-V3: 70 KB a token"],
+  ["look nearby: sliding window", "only the most recent tokens", "Olmo 3: window of 4,096 in 3 of every 4 blocks, full attention in the rest"],
+  ["squeeze, then select", "every few tokens squeezed into one entry; only the most relevant entries read", "DeepSeek-V4-Pro: squeezes every 4 tokens, reads the top 1,024, interleaved with blocks that squeeze every 128; a tenth of DeepSeek-V3.2's cache at 1M"],
+  ["a fixed-size state: linear attention", "no growing cache, only a state every token updates", "Kimi K3: in 3 of every 4 blocks, MLA in the fourth"]], "The frontier mixes them: a few blocks that see everything in full, many that are cheap.")}
+${LX.keys([
+  "Attention is quadratic: 2 × tokens → 4 × scores; ≈ 6 · L · n · d extra FLOPs per token in training. So pre-train short, stretch late.",
+  "FlashAttention: tiles + running softmax, exact same result; memory no longer quadratic, compute still is.",
+  "KV cache: earlier keys/values never change (causal), so keep them; per token 2 · L · h · d<sub>head</sub> · 2 bytes = 196,608 B for the pilot; 206 GB at 1M.",
+  "Generation is memory-bound (read the whole cache every token).",
+  "MQA: one K/V for all heads (h× smaller, worse). GQA: g groups (h/g smaller, ≈ MHA).",
+  "MLA: cache a latent; up-projections fold into W<sup>Q</sup>/W<sup>O</sup>; separate 64-number rotary key; 576 numbers per block in DeepSeek-V3.",
+  "Sliding window, squeeze-then-select, linear attention (fixed state); frontier models mix full and cheap blocks."])}
+`},
+
+{lec: "tp1", sec: "data", title: "Data: from the web to training rows", html: `
+${LX.pipe("data")}
+<p class="lead">Most text comes from the web. It is collected, cleaned, deduplicated, classified and decontaminated, mixed in proportions found by experiment, and finally packed into rows of equal length.</p>
+
+<h3>Where training data comes from</h3>
+${LX.tbl(["Source", "Size"], [
+  ["Common Crawl: about a hundred crawls, roughly one a month, each a few billion pages", "about 240T tokens of text altogether"],
+  ["FineWeb (cut from it)", "15T tokens"], ["FineWeb-Edu (inside FineWeb)", "1.3T"], ["Nemotron-CC", "6.3T"], ["DCLM-Baseline", "about 4T"], ["OpenWebMath (specialised)", "14.7B"],
+  ["DataComp image–text pairs (Common Crawl keeps only links and alt text; pixels are fetched)", "12.8 billion pairs"]], "", "num")}
+<ul class="tight">
+<li><b>Better from the source than the crawl:</b> OLMo's first data set took 342B tokens of code from repositories, 57B from scientific papers, 5.2B from Project Gutenberg and 3.7B from Wikipedia's dumps.</li>
+<li><b>Not crawled at all:</b> sites that opt out, pages behind logins, most of social media, video.</li>
+<li><b>Outside the open web:</b> licensed data, scanned books, and synthetic data that models write for other models.</li>
+</ul>
+
+<h3>Cleaning, in three steps</h3>
+${LX.flow([["1 · Filter with heuristics", "cheap rules drop whole pages: too short, mostly symbols, the same line over and over"], ">", ["2 · Deduplicate", "exact copies → keep one; near copies → keep one; a repeated passage (a footer in thousands of pages) is cut from each page, the pages stay"], ">", ["3 · Classify", "small models give each page a topic and a quality score, so the mix can draw more from the good pages of each topic", "acc"]])}
+
+<h3>Decontamination</h3>
+<p>GSM8K's first test question is about Janet's ducks laying 16 eggs a day. If a forum page with the worked answer (16 − 3 − 4 = 9 eggs, 9 × $2 = $18) lands in the training data, the model may later answer from memory, and its score no longer shows whether it can reason. So <b>benchmarks are taken out before training</b>: labs look for <b>runs of words that a page shares with a benchmark, in the same order</b>. DeepSeekMath drops any page sharing a run of 10 words with a benchmark. The page with Janet's ducks goes.</p>
+
+<h3>The mix</h3>
+<p>Nobody knows in advance how much web, code, maths or PDFs to include. Common practice: train small models on different mixes and predict the best one.</p>
+${LX.flow([["swarm", "Olmo 3: many 30M-parameter models, each on a different random mix of 3B tokens"], ">", ["evaluate", "every task"], ">", ["regression", "predicts each task's score from the mix's six components"], ">", ["best predicted mix", "limited by what is available", "acc"]])}
+<p>If the best mix wants more maths than exists, the maths must be repeated, but <b>no source should be repeated more than four to seven times</b>.</p>
+
+<h3>From documents to training rows: packing</h3>
+<p>The tokenizer turns each document into IDs and ends it with a special token (Qwen3: &lt;|endoftext|&gt;, ID 151643). All documents are joined into one long stream and cut into <b>rows of equal length</b>, 4,096 for our model. A document may start in one row and end in the next, and a row usually holds several documents.</p>
+${LX.toks([["·at", 518], ["·the", 279], ["·market", 3081], [".", 13], ["&lt;|endoftext|&gt;", 151643, 1], ["The", 785], ["·cow", 19362], ["·says", 2727], ["·moo", 45871]])}
+<p>The alternative is <b>padding</b>: one document per row, the rest filled with a padding token. Those slots are computed like every other, but nothing is learned from them, and with documents of very different lengths half a batch can be padding. <b>Every lab packs.</b></p>
+
+<h3>Images as tokens</h3>
+${LX.flow([["448 × 448 image", ""], ">", ["14 × 14-pixel patches", ""], ">", ["2 × 2 patches = 28 × 28 pixels", "one slot in the text"], ">", ["16 × 16 = 256 slots", "", "acc"]], "Qwen2.5-VL.")}
+${LX.toks([["&lt;|vision_start|&gt;", 151652], ["&lt;|image_pad|&gt; × 256", 151655, 1], ["&lt;|vision_end|&gt;", 151653]])}
+<p>The &lt;|image_pad|&gt; tokens hold a place and carry nothing: the embedding table gives all of them the same vector. The vision encoder looks at all patches at once and returns one vector per 2 × 2 patches, and those vectors <b>overwrite the placeholders</b>, in order, before the first decoder block. The image is input only: the slots' labels are set to <b>−100</b>, the value PyTorch's loss skips, so the model never has to predict them.</p>
+${LX.code(`embeds = embed_tokens(input_ids)               # every token gets a vector, the slots too
+image_embeds = vision_encoder(pixel_values)    # one vector per 28 × 28 pixels
+is_slot = input_ids == 151655                  # where the slots are
+embeds = embeds.masked_scatter(is_slot[..., None], image_embeds)
+labels[is_slot] = -100                         # the image is input only: no loss on it`)}
+${LX.keys([
+  "Common Crawl ≈ 240T tokens; curated cuts such as FineWeb (15T) and FineWeb-Edu (1.3T inside it). Code, papers, books, Wikipedia are better taken from the source.",
+  "Cleaning: heuristic filters → deduplication (exact, near, repeated passages cut) → classifiers for topic and quality.",
+  "Decontamination: drop pages sharing a run of words (in order) with a benchmark; DeepSeekMath uses 10 words.",
+  "Mix: predicted from a swarm of small models plus a regression; repeat no source more than 4–7 times.",
+  "Packing: documents + end-of-text token joined and cut into equal rows; padding wastes compute; every lab packs.",
+  "Images: placeholder tokens overwritten by encoder outputs; labels −100, no loss on the image."])}
+`},
+
+{lec: "tp1", sec: "pre", title: "Pre-training: the loop", html: `
+${LX.pipe("pre")}
+<p class="lead">Pre-training repeats one step about 954,000 times: take the next batch, run it forward, measure the loss, and turn every weight a little in the direction that lowers it.</p>
+${LX.flow([["dataset", "4T tokens, packed into rows of 4,096"], ">", ["batch", "the next 1,024 rows ≈ 4.2M token IDs"], ">", ["forward", "a distribution over the next token at every position"], ">", ["loss", "how surprised the model was, averaged into one number"], ">", ["update", "every weight turned a little", "acc"]], "Then back to the next batch, until the 4T tokens are used up. Every 1,000 steps or so, the model is saved and tested.")}
+
+<h3>Inputs and targets: the text is its own label</h3>
+${LX.tbl(["Input", "The", "cow", "says", "moo", ".", "&lt;|endoftext|&gt;", "Vienna", "is"], [["Target", "cow", "says", "moo", ".", "&lt;|endoftext|&gt;", "Vienna", "is", "the"]], "The targets are the inputs shifted by one. A row of 4,097 tokens gives 4,096 inputs and 4,096 targets. Nobody writes the answers.")}
+
+<h3>Forward</h3>
+${LX.flow([["token IDs", "1,024 × 4,096"], ">", ["embeddings", "1,024 × 4,096 × d"], ">", ["24 blocks", "same shape"], ">", ["output + softmax", "1,024 × 4,096 × 150,000", "acc"]], "4.2 million distributions in one pass. Nothing is generated: the model only scores the text it is given, at every position at once, which the causal mask makes possible.")}
+
+<h3>Loss: −log p of the true next token</h3>
+<p>At every position the model spreads its bet over about 150,000 tokens. The loss looks only at the share <i>p</i> that landed on the token that actually came next and takes <b>−log <i>p</i></b>. Sure and right: <i>p</i> ≈ 1, loss ≈ 0. The less it expected the truth, the bigger the loss and the stronger the signal. Summed over a sentence, the losses are −log of the whole sentence's probability (the chain rule). On “The cow says moo”, <i>cow</i> surprised the model most and carries the biggest loss.</p>
+${LX.f(`before training: −ln(1 / 151,936) = ln 151,936 ≈ 11.9`, "the model bets evenly on every token: where every loss curve starts")}
+<ul class="tight">
+<li>The 4.2 million losses of a batch are <b>averaged</b> into one number, the batch loss. On 256 GPUs each gets 4 rows, computes the mean over its 16,384 positions, and the batch loss is the mean of the 256 means, the same as the mean over all positions because every GPU has the same number of positions.</li>
+<li>Batch losses are <b>not added up</b> from step to step. Each is one point on the loss curve, for us to watch; each step's gradient comes from its own batch alone.</li>
+</ul>
+
+<h3>Backward, loss spikes and clipping</h3>
+<p>Backpropagation computes from that one number a <b>gradient</b> for every one of the 30B weights: which way to turn it, and how far.</p>
+${LX.note(`<b>Loss spikes.</b> Now and then a batch produces a far larger gradient than usual. PaLM saw about 20 spikes in one run. Replayed from a different checkpoint, the same batches caused no spike: neither bad data alone nor the weights alone, but a batch meeting a particular state. One known cause: attention scores that grow until softmax puts everything on one token. The PaLM team restarted about 100 steps earlier and skipped 200 to 500 batches.`)}
+<p>The usual safety rail is <b>gradient clipping</b>: all gradients together form one long vector; if it is longer than a threshold, usually 1.0, it is scaled down to that length. The step keeps its <b>direction</b>, only not as far.</p>
+
+<h3>One step on many GPUs</h3>
+<p>256 H100s turn 40,000 hours into about a week. In <b>data parallelism</b> every GPU holds a full copy of the model, gets its own rows (4 each), computes its own loss and gradients, and the GPUs <b>average their gradients among themselves</b>, with no central copy, so each applies the same update and the copies stay identical. Our model doesn't fit that way: 30B parameters with their gradients and AdamW's state take about 480 GB, an H100 holds 80 GB. So the model is split further, for example with the storage split across GPUs (<b>FSDP</b>), attention cut by heads (<b>tensor parallelism</b>) and the <b>experts spread over the GPUs</b>. For the pilot: FSDP plus experts spread over the GPUs.</p>
+
+<h3>The update: optimiser and scheduler</h3>
+${LX.f(`θ ← θ − η<sub><i>t</i></sub> · Δ<sub><i>t</i></sub>`, "the two parts are designed separately")}
+${LX.cols([
+  ["Optimiser → Δ<sub>t</sub>", "<p>One batch's gradient is noisy (it jitters, sometimes flips sign) and badly scaled. The optimiser smooths recent gradients (<b>momentum</b>) and sizes each weight's step by how large its gradients have been (as <b>Adam</b> does). <b>AdamW</b> is the common choice; <b>Muon</b> a newer one, used for Kimi K2.</p>"],
+  ["Scheduler → η<sub>t</sub>", "<p>No single step size fits the run: big steps early blow up random weights; big steps late bounce around the valley floor. So the learning rate <b>warms up</b>, stays high, and <b>falls at the end</b>. Shapes: <b>cosine</b> and <b>warmup–stable–decay (WSD)</b>. With WSD the decay can be a stage of its own: mid-training.</p>", "acc"]])}
+${LX.code(`opt = AdamW(model.parameters(), lr=3e-4, betas=(0.9, 0.95), weight_decay=0.1)
+for step, batch in enumerate(loader):
+    inputs = batch[:, :-1]                  # drop the last
+    targets = batch[:, 1:].clone()          # drop the first
+    targets[targets == 151655] = -100       # image slots: no loss
+    loss = cross_entropy(model(inputs).flatten(0, 1), targets.flatten())
+    loss.backward()
+    clip_grad_norm_(model.parameters(), 1.0)
+    set_lr(opt, schedule(step))
+    opt.step(); opt.zero_grad()
+    if step % 1000 == 0: save_checkpoint(...); evaluate(model)`)}
+<p>The hard part is not the loop. It is keeping 256 GPUs busy for a week without a spike, a dead node or a silent error in the numbers.</p>
+${LX.keys([
+  "Targets = inputs shifted by one; no labels needed. A row of 4,097 tokens → 4,096 predictions.",
+  "Forward scores all positions at once (causal mask); nothing is generated during training.",
+  "Loss = mean of −log p(true next token); starts at ln V ≈ 11.9 for Qwen3's 151,936.",
+  "Batch loss = mean over all positions; not accumulated across steps; each step's gradient from its own batch.",
+  "Loss spikes: a batch meeting a particular state; fix by restarting earlier and skipping batches. Clipping at norm 1.0 keeps the direction.",
+  "Data parallelism averages gradients between GPUs; too big a model also needs FSDP, tensor or expert parallelism.",
+  "Optimiser (momentum, per-weight scaling: AdamW, Muon) vs scheduler (warm-up, high, decay: cosine, WSD)."])}
+`}
+);
+LX.post = hl => {
+  const g1 = [["sft", "SFT", "examples to imitate"], ["sft", "DPO", "chosen vs. rejected pairs"]];
+  const g2 = [["dist", "On-policy distillation", "a teacher grades every token"], ["rlhf", "RLHF / RLAIF", "a reward model or judge scores"], ["rlvr", "RLVR", "a checker scores 1 or 0"]];
+  const b = ([k, t, s]) => `<button class="wp${hl === k ? " on" : ""}" data-go="tp2:${k}"><b>${t}</b><small>${s}</small></button>`;
+  return `<figure class="fig"><div class="cols two">
+    <div class="colc"><h4>Learns from a fixed dataset</h4><div class="wstack">${g1.map(b).join("")}</div></div>
+    <div class="colc acc"><h4>Learns from its own output, scored as it is generated</h4><div class="wstack">${g2.map(b).join("")}</div></div>
+  </div><figcaption>Post-training methods by what the policy learns from. Labs chain several: Tülu 3 and Olmo 3 run SFT, then DPO, then RLVR. Click one to open it.</figcaption></figure>`;
+};
+
+LESSONS.push(
+/* ═════════════ Training Paradigms II ═════════════ */
+{lec: "tp2", sec: "mid", title: "Mid-training", html: `
+${LX.pipe("mid")}
+<p class="lead">Mid-training is either the end of pre-training or a stage of its own. It has three goals: <b>cool the learning rate down</b>, <b>finish on the best data</b>, and, if needed, <b>stretch the context window</b>.</p>
+
+<h3>1 · Cooling the learning rate down</h3>
+<figure class="fig"><svg viewBox="0 0 320 120" class="pic wide" aria-hidden="true">
+<path d="M5 20 C 40 30, 55 40, 70 48 C 78 52, 84 44, 92 50 C 120 66, 150 80, 175 98 C 195 112, 215 112, 235 98 C 255 84, 280 60, 315 40" fill="none" stroke="var(--fg)" stroke-width="2"/>
+<circle cx="84" cy="48" r="5" fill="var(--mid)"/><text x="58" y="36" font-size="10" fill="var(--mid)">small rate: stuck in a dip</text>
+<path d="M150 80 L 245 92 L 165 104 L 232 100 L 182 106" fill="none" stroke="var(--bad)" stroke-width="1.5" stroke-dasharray="3 3"/><text x="230" y="80" font-size="10" fill="var(--bad)">high rate: bounces</text>
+<circle cx="205" cy="111" r="5" fill="var(--accent)"/><text x="160" y="118" font-size="10" fill="var(--accent)">decayed: settles</text>
+</svg><figcaption>The loss along one direction of the weights: a slope with small dips and a valley at the bottom. A cartoon.</figcaption></figure>
+<p>A small rate gets caught in the first dip. A high rate hops over the dips and crosses the slope quickly, but at the bottom its big steps overshoot and the weights bounce between the walls. Only when the rate falls do the steps shrink and the weights settle. In billions of dimensions real traps are rare, and the noise of big steps tends to lead to wide valleys, but the point stands. On the same data, a rate falling to zero at the end alone gave <b>OLMo 2 7B +4.4 points</b> on its multiple-choice average (69.6 → 74.0).</p>
+
+<h3>2 · Finishing on the best data</h3>
+<p>The final tokens a model reads have the greatest impact on the finished model, so the best data is kept for the end. Olmo 3 7B: about <b>5.9T tokens of pre-training</b>, then <b>100B of mid-training</b>, under 2 % of the total, with a very different mix.</p>
+${LX.tbl(["Data", "Pre-training", "Mid-training"], [["web", "76.1 %", "27.5 %"], ["PDFs", "14.5 %", "5.0 %"], ["code", "6.9 %", "20.0 %"], ["maths", "2.6 %", "19.2 %"], ["reasoning", "0", "14.4 %"], ["Q&amp;A", "0", "13.9 %"]], "", "num")}
+<p>The reasoning share consists of instructions and <b>thinking traces</b>: worked solutions in which a model thinks a problem through step by step, often written by reasoning models.</p>
+${LX.code(`17 × 24 = ?
+17 × 20 = 340, 17 × 4 = 68.
+340 + 68 = 408.
+Check: 408 ÷ 24 = 17. ✓
+Answer: 408.`)}
+<p>Afterwards the model produces such reasoning itself <b>some of the time</b>. Ask it eight times and a few answers are long and careful, and those tend to be correct. Reinforcement learning in post-training rewards correct answers, making them more common and longer, but <b>it can only reward what the model already does occasionally</b>. Olmo 3 even ran RL directly on its base model, which worked in part because the traces had given it something to reinforce.</p>
+
+<h3>3 · Stretching the context: the positions</h3>
+<p>The pilot goes from 4,096 to 1M = 2<sup>20</sup> = 1,048,576 tokens, 256 times longer. RoPE's fast pairs tell neighbours apart; its slow pairs tell distant positions apart only because they turn so little: within a training row they never complete a turn, so no two positions look alike.</p>
+${LX.tbl(["Olmo 3 7B (rows of 8,192, 64 pairs)", ""], [
+  ["pairs that never complete a turn in a row", "almost half"],
+  ["pair 48 within a training row", "at most 31°"],
+  ["pair 48 in a row 8 × as long", "245°, an angle never seen"],
+  ["make slow pairs faster from the start?", "no: once they complete full turns they give distant positions the same angle"]])}
+${LX.tbl(["Method", "Idea", "Result"], [
+  ["just train on longer rows", "let the slow pairs turn further and get used to new angles", "works poorly: LLaMA fine-tuned &gt; 10,000 steps went from 2,048 to only 2,560 usable tokens (Chen et al.)"],
+  ["position interpolation", "squeeze the longer row into known angles: turn <b>every</b> pair 8 × more slowly; pair 48 again ≤ 31°, now across 65,536 positions", "only new angles <b>in between</b> known ones; adapts within 1,000 steps. Cost: neighbouring tokens move closer on the fast pairs, harder to tell apart"],
+  ["<b>YaRN</b>", "slow down <b>only the slow pairs</b>; leave the fast pairs (they have seen every angle); slow the pairs in between partially", "also sharpens attention: 8 × as many tokens flatten the softmax, so scores × (0.1 ln 8 + 1)² ≈ 1.46; then adapts in a long-context stage"]])}
+
+<h3>3 · Stretching the context: long documents</h3>
+<p>In pre-training a document longer than a row is split, so the model never sees it whole. Olmo 3 adds a <b>long-context stage of 50B tokens with rows of 65,536</b>. A 30,000-token PDF now fits in one row, and short documents fill the rest.</p>
+${LX.tbl(["Long-context mix", "Long documents (8K–64K)", "Short mid-training mix", "Loss on short tasks"], [["Olmo 3", "34 % (mainly scientific PDFs and synthetic tasks built on them)", "66 %", "−0.8 points"], ["reversed", "66 %", "34 %", "−2.5 points"]], "", "num")}
+<p>A row still holds several documents. With the plain causal mask a token at the end of a row would attend to unrelated documents 60,000 tokens earlier. So Olmo 3 uses <b>intra-document masking</b>: the score between tokens of <b>different documents</b> is set to −∞, just as the causal mask blocks later tokens. Every long-range pair the model learns from then lies within one long document.</p>
+${LX.grid(["A", "A", "A", "B", "B", "C", "C"], (i, j) => {
+  const doc = [0, 0, 0, 1, 1, 2, 2];
+  return j > i ? ["", "off"] : doc[i] !== doc[j] ? ["−∞", "off x"] : ["", "on d" + doc[i]];
+}, "Three documents A, B, C packed in one row. Each token attends only to earlier tokens of its own document. This mask is used only in training; at inference everything in the context is one conversation, so every token may attend to all of it.")}
+
+<h3>How far labs stretch</h3>
+${LX.tbl(["Model", "Stretch", "Stages"], [
+  ["Olmo 3 7B", "8K → 64K", "one"], ["DeepSeek-V3", "4K → 32K → 128K", "two, 1,000 steps each"], ["Llama 3", "8K → 128K", "six, about 800B tokens"],
+  ["GLM-5", "32K → 128K → 200K", "two"], ["DeepSeek-V4", "4K → 1M (256 ×)", "during pre-training, relying on its compressed attention"]])}
+<p>Stretched positions alone don't make a million tokens affordable: with full attention the pilot's KV cache would take 206 GB for one conversation, so a million tokens also needs attention that keeps fewer or smaller keys and values. The pilot's plan: <b>three stages, 4K → 32K → 256K → 1M</b> (factors 8, 8, 4), each with YaRN, intra-document masking and a large share of the short mix. Documents of hundreds of thousands of tokens are rarer still, so later stages lean more on <b>synthetic tasks</b> built from long documents.</p>
+${LX.note(`<b>The result is a base model.</b> It continues any text in many languages and with images, and occasionally writes out its reasoning. It does not yet follow instructions or hold a conversation: that is post-training.`)}
+${LX.keys([
+  "Goals: decay the learning rate, best data last, stretch the context.",
+  "Decay lets weights settle at the valley floor; OLMo 2 7B +4.4 points on the same data.",
+  "Olmo 3 7B: 5.9T pre + 100B mid (&lt; 2 %); mid mix far heavier on code, maths, reasoning (thinking traces), Q&amp;A.",
+  "RL can only reinforce what the model already does sometimes, hence thinking traces in mid-training.",
+  "Positions: naive longer training fails; PI slows all pairs (blurs neighbours); YaRN slows only slow pairs and scales scores by ≈ 1.46.",
+  "Long-context stage: 65,536-token rows, 34 % long docs, 66 % short mix; intra-document masking (training only).",
+  "Pilot: 4K → 32K → 256K → 1M in three stages; also needs a cheaper attention."])}
+`},
+
+{lec: "tp2", sec: "sft", title: "Post-training: SFT and DPO", html: `
+${LX.pipe("post")}
+<p class="lead">Ask a base model “Why do cows moo?” and it may simply continue with three more questions, as if the text came from a quiz. Post-training teaches it to answer. From here on the model being trained is called the <b>policy</b>, a term from reinforcement learning.</p>
+${LX.post("sft")}
+
+<h3>Supervised fine-tuning (SFT)</h3>
+<p>SFT is essentially <b>pre-training again, on conversations</b>. Each example is a prompt and an answer in the model's <b>chat template</b>, which marks who is speaking with special tokens:</p>
+${LX.code(`<|im_start|>user
+Why do cows moo?<|im_end|>
+<|im_start|>assistant
+To call their calves.<|im_end|>`)}
+<p>The loss is the same −log <i>p</i> of each next token, but <b>only on the answer</b>. The prompt's labels are set to −100, like the image slots in pre-training: the model should learn to answer, not to ask.</p>
+${LX.tbl(["Where the examples come from", ""], [["people", "write them"], ["a stronger model", "writes them: <b>distillation</b>"], ["the model itself", "generates many answers, only the best are kept: <b>rejection sampling</b>"]], "Whoever wrote them, SFT teaches the model to imitate them.")}
+
+<h3>Direct preference optimisation (DPO)</h3>
+<p>SFT shows a good answer but never a worse one. DPO learns from pairs: each prompt has a <b>chosen</b> and a <b>rejected</b> answer.</p>
+${LX.cols([["+ chosen", "<p>Cows moo to call their calves and keep in touch with the herd.</p>", "acc"], ["− rejected", "<p>Cows moo. That is what cows do.</p>", "bad"]])}
+${LX.tbl(["Who decides which is better", ""], [["InstructGPT (before DPO)", "people ranked 4 to 9 answers per prompt; the rankings trained a reward model (RLHF)"], ["Tülu 3", "GPT-4o rated them"], ["Olmo 3", "nobody judges: the chosen answer comes from Qwen3-32B, the rejected one from Qwen3-0.6B"]], "In each case the pairs are labelled once and form a fixed dataset, like SFT's.")}
+<p>DPO passes both answers through two models: the <b>policy</b> and the <b>reference</b>, a <b>frozen copy of the SFT model</b> training starts from. Each gives the log-probability of each answer (the sum of its tokens' log <i>p</i>). The answer's <b>gain</b> is how much more likely the policy finds it than the reference does.</p>
+${LX.f(`gain = log <i>p</i><sub>policy</sub> − log <i>p</i><sub>ref</sub> &nbsp;&nbsp;&nbsp; 𝓛 = −log σ( β · [ gain<sup>+</sup> − gain<sup>−</sup> ] )`, "σ(x) = 1 / (1 + e<sup>−x</sup>); β is usually 0.1")}
+${LX.tbl(["", "Policy", "Reference", "Gain"], [["chosen (+)", "−38", "−40", "+2"], ["rejected (−)", "−37", "−35", "−2"]], "Loss = −log σ(0.1 · 4) = −log 0.60 = 0.51, already below the starting value log 2 = 0.69.", "num")}
+<p>The step raises the chosen answer's probability and lowers the rejected one's. Because both gains are measured <b>relative to the reference</b>, the margin reflects how far the policy has moved from its start, not how likely an answer is in the first place. Here the policy still finds the rejected answer more likely (−37 against −38), and yet the loss is already lower, because it moved the right way for both.</p>
+${LX.keys([
+  "Policy = the model being trained.",
+  "SFT: next-token loss on the answer only (prompt labels −100); data from people, a stronger model (distillation) or the model's own best answers (rejection sampling).",
+  "DPO: fixed pairs; policy vs frozen SFT reference; gain = log p<sub>policy</sub> − log p<sub>ref</sub>; loss −log σ(β[gain<sup>+</sup> − gain<sup>−</sup>]), β ≈ 0.1; starts at log 2.",
+  "The margin is relative: the rejected answer can still be more likely than the chosen one.",
+  "Preference labels: people (InstructGPT), a model (Tülu 3: GPT-4o), or a strong vs weak model (Olmo 3)."])}
+`},
+
+{lec: "tp2", sec: "dist", title: "On-policy distillation", html: `
+${LX.pipe("post")}
+${LX.post("dist")}
+<p class="lead">SFT and DPO learn from answers someone else wrote, so the policy's <b>own mistakes never appear</b> in them. In on-policy distillation the policy, now the <b>student</b>, writes its own answer, and a stronger model, the <b>teacher</b>, grades it token by token.</p>
+${LX.flow([["student writes", "“17 × 24 = 418”"], ">", ["teacher reads", "one forward pass, writes nothing itself"], ">", ["grade per token", "teacher's log p minus student's", "acc"], ">", ["update", "−log p weighted by the grade"]])}
+${LX.f(`grade<sub><i>t</i></sub> = log <i>p</i><sub>teacher</sub>(token<sub><i>t</i></sub>) − log <i>p</i><sub>student</sub>(token<sub><i>t</i></sub>)`)}
+${LX.tbl(["Token", "Student p", "Teacher p", "Grade"], [["17 × 24", "0.60", "0.70", "<span class='ok'>+0.15</span>"], ["=", "0.90", "0.90", "0"], ["418", "0.30", "0.02 (it expected 408)", "<span class='no'>−2.71</span>"]], "Prompt: “17 cows give 24 litres each. How much?” (“17 × 24” treated as one token for simplicity.)", "num")}
+${LX.f(`𝓛 = − Σ<sub><i>t</i></sub> grade<sub><i>t</i></sub> · log <i>p</i><sub>student</sub>(token<sub><i>t</i></sub>)`, "the grade is treated as a constant")}
+<p>A positive grade makes a token more likely, a negative one less likely. The probability of “418” drops sharply, <b>exactly where the student went wrong</b>.</p>
+${LX.tbl(["", "DPO gain", "Distillation grade"], [["order", "model being trained − reference", "teacher − model being trained"], ["positive means", "the policy likes it more than the reference", "the teacher likes it more than the student"], ["granularity", "the whole answer", "every single token"], ["whose text", "a fixed dataset", "the student's own output"]], "Both are one model's log-probability minus another's.")}
+${LX.keys([
+  "On-policy: the student generates, so its own mistakes get feedback.",
+  "The teacher only reads (one forward pass) and supplies its probabilities.",
+  "grade<sub>t</sub> = log p<sub>teacher</sub> − log p<sub>student</sub>, per token, treated as a constant weight on −log p<sub>student</sub>.",
+  "Compared with DPO's gain, the order is reversed and the signal is per token."])}
+`},
+
+{lec: "tp2", sec: "rlhf", title: "RLHF, over-optimisation, the KL leash and RLAIF", html: `
+${LX.pipe("post")}
+${LX.post("rlhf")}
+<p class="lead">Reinforcement learning from human feedback starts from the same pairs as DPO but takes a detour: the pairs train a separate <b>reward model</b>, which then scores the policy's new answers, round after round.</p>
+
+<h3>Step 1: train the reward model</h3>
+<p>The reward model is a language model that outputs <b>a single number</b> instead of a distribution over the next token. It reads a prompt and <b>one</b> answer and returns a score. Its loss has DPO's form, with scores in place of gains:</p>
+${LX.f(`𝓛 = −log σ( <i>r</i><sup>+</sup> − <i>r</i><sup>−</sup> )`, "chosen scored 1.4, rejected −0.6: −log σ(2.0) = 0.13")}
+<p>Although it never sees both answers at once, it learns to give better answers higher scores.</p>
+
+<h3>Step 2: the policy learns from fresh scores</h3>
+${LX.flow([["policy writes", "new answers nobody ranked"], ">", ["reward model, frozen", "scores each one"], ">", ["policy learns", "from these scores", "acc"], ">", ["repeat", "round after round"]])}
+<p>The feedback concerns the model's answers <b>as they are now</b>, not as they were when the dataset was made. The simplest update is SFT on the policy's own answer, every token weighted by the answer's reward:</p>
+${LX.f(`𝓛 = −<i>r</i> · Σ<sub><i>t</i></sub> log <i>p</i><sub>policy</sub>(token<sub><i>t</i></sub>)`, "like on-policy distillation, but one weight for the whole answer instead of one per token")}
+
+<h3>Over-optimisation</h3>
+<figure class="fig"><svg viewBox="0 0 300 130" class="pic wide" aria-hidden="true">
+<line x1="30" y1="115" x2="290" y2="115" stroke="var(--line)" stroke-width="2"/><line x1="30" y1="115" x2="30" y2="10" stroke="var(--line)" stroke-width="2"/>
+<path d="M30 110 C 100 70, 180 40, 285 15" fill="none" stroke="var(--mid)" stroke-width="2.5"/><text x="200" y="28" font-size="10" fill="var(--mid)">reward model's score</text>
+<path d="M30 110 C 90 60, 140 50, 170 55 C 210 62, 250 85, 285 100" fill="none" stroke="var(--accent)" stroke-width="2.5"/><text x="205" y="92" font-size="10" fill="var(--accent)">true quality</text>
+<text x="150" y="128" font-size="10" fill="var(--sub)">how far the policy has drifted →</text>
+</svg><figcaption>The reward model is only a stand-in for what people want. Its score keeps rising; the quality people perceive rises, peaks and falls. Illustrative, after Gao et al., who used a large reward model in place of human raters.</figcaption></figure>
+<p>The policy discovers what the reward model <b>overrates: long, confident and flattering answers</b>. This is <b>Goodhart's law</b>: when a measure becomes a target, it ceases to be a good measure.</p>
+
+<h3>The leash: KL to the reference</h3>
+<p>The fix ties the policy to the <b>reference</b>, the frozen SFT model, and pulls harder the further the policy drifts. The distance is the <b>Kullback–Leibler divergence</b>.</p>
+${LX.tbl(["Next token after “Cows moo to”", "Reference", "Policy", "log p<sub>policy</sub> − log p<sub>ref</sub>"], [["call", "0.50", "0.80", "+0.47"], ["warn", "0.30", "0.15", "−0.69"], ["eat", "0.20", "0.05", "−1.39"]], "", "num")}
+${LX.f(`KL = Σ<sub>token</sub> <i>p</i><sub>policy</sub> · ( log <i>p</i><sub>policy</sub> − log <i>p</i><sub>ref</sub> ) = 0.80·0.47 + 0.15·(−0.69) + 0.05·(−1.39) = 0.20`, "the last column, weighted by how often the policy chooses each token")}
+<ul class="tight">
+<li>KL is <b>0</b> when the two distributions are identical, and <b>never negative</b>.</li>
+<li>It grows fastest when the policy puts probability on tokens the <b>reference considers unlikely</b>.</li>
+<li>For a whole answer, KL is summed over its tokens and <b>subtracted from the reward model's score</b>: with β = 0.1 and KL 1.5, <i>r</i> = 0.8 − 0.1 · 1.5 = 0.65.</li>
+<li>DPO's β plays the same role: DPO is derived from exactly this objective, reward minus β · KL, which is why its gains are measured against the reference.</li>
+</ul>
+${LX.note(`<b>The RLHF loop has two frozen models</b>, the reward model and the reference, with the policy in between.`)}
+
+<h3>Reinforcement learning from AI feedback (RLAIF)</h3>
+<p>A human label costs around a dollar or more; a label from a frontier model less than a cent. In RLAIF a <b>model picks the better answer</b> instead of a person; the rest of RLHF stays the same. In <b>Constitutional AI</b> people only write the principles, the <b>constitution</b>, and the model judges each pair according to one of them.</p>
+<p>A judge can also score an answer directly with a <b>rubric</b> written for the specific prompt. The reward is the share of rubric items met:</p>
+${LX.tbl(["Rubric for “Why do cows moo?”", "+ calves and herd", "− what cows do"], [["gives a reason", "✓", "✗"], ["names the calves or the herd", "✓", "✗"], ["mentions other reasons too", "✗", "✗"], ["is short", "✓", "✓"], ["<b>reward</b>", "<b>0.75</b>", "<b>0.25</b>"]], "Real rubrics have 7 to 20 items, often weighted by importance; here all count equally.")}
+${LX.cols([["Human labels", "<p><b>Noisy</b>, but carry little systematic bias.</p>"], ["Judge labels", "<p><b>Consistent</b>, but systematically biased: judges favour <b>long answers</b> and <b>their own</b>.</p>", "bad"]])}
+${LX.keys([
+  "RLHF = DPO's pairs → reward model (one number per prompt + answer; loss −log σ(r<sup>+</sup> − r<sup>−</sup>)) → policy learns from scores on its own new answers.",
+  "Simplest update: −r · Σ log p; one weight per answer.",
+  "Over-optimisation (Goodhart): RM score keeps rising, real quality peaks then falls; RMs overrate long, confident, flattering answers.",
+  "KL leash to the frozen SFT reference, subtracted from the reward (β ≈ 0.1); KL ≥ 0, = 0 only if identical.",
+  "RLAIF: an AI judge instead of people; Constitutional AI: people write only the principles; rubrics give a share of items met.",
+  "Humans: noisy, little bias. Judges: consistent, biased to length and themselves."])}
+`},
+
+{lec: "tp2", sec: "rlvr", title: "Reinforcement learning with verifiable rewards (RLVR)", html: `
+${LX.pipe("post")}
+${LX.post("rlvr")}
+<p class="lead">Some answers can be checked automatically. A <b>checker</b> returns 1 if the answer is correct and 0 if it is wrong, and takes the place of the reward model. The name RLVR was introduced by Tülu 3.</p>
+${LX.tbl(["Task", "What the checker does"], [
+  ["maths", "compares the final answer with the known one: 408 is correct, 418 is wrong"],
+  ["code", "runs unit tests in a sandbox; the program has to pass them"],
+  ["instructions", "a script checks constraints such as “under 50 words” or “no commas”"],
+  ["puzzles", "the puzzles are generated, so the answer is known in advance"],
+  ["format", "the output has to be valid JSON or the correct tool call"]])}
+${LX.cols([
+  ["What a checker can't do", "<p>Verify a poem or a kind reply. Those still need a reward model or a judge.</p>", "bad"],
+  ["What a checker needs", "<p>It can only reward correct answers the policy <b>already finds now and then</b>. That is why thinking traces were added in mid-training.</p>", "acc"]])}
+${LX.flow([["mid-training", "thinking traces: the model sometimes reasons"], ">", ["RLVR", "checker rewards the correct ones"], ">", ["result", "correct, careful reasoning becomes more common and longer", "acc"]])}
+${LX.keys([
+  "RLVR: a checker scores 1 or 0 instead of a reward model; name from Tülu 3.",
+  "Checkable: maths answers, code via unit tests in a sandbox, instruction constraints via scripts, generated puzzles, formats such as JSON and tool calls.",
+  "Not checkable (poems, kindness) → reward model or judge.",
+  "Only reinforces what the policy already produces sometimes; mid-training's thinking traces make that possible.",
+  "Tülu 3 and Olmo 3: SFT → DPO → RLVR."])}
+`},
+
+{lec: "tp2", sec: "ppo", title: "From scores to updates: PPO and GRPO", html: `
+${LX.pipe("post")}
+<p class="lead">RLHF, RLAIF and RLVR all give a score per answer. They all still need an update that turns the score into a training step. The key idea is the <b>baseline</b>: compare each score with what was expected.</p>
+${LX.tbl(["Answer to “Why do cows moo?”", "r", "r − b"], [["Cows moo to call their calves.", "0.8", "+0.375"], ["To talk to other cows.", "0.5", "+0.075"], ["Because they are hungry.", "0.3", "−0.125"], ["Cows moo. That is what cows do.", "0.1", "−0.325"]], "Baseline b = the average, 0.425.", "num")}
+<p>With the reward alone, <b>every answer becomes more likely</b>, even the worst, and the reward doesn't say whether 0.5 is good: on a hard prompt it is, on an easy one not. Subtract the expected score, the baseline <i>b</i>:</p>
+${LX.f(`𝓛 = −( <i>r</i> − <i>b</i> ) · Σ<sub><i>t</i></sub> log <i>p</i>(token<sub><i>t</i></sub>) &nbsp;&nbsp;&nbsp; advantage <i>A</i> = <i>r</i> − <i>b</i>`, "better than expected → more likely; worse → less likely")}
+${LX.cols([["PPO", "<p>The baseline is <b>learned</b>, by a value model.</p>"], ["GRPO", "<p>The baseline is <b>measured</b>, from a group of answers.</p>", "acc"]])}
+
+<h3>PPO: learning the baseline</h3>
+<p>Proximal policy optimisation learns the baseline with a <b>fourth model, the value model</b>, which estimates from the tokens so far how much reward the answer will eventually get. InstructGPT was trained with PPO.</p>
+${LX.tbl(["", "Cows", "moo", "to", "call", "their", "calves"], [
+  ["−0.1 KL<sub>t</sub> (leash, every token)", "0.00", "0.00", "−0.02", "−0.02", "−0.04", "−0.07"],
+  ["r<sub>RM</sub> (last token only)", "0", "0", "0", "0", "0", "0.80"],
+  ["r<sub>t</sub> (sum)", "0.00", "0.00", "−0.02", "−0.02", "−0.04", "0.73"],
+  ["G<sub>t</sub>, received (rewards from t to the end)", "0.65", "0.65", "0.65", "0.67", "0.69", "0.73"],
+  ["V<sub>t</sub>, expected (value model)", "0.40", "0.42", "0.45", "0.50", "0.55", "0.60"],
+  ["<b>A<sub>t</sub> = G<sub>t</sub> − V<sub>t</sub></b>", "+0.25", "+0.23", "+0.20", "+0.17", "+0.14", "+0.13"]], "Each token gets its own advantage. The value model learns by pulling V<sub>t</sub> towards G<sub>t</sub>.", "num")}
+<p>Generating and scoring answers is expensive, so PPO <b>updates several times on the same batch</b>. Before each update the current weights re-read the stored answer, and the <b>ratio</b> ρ<sub><i>t</i></sub> = <i>p</i><sub>now</sub>(token<sub><i>t</i></sub>) / <i>p</i><sub>when written</sub>(token<sub><i>t</i></sub>) shows how far each token's probability has moved.</p>
+${LX.tbl(["“their” (positive advantage)", "update 1", "update 2", "update 3"], [["p", "0.45", "0.50", "0.55"], ["ρ", "1.00", "1.11", "1.22 &gt; 1 + ε → not pushed further"]], "Clip range ε, usually 0.2. A token with a negative advantage is likewise not pushed down once ρ falls below 1 − ε.", "num")}
+${LX.f(`𝓛 = − Σ<sub><i>t</i></sub> min( ρ<sub><i>t</i></sub> <i>A<sub>t</sub></i> , clip(ρ<sub><i>t</i></sub>, 1 − ε, 1 + ε) <i>A<sub>t</sub></i> )`, "the clip stops a single batch from moving the policy too far")}
+
+<h3>GRPO: measuring the baseline</h3>
+<p>Group relative policy optimisation does away with the value model. The policy writes a <b>group of G answers to the same prompt</b> (4 here, 8 to 64 in practice), and the group is the baseline:</p>
+${LX.f(`<i>A<sub>i</sub></i> = ( <i>r<sub>i</sub></i> − mean(<i>r</i>) ) / std(<i>r</i>)`, "mean 0.425, std 0.259")}
+${LX.tbl(["Answer", "r", "A<sub>i</sub>"], [["Cows moo to call their calves.", "0.8", "+1.45"], ["To talk to other cows.", "0.5", "+0.29"], ["Because they are hungry.", "0.3", "−0.48"], ["Cows moo. That is what cows do.", "0.1", "−1.25"]], "Every token of an answer gets the same advantage. The ratio and clip work as in PPO, but the KL leash moves out of the reward into the loss, as a separate term with β = 0.04.", "num")}
+${LX.f(`𝓛 = − Σ<sub><i>i</i>,<i>t</i></sub> [ min( ρ<sub><i>i</i>,<i>t</i></sub> <i>A<sub>i</sub></i> , clip(ρ<sub><i>i</i>,<i>t</i></sub>, 1 − ε, 1 + ε) <i>A<sub>i</sub></i> ) − β KL<sub><i>t</i></sub> ]`)}
+<p>DeepSeek-R1 was trained with GRPO, and so was Olmo 3, with a variant of its own.</p>
+${LX.tbl(["", "PPO", "GRPO"], [
+  ["baseline b", "V<sub>t</sub>, a value model, learned", "the group's mean, measured"],
+  ["advantage", "A<sub>t</sub> = G<sub>t</sub> − V<sub>t</sub>, one per token", "A<sub>i</sub> = (r<sub>i</sub> − mean)/std, one per answer"],
+  ["answers per prompt", "one", "a group of G"],
+  ["models in memory", "policy, reference, reward model, value model", "policy, reference, reward model; with a checker only the first two"],
+  ["KL leash", "in the reward", "in the loss"],
+  ["ratio and clip", "the same", "the same"]])}
+<p>Without a value model GRPO saves the memory of one model the size of the policy, or of two if a checker replaces the reward model. In return it must generate a group for every prompt, and it assigns credit <b>less precisely</b>, since every token of an answer gets the same advantage.</p>
+${LX.keys([
+  "Reward alone pushes every answer up; subtract a baseline: advantage A = r − b.",
+  "PPO: value model (4th model) learns V<sub>t</sub>; per-token A<sub>t</sub> = G<sub>t</sub> − V<sub>t</sub>; KL in the reward; InstructGPT.",
+  "Several updates per batch; ratio ρ = p<sub>now</sub>/p<sub>when written</sub>; clip at 1 ± ε (ε ≈ 0.2) stops a batch moving the policy too far.",
+  "GRPO: G answers per prompt (8–64); A<sub>i</sub> = (r<sub>i</sub> − mean)/std, same for every token; KL as a separate loss term (β = 0.04); DeepSeek-R1, Olmo 3.",
+  "GRPO saves the value model's memory (two models with a checker) but needs a group per prompt and gives coarser credit."])}
+`}
+);
+
 /* ───────── state ───────── */
 const KEY = "genai-quiz-v1";
 const store = (() => { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } })();
@@ -880,7 +2025,7 @@ store.pts = store.pts || {};
 function save(){ try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} }
 
 let seed = store.seed || Math.floor(Math.random() * 1e9);
-let mode = "practice";           // practice | mock
+let mode = "practice";           // learn | practice | mock
 let filter = store.filter || "all";
 let sec = store.sec || "";
 let order = [];                  // question ids in the current set
@@ -937,10 +2082,10 @@ function renderChips(){
     const n = Q.filter(q => inFilter(q, k)).length;
     return `<button class="chip" data-f="${k}" aria-pressed="${filter === k}">${label}<span class="n">${n}</span></button>`;
   }).join("");
-  $("#chips").hidden = mode === "mock";
+  $("#chips").hidden = mode !== "practice";
   const list = SECTIONS[filter];
   const sc = $("#secchips");
-  sc.hidden = mode === "mock" || !list;
+  sc.hidden = mode !== "practice" || !list;
   if (list) sc.innerHTML = [["", "All sections"], ...list].map(([k, label]) => {
     const n = Q.filter(q => q.lec === filter && (!k || q.sec === k)).length;
     return `<button class="chip sec" data-s="${k}" aria-pressed="${sec === k}">${label}<span class="n">${n}</span></button>`;
@@ -948,6 +2093,11 @@ function renderChips(){
 }
 
 function renderStat(){
+  if (mode === "learn") {
+    const read = LSEQ.filter(k => store.read[k]).length, right = Q.filter(q => store.res[q.id] === "perfect").length;
+    $("#stat").innerHTML = `<b>${read}</b> of ${LSEQ.length} sections read · ${right} of ${Q.length} questions fully right`;
+    return;
+  }
   if (mode === "mock") {
     const answered = mock.ids.filter(id => (picks[id] || new Set()).size).length;
     $("#stat").innerHTML = mock.done
@@ -1021,6 +2171,7 @@ function renderQuestion(){
     <div class="controls">
       <button class="btn" id="prev" ${idx === 0 ? "disabled" : ""}>Previous</button>
       ${primary}
+      ${mode === "practice" || mock.done ? `<button class="btn" data-go="${q.lec}:${q.sec}">Lesson: ${secName(q)}</button>` : ""}
       <span class="spacer"></span>
       <span class="hint"><kbd>A</kbd>–<kbd>D</kbd> tick · <kbd>Enter</kbd> ${mode === "mock" ? "next" : "check, then next"} · <kbd>←</kbd> <kbd>→</kbd> move</span>
     </div>
@@ -1044,7 +2195,11 @@ function renderSummary(){
   renderStat();
 }
 
-function render(){ renderChips(); renderStat(); renderDots(); renderQuestion(); }
+function render(){
+  renderChips(); renderStat();
+  if (mode === "learn") { $("#dots").innerHTML = ""; return renderLearn(); }
+  renderDots(); renderQuestion();
+}
 
 /* ───────── actions ───────── */
 function currentIds(){ return mode === "mock" ? mock.ids : order; }
@@ -1092,14 +2247,16 @@ setInterval(() => {
 }, 1000);
 function setMode(m){
   mode = m;
-  $("#m-practice").setAttribute("aria-pressed", m === "practice");
-  $("#m-mock").setAttribute("aria-pressed", m === "mock");
-  if (m === "mock") newMock(); else { buildOrder(); idx = Math.min(store.idx || 0, Math.max(order.length - 1, 0)); }
+  ["learn", "practice", "mock"].forEach(k => $("#m-" + k).setAttribute("aria-pressed", m === k));
+  if (m !== "mock") { store.mode = m; save(); }
+  if (m === "mock") newMock(); else if (m === "practice") { buildOrder(); idx = Math.min(store.idx || 0, Math.max(order.length - 1, 0)); }
   render();
 }
 
 document.addEventListener("click", e => {
   const t = e.target.closest("button"); if (!t) return;
+  if (t.dataset.go) return openLesson(t.dataset.go);
+  if (t.dataset.l) return openLesson(t.dataset.l);
   if (t.matches(".opt")) return toggle(+t.dataset.o);
   if (t.matches(".chip.sec")) { sec = t.dataset.s; store.sec = sec; idx = 0; save(); buildOrder(); return render(); }
   if (t.matches(".chip")) { filter = t.dataset.f; sec = ""; store.filter = filter; store.sec = ""; idx = 0; save(); buildOrder(); return render(); }
@@ -1113,7 +2270,11 @@ document.addEventListener("click", e => {
     case "summary": return renderSummary();
     case "review": idx = 0; return render();
     case "newmock": newMock(); return render();
+    case "m-learn": return setMode("learn");
     case "m-practice": return setMode("practice");
+    case "lprev": return openLesson(LSEQ[LSEQ.indexOf(lesson) - 1]);
+    case "lnext": store.read[lesson] = true; save(); return openLesson(LSEQ[LSEQ.indexOf(lesson) + 1]);
+    case "ltest": return testLesson();
     case "m-mock": return setMode("mock");
     case "shuffle":
       seed = Math.floor(Math.random() * 1e9); store.seed = seed; store.shuffled = true; save();
@@ -1125,8 +2286,11 @@ document.addEventListener("click", e => {
   }
 });
 
+document.addEventListener("change", e => { if (e.target.id === "lsel") openLesson(e.target.value); });
+
 document.addEventListener("keydown", e => {
   if (e.metaKey || e.ctrlKey || e.altKey) return;
+  if (mode === "learn") return;
   if (e.target.closest && e.target.closest("input,textarea")) return;
   const ids = currentIds(); if (!ids.length) return;
   const q = byId[ids[idx]]; if (!q) return;
@@ -1143,10 +2307,63 @@ document.addEventListener("keydown", e => {
   }
 });
 
+
+/* ───────── Learn mode ───────── */
+const LKEY = l => l.lec + ":" + l.sec;
+const lessonBy = Object.fromEntries(LESSONS.map(l => [LKEY(l), l]));
+const LSEQ = LORDER.flatMap(lec => SECTIONS[lec].map(([s]) => lec + ":" + s)).filter(k => lessonBy[k]);
+store.read = store.read || {};
+let lesson = lessonBy[store.lesson] ? store.lesson : LSEQ[0];
+
+function secStats(lec, s){
+  const qs = Q.filter(q => q.lec === lec && q.sec === s);
+  return {n: qs.length, right: qs.filter(q => store.res[q.id] === "perfect").length};
+}
+function secTitle(k){ const [lec, s] = k.split(":"); return SECTIONS[lec].find(x => x[0] === s)[1]; }
+
+function renderLearn(){
+  const L = lessonBy[lesson], i = LSEQ.indexOf(lesson);
+  const secs = SECTIONS[L.lec], si = secs.findIndex(x => x[0] === L.sec);
+  const st = secStats(L.lec, L.sec);
+  const toc = LORDER.map(lec => `<div class="tocg"><div class="toch">${LECT[lec].short}</div>${
+    LSEQ.filter(k => k.startsWith(lec + ":")).map(k => { const [, s] = k.split(":"), t = secStats(lec, s);
+      return `<button class="tocl${k === lesson ? " cur" : ""}" data-l="${k}" ${k === lesson ? 'aria-current="true"' : ""}><span class="rd${store.read[k] ? " on" : ""}" aria-label="${store.read[k] ? "read" : "not read yet"}"></span><span class="tt">${secTitle(k)}</span><span class="n" title="questions fully right">${t.right}/${t.n}</span></button>`; }).join("")}</div>`).join("");
+  const sel = `<select class="lsel" id="lsel" aria-label="Lesson">${LORDER.map(lec => `<optgroup label="${LECT[lec].full}">${
+    LSEQ.filter(k => k.startsWith(lec + ":")).map(k => `<option value="${k}" ${k === lesson ? "selected" : ""}>${store.read[k] ? "✓ " : ""}${secTitle(k)}</option>`).join("")}</optgroup>`).join("")}</select>`;
+  const prev = LSEQ[i - 1], next = LSEQ[i + 1];
+  $("#view").innerHTML = `<div class="learn">
+    <nav class="toc" aria-label="Lessons">${toc}</nav>
+    <article class="lesson">${sel}
+      <div class="qhead"><span class="eyebrow">${LECT[L.lec].full} · Section ${si + 1} of ${secs.length}</span><span class="tag">${st.right} of ${st.n} questions fully right</span></div>
+      <h2>${L.title}</h2>
+      ${L.html}
+      <div class="lfoot">
+        <button class="btn" id="lprev" ${prev ? "" : "disabled"}>Previous section</button>
+        <button class="btn primary" id="ltest">Test this section · ${st.n} questions</button>
+        <span class="spacer"></span>
+        ${next ? `<button class="btn" id="lnext">Next: ${secTitle(next)}</button>` : ""}
+      </div>
+    </article></div>`;
+}
+function openLesson(k, scroll = true){
+  if (!lessonBy[k]) return;
+  lesson = k; store.lesson = k; save();
+  if (mode !== "learn") return setMode("learn");
+  render();
+  if (scroll) $("#view").scrollIntoView({block: "start"});
+}
+function testLesson(){
+  const [lec, s] = lesson.split(":");
+  store.read[lesson] = true;
+  filter = lec; sec = s; store.filter = lec; store.sec = s; store.idx = 0; idx = 0; save();
+  setMode("practice");
+  $("#view").scrollIntoView({block: "start"});
+}
+
 store.seed = seed; save();
-$("#subline").textContent = `194.207 Generative AI · ${Q.length} questions as on the test, each with its answer`;
-buildOrder(); idx = Math.min(store.idx || 0, Math.max(order.length - 1, 0));
-render();
+$("#subline").textContent = `194.207 Generative AI · ${LSEQ.length} lessons, section by section, and ${Q.length} questions as on the test`;
+setMode(store.mode === "practice" ? "practice" : "learn");
 </script>
+
 </body>
 </html>
